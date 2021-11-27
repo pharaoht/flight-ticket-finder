@@ -127,6 +127,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+AUTH_USER_MODEL = 'flight_app.UserAccount'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
