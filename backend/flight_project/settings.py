@@ -29,6 +29,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'flightsearchapi2@gmail.com'
+EMAIL_HOST_PASSWORD = 'qoqgnfrumgbndgcz'
+EMAIL_USE_TLS = True
+
 
 # Application definition
 
@@ -126,7 +133,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'build/static')
+]
 AUTH_USER_MODEL = 'flight_app.UserAccount'
 
 REST_FRAMEWORK = {
@@ -158,8 +167,8 @@ DJOSER = {
     'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {
-        'user_create': 'accounts_app.serializers.UserCreateSerializer',
-        'user':  'accounts_app.serializers.UserCreateSerializer',
+        'user_create': 'flight_app.serializers.UserCreateSerializer',
+        'user':  'flight_app.serializers.UserCreateSerializer',
         'user_delete':  'djoser.serializers.UserDeleteSerializer',
     }
 }
