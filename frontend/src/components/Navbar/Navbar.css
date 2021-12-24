@@ -40,13 +40,13 @@ header .group ul li {
   list-style: none;
 }
 
-header .group ul li a {
+header .group ul li {
   color: #222;
   text-decoration: none;
   margin-left: 30px;
 }
 
-header .group ul li a:hover {
+header .group ul li:hover {
   color: #ff5a26;
 }
 
@@ -54,6 +54,6 @@ header .group .action {
   margin-left: 20px;
 }
 
-header .group .action li a {
+header .group .action li {
   font-size: 1.25em;
 }

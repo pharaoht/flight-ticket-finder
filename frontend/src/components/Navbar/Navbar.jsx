@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { BrowserRouter as Link } from "react-router-dom";
 import '../Navbar/Navbar.css'
 
 const Navbar = () => {
@@ -15,8 +15,8 @@ const Navbar = () => {
                         <li><Link to='/'>Contact</Link></li>
                     </ul>
                     <ul className='action'>
-                        <li><Link to='/'><icon-icon name='search-outline'></icon-icon></Link></li>
-                        <li><Link to='/'><icon-icon name='person-outline'></icon-icon></Link></li>
+                        <li><Link to='/' ><ion-icon name='search-outline'></ion-icon></Link></li>
+                        <li><Link to='/' ><ion-icon name='person-outline'></ion-icon></Link></li>
                     </ul>
                 </div>
             </header>
