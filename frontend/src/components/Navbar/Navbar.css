@@ -48,6 +48,7 @@ header .group ul li {
 
 header .group ul li:hover {
   color: #ff5a26;
+  cursor: pointer;
 }
 
 header .group .action {

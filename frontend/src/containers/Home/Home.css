@@ -37,6 +37,10 @@
   font-size: 6em;
 }
 
+.content h2:hover {
+  cursor: default;
+}
+
 .content .btn {
   display: inline-block;
   background: #ff5a26;
@@ -46,4 +50,8 @@
   letter-spacing: 2px;
   font-size: 1.1em;
   margin-top: 20px;
+}
+
+.content .btn:hover {
+  cursor: pointer;
 }
