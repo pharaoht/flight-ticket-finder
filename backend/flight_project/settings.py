@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'djoser',
-    'flight_app.apps.AccountsAppConfig',
+    'flight_app',
 ]
 
 MIDDLEWARE = [
