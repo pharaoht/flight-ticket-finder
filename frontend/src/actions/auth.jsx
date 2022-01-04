@@ -110,5 +110,37 @@ export const login = (email, password) => async dispatch => {
 
     } catch (err) {
 
-    }
-}
+        console.log(err.response.data);
+
+        dispatch({
+            type: LOGIN_FAIL
+        });
+
+    };
+};
+
+export const reset_password = (email) => async dispatch => {
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    };
+
+    const body = JSON.stringify({ email });
+
+    try {
+
+        await axios.get(`${url}auth/users/rest_password/`, body, config);
+
+        dispatch({
+            type: PASSWORD_REST_SUCCESS
+        });
+
+    } catch (err) {
+
+        dispatch({
+            type: PASSWORD_REST_FAIL
+        });
+    };
+};
