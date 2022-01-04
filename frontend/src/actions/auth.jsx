@@ -67,7 +67,48 @@ export const load_user = () => async dispatch => {
             const response = await axios.get(`${url}auth/users/me/`, config);
             window.localStorage.setItem('info', response.data.id);
 
+            dispatch({
+                type: LOAD_USER_SUCCESS,
+                payload: response.data
+            });
 
-        }
+        } catch (err) {
+
+            dispatch({
+                type: LOAD_USER_FAIL
+            });
+        };
+    }
+    else {
+        dispatch({
+            type: LOAD_USER_FAIL
+        });
     };
 };
+
+export const login = (email, password) => async dispatch => {
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const body = JSON.stringify({ email, password });
+
+    try {
+
+        const res = await axios.post(`${url}auth/jwt/create/`, body, config);
+
+        dispatch({
+            type: LOGIN_SUCCESS,
+            payload: res.data
+        });
+
+        dispatch(load_user());
+
+
+    } catch (err) {
+
+    }
+}
