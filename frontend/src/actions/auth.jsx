@@ -61,5 +61,13 @@ export const load_user = () => async dispatch => {
                 'Accept': 'application/json',
             }
         };
+
+        try {
+
+            const response = await axios.get(`${url}auth/users/me/`, config);
+            window.localStorage.setItem('info', response.data.id);
+
+
+        }
     };
 };
