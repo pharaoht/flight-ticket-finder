@@ -1,8 +1,11 @@
 import Home from './containers/Home/Home';
 import Navbar from '../src/components/Navbar/Navbar';
+import { Provider } from 'react-redux';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 
-function App() {
+
+const App = () => {
   return (
     <>
       <Navbar></Navbar>

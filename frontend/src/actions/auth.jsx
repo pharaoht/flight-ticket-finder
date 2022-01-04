@@ -42,22 +42,20 @@ export const checkAuthenticated = () => async dispatch => {
                 dispatch({ type: AUTHENTICATED_FAIL })
             }
         }
-        catch (error) { 
-            dispatch({ type: AUTHENTICATED_FAIL})
+        catch (error) {
+            dispatch({ type: AUTHENTICATED_FAIL })
         }
     }
     else {
         dispatch({ type: AUTHENTICATED_FAIL })
     }
-
-
 }
 
 export const load_user = () => async dispatch => {
-    
-    if (localStorage.getItem('access')){
+
+    if (localStorage.getItem('access')) {
         const config = {
-            headers:{
+            headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `JWT ${localStorage.getItem('access')}`,
                 'Accept': 'application/json',
