@@ -225,8 +225,9 @@ export const verify = (userId, token) => async dispatch => {
         })
 
     } catch (err) {
+
         dispatch({
             type: AUTHENTICATED_FAIL
         })
-    }
+    };
 };
