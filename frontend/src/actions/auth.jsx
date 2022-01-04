@@ -174,3 +174,59 @@ export const reset_password_confirm = (userId, token, new_password, re_new_passw
         })
     };
 };
+
+export const logout = () => dispatch => {
+    dispatch({
+        type: LOGOUT,
+    });
+};
+
+export const signup = (email, first_name, last_name, password, re_password) => async dispatch => {
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const body = JSON.stringify({ email, first_name, last_name, password, re_password });
+
+    try {
+
+        const res = await axios.post(`${url}auth/users/`, body, config);
+
+        dispatch({
+            type: SIGNUP_SUCCESS,
+            payload: res.data
+        });
+
+    } catch (err) {
+
+        dispatch({
+            type: SIGNUP_FAIL
+        })
+    };
+};
+
+export const verify = (userId, token) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    const body = JSON.stringify({ userId, token });
+
+    try {
+        await axios.post(`${url}auth/users/activation/`, body, config)
+
+        dispatch({
+            type: AUTHENTICATED_SUCCESS,
+        })
+
+    } catch (err) {
+        dispatch({
+            type: AUTHENTICATED_FAIL
+        })
+    }
+};
