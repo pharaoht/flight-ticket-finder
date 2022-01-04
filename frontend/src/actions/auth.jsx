@@ -144,3 +144,33 @@ export const reset_password = (email) => async dispatch => {
         });
     };
 };
+
+export const reset_password_confirm = (userId, token, new_password, re_new_password) => async dispatch => {
+
+    const csrf = axios.defaults.xsrfCookieName = 'csrftoken';
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrf
+
+        }
+    };
+
+    const body = JSON.stringify({ userId, token, new_password, re_new_password });
+
+    try {
+
+        await axios.post(`${url}auth/users/reset_password_confirm/`, body, config);
+
+        dispatch({
+            type: PASSWORD_REST_CONFIRM_SUCCESS
+        });
+
+    } catch (err) {
+
+        dispatch({
+            type: PASSWORD_REST_CONFIRM_FAIL
+        })
+    };
+};
