@@ -1,0 +1,40 @@
+.inputBx {
+  margin: 0 20px;
+}
+
+.inputBx p {
+  color: #222;
+  margin-bottom: 10px;
+  cursor: default;
+}
+
+.inputBx p:hover {
+  color: #ff5a26;
+}
+
+.inputBx p.white {
+  color: #fff;
+}
+
+.inputBx input {
+  border: 1px solid #222;
+  outline: none;
+  padding: 5px;
+  width: 100%;
+  min-width: 100px;
+  height: 30px;
+}
+
+.inputBx input:focus {
+  border: 1px solid #ff5a26;
+}
+
+.inputBx input[type="Submit"] {
+  outline: none;
+  border: none;
+  background: #ff5a26;
+  color: #fff;
+  cursor: pointer;
+  letter-spacing: 2px;
+  padding: 10px;
+}

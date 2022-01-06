@@ -11,8 +11,8 @@ const Navbar = () => {
                     <ul className='navigation'>
                         <li><Link to='/'>Home</Link></li>
                         <li><Link to='/'>Destinations</Link></li>
-                        <li><Link to='/'>About</Link></li>
-                        <li><Link to='/'>Contact</Link></li>
+                        <li><Link to='/'>Tips</Link></li>
+                        <li><Link to='/'>NewsLetter</Link></li>
                     </ul>
                     <ul className='action'>
                         <li><Link to='/' ><ion-icon name='search-outline'></ion-icon></Link></li>
