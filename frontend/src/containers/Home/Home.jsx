@@ -8,6 +8,7 @@ const Home = () => {
     const test = () => {
         alert("hi")
     }
+
     return (
         <>
             <div className='banner'>
@@ -28,7 +29,7 @@ const Home = () => {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
 export default Home;
