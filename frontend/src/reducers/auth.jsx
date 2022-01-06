@@ -14,7 +14,7 @@ import {
     SIGNUP_FAIL,
     ACTIVATION_SUCCESS,
     ACTIVATION_FAIL,
-} from '../actions/types'
+} from '../actions/types';
 
 const initialState = {
     access: localStorage.getItem('access'),
@@ -23,7 +23,7 @@ const initialState = {
     user: null,
 };
 
-export default function (state = initialState, action) {
+export default function reducer(state = initialState, action) {
     const { type, payload } = action
 
     switch (type) {
@@ -85,5 +85,5 @@ export default function (state = initialState, action) {
         default:
             return state
 
-    }
-}
+    };
+};
