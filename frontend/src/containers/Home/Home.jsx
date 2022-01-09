@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import '../Home/Home.css';
 import photo1 from '../../photos/bg.jpg';
 import { fromAirport as FromAirport, toAirport as ToAirport, checkIn as CheckIn, checkOut as CheckOut, findBtn as FindBtn } from '../../components/Inputs/Inputs';
@@ -8,6 +9,8 @@ const Home = () => {
 
     const URL = 'https://tequila-api.kiwi.com/v2/search?';
 
+    const URL2 = 'https://tequila-api.kiwi.com/';
+
     const token = '';
 
     const [paramData, setParamData] = useState({
@@ -16,6 +19,10 @@ const Home = () => {
         departure: '',
         return: ''
     });
+
+    const locationAPIRequest = () => {
+
+    };
 
     const changeHandler = (event) => {
 
@@ -28,7 +35,8 @@ const Home = () => {
 
     };
 
-    const submitHandler = () => {
+    const submitHandler = (e) => {
+        e.preventDefault();
         alert("hi");
     };
 
