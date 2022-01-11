@@ -30,7 +30,7 @@ const Home = () => {
     };
 
     const paramBuilder = () => {
-        let paramUrl = `${URL}`
+        let paramUrl = `${URL}`;
 
 
     };
