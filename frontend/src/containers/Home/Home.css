@@ -77,3 +77,19 @@
     margin: 0;
   }
 }
+
+ul {
+  list-style: none;
+}
+
+.suggestBox {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  padding: 30px 50px;
+  flex-wrap: wrap;
+  transform: translateY(40%);
+}

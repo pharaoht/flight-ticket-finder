@@ -45,3 +45,12 @@ export const findBtn = ({ onClick }) => {
         </div>
     );
 };
+
+//pass props
+export const fromLocations = ({ name, id, onClick }) => {
+    return (
+        <>
+            <li key={id} onClick={onClick}> {name} </li>
+        </>
+    );
+};
