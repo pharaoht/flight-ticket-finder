@@ -7,12 +7,6 @@ import { BrowserRouter as Link } from "react-router-dom";
 
 const Home = () => {
 
-    const URL = 'https://tequila-api.kiwi.com/v2/search?';
-
-    const URL2 = 'https://tequila-api.kiwi.com/';
-
-    const token = '';
-
     const [paramData, setParamData] = useState({
         from_airport: '',
         to_airport: '',
@@ -20,19 +14,40 @@ const Home = () => {
         return: ''
     });
 
-    const locationAPIRequest = () => {
+    const [locations, setLocations] = useState([])
+
+    const locationAPIRequest = (location) => {
+        const url_1 = 'https://tequila-api.kiwi.com/locations/query?term=';
+        const url_2 = '&locale=en-US&location_types=airport&limit=10&active_only=true';
+
+        const config = {
+            headers: {
+                "accept": "application/json",
+                "apikey": "SLxN9_Q0EiAp-Lr7hLb-efLH7T1bIlOd"
+            }
+        };
+
+        axios.get(`${url_1}${location}${url_2}`, config)
+            .then(res => {
+                console.log(res)
+                setLocations(res.data.locations);
+            })
+            .catch(err => {
+                console.log(err)
+            });
 
     };
 
     const changeHandler = (event) => {
-
+        console.log(event)
         setParamData({ ...paramData, [event.target.name]: event.target.value });
-    };
 
-    const paramBuilder = () => {
-        let paramUrl = `${URL}`;
-
-
+        if (event.target.name === '' || event.target.name === 'departure' || event.target.name === 'return') {
+            return false;
+        }
+        else {
+            locationAPIRequest(event.target.value);
+        };
     };
 
     const submitHandler = (e) => {
