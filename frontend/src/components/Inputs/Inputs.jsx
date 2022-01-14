@@ -50,7 +50,15 @@ export const findBtn = ({ onClick }) => {
 export const fromLocations = ({ name, id, onClick }) => {
     return (
         <>
-            <li key={id} onClick={onClick}> {name} </li>
+            <li className="airports" key={id} onClick={onClick}> {name} </li>
+        </>
+    );
+};
+
+export const toLocations = ({ name, id, onClick }) => {
+    return (
+        <>
+            <li className="airports" key={id} onClick={onClick}> {name} </li>
         </>
     );
 };

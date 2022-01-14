@@ -71,25 +71,25 @@
   animation: 1s slidefades 0.1s forwards;
 }
 
+ul {
+  list-style: none;
+}
+
+.airport_holder {
+  width: 15%;
+  padding: 5px;
+  position: absolute;
+  display: block;
+  bottom: 100%;
+  /* pointer-events: none; */
+  background: #fff;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
 @keyframes slidefades {
   100% {
     opacity: 1;
     margin: 0;
   }
-}
-
-ul {
-  list-style: none;
-}
-
-.suggestBox {
-  position: absolute;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #fff;
-  padding: 30px 50px;
-  flex-wrap: wrap;
-  transform: translateY(40%);
 }

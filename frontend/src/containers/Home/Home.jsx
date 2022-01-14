@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import '../Home/Home.css';
 import photo1 from '../../photos/bg.jpg';
-import { fromAirport as FromAirport, toAirport as ToAirport, checkIn as CheckIn, checkOut as CheckOut, findBtn as FindBtn, fromLocations as FromLocation } from '../../components/Inputs/Inputs';
+import { fromAirport as FromAirport, toAirport as ToAirport, checkIn as CheckIn, checkOut as CheckOut, findBtn as FindBtn, fromLocations as FromLocation, toLocations as ToLocations } from '../../components/Inputs/Inputs';
 import { BrowserRouter as Link } from "react-router-dom";
 
 const Home = () => {
@@ -15,9 +15,14 @@ const Home = () => {
     });
 
     const [fromLocation, setFromLocations] = useState([]);
-    const [toLocation, setToLocation] = useState([]);
+    const [toLocation, setToLocations] = useState([]);
+    const [eventValue, setEventValue] = useState('');
+    const [changeValue, setChangeValue] = useState('');
+    const fromInput = useRef();
+
 
     const locationAPIRequest = (location, val) => {
+        console.log("location api")
         const url_1 = 'https://tequila-api.kiwi.com/locations/query?term=';
         const url_2 = '&locale=en-US&location_types=airport&limit=10&active_only=true';
 
@@ -30,43 +35,61 @@ const Home = () => {
 
         axios.get(`${url_1}${location}${url_2}`, config)
             .then(res => {
-                console.log(res)
+                console.log(val)
                 val === 1 ?
                     setFromLocations(res.data.locations) :
-                    setToLocation(res.data.locations);
+                    setToLocations(res.data.locations);
             })
             .catch(err => {
                 console.log(err)
             });
-
     };
 
-    const changeHandler = (event) => {
-        console.log(event)
-        setParamData({ ...paramData, [event.target.name]: event.target.value });
 
-        if (event.target.value === '') {
-            setFromLocations([]);
-            return false;
-        }
-        else {
-            event.target.name === 'from_airport' ?
-                locationAPIRequest(event.target.value, 1) :
-                locationAPIRequest(event.target.value, 2);
-        };
+    const changeHandler = (event) => {
+
+        event.target.name === 'from_airport' ?
+            setChangeValue(1) :
+            setChangeValue(2);
+
+        setEventValue(prev => prev = event.target.value);
+        setParamData({ ...paramData, [event.target.name]: event.target.value });
+    };
+
+    const populateText = () => {
+        alert("hi");
     };
 
     function showFromLocations() {
         return (
-            <ul>
-                {fromLocation.map((itm, idx) => {
-                    return (
-                        <>
-                            <FromLocation name={itm.name} id={itm.id} />
-                        </>
-                    );
-                })}
-            </ul>
+            <div className='airport_holder'>
+                <ul onClick={populateText}>
+                    {fromLocation.map((itm, idx) => {
+
+                        return (
+                            <>
+                                <FromLocation name={itm.name} id={itm.id} onClick={populateText} />
+                            </>
+                        )
+                    })}
+                </ul>
+            </div>
+        );
+    };
+
+    function showToLocations() {
+        return (
+            <div className='airport_holder'>
+                <ul>
+                    {toLocation.map((itm, idx) => {
+                        return (
+                            <>
+                                <ToLocations name={itm.name} id={itm.id} onClick={submitHandler} />
+                            </>
+                        )
+                    })}
+                </ul>
+            </div>
         );
     };
 
@@ -74,6 +97,20 @@ const Home = () => {
         e.preventDefault();
         alert("hi");
     };
+
+    useEffect(() => {
+        console.log("use effect")
+
+        const timer = setTimeout(() => {
+            console.log("time out")
+            locationAPIRequest(eventValue, changeValue);
+        }, 500)
+
+        return () => {
+            console.log("clean up")
+            clearTimeout(timer)
+        }
+    }, [paramData])
 
     return (
         <>
@@ -87,9 +124,14 @@ const Home = () => {
                     <div className='searchBox'>
                         <div>
                             {fromLocation.length > 1 ? showFromLocations() : null}
+
                             <FromAirport onChange={(e) => changeHandler(e)} />
                         </div>
-                        <ToAirport onChange={changeHandler} />
+                        <div>
+                            {toLocation.length > 1 ? showToLocations() : null}
+                            <ToAirport onChange={(e) => changeHandler(e)} />
+                        </div>
+
                         <CheckIn onChange={changeHandler} />
                         <CheckOut onChange={changeHandler} />
                         <FindBtn onClick={submitHandler} />
