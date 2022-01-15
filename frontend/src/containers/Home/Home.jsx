@@ -51,7 +51,6 @@ const Home = () => {
             });
     };
 
-
     const changeHandler = (event) => {
 
         if (event.target.value === '') {
@@ -71,12 +70,13 @@ const Home = () => {
     const populateText = (event, country, airportId) => {
         fromInput.current.value = `${airportId} - ${country} `;
         setParamData({ ...paramData, from_airport: airportId });
-
+        setFromLocations([]);
     };
 
     const populateToInput = (e, country, airportId) => {
         toInput.current.value = `${airportId} - ${country} `;
         setParamData({ ...paramData, to_airport: airportId });
+        setToLocations([]);
     };
 
     function showFromLocations() {

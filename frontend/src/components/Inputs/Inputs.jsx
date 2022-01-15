@@ -26,7 +26,7 @@ export const checkIn = ({ onChange }) => {
     return (
         <div className='inputBx'>
             <p>Departure</p>
-            <input type='date' name='departure' onChange={onChange} />
+            <input type='date' name='departure' onChange={onChange} minDate={new Date()} />
         </div>
     );
 };
