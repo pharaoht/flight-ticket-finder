@@ -49,7 +49,7 @@ export const checkAuthenticated = () => async dispatch => {
     else {
         dispatch({ type: AUTHENTICATED_FAIL })
     }
-}
+};
 
 export const load_user = () => async dispatch => {
 

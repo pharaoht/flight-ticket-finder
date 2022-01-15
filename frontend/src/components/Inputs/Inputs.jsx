@@ -1,23 +1,26 @@
 import React from 'react'
 import '../Inputs/Inputs.css';
 
-export const fromAirport = ({ onChange }) => {
-    return (
+
+export const FromAirport = React.forwardRef((props, ref) => (
+    <>
         <div className='inputBx'>
             <p>From:</p>
-            <input type="text" name='from_airport' placeholder="JFK, MIA, LAX" onChange={onChange} />
+            <input type="text" name='from_airport' placeholder="JFK, MIA, LAX"
+                onChange={props['onChange']} ref={ref} />
         </div>
-    );
-};
+    </>
+));
 
-export const toAirport = ({ onChange }) => {
-    return (
+export const toAirport = React.forwardRef((props, ref) => (
+    <>
         <div className='inputBx'>
             <p>To:</p>
-            <input type="text" name='to_airport' placeholder="JFK, MIA, LAX" onChange={onChange} />
+            <input type="text" name='to_airport' placeholder="JFK, MIA, LAX"
+                onChange={props['onChange']} ref={ref} />
         </div>
-    );
-};
+    </>
+));
 
 export const checkIn = ({ onChange }) => {
     return (
@@ -47,7 +50,15 @@ export const findBtn = ({ onClick }) => {
 };
 
 //pass props
-export const fromLocations = ({ name, id, onClick }) => {
+export const fromLocations = ({ name, id, onClick, key }) => {
+    return (
+        <>
+            <li className="airports" key={key} onClick={onClick}> {name} </li>
+        </>
+    )
+};
+
+export const toLocations = ({ name, id, onClick, }) => {
     return (
         <>
             <li className="airports" key={id} onClick={onClick}> {name} </li>
@@ -55,10 +66,3 @@ export const fromLocations = ({ name, id, onClick }) => {
     );
 };
 
-export const toLocations = ({ name, id, onClick }) => {
-    return (
-        <>
-            <li className="airports" key={id} onClick={onClick}> {name} </li>
-        </>
-    );
-};
