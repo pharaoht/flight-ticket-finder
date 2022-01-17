@@ -135,7 +135,7 @@ const Home = () => {
     }, [eventValue]);
 
     useEffect(() => {
-        setParamData({ ...paramData, departure: departDate, return: returnDate });
+        setParamData((prevState) => { return { ...prevState, departure: departDate, return: returnDate } })
     }, [departDate, returnDate])
 
     return (

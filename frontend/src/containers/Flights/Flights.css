@@ -1,0 +1,10 @@
+.parent-ticket-container {
+  padding: 0 100px;
+}
+.main-flight-info {
+  display: flex;
+}
+
+.sidebar-component {
+  width: 25%;
+}
