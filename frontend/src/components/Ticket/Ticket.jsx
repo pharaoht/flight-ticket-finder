@@ -1,10 +1,9 @@
 import React from 'react'
 
-export default function Flights() {
+export default function Ticket() {
     return (
         <div>
-            hi
+
         </div>
     )
 }
-

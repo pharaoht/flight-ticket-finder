@@ -1,6 +1,7 @@
 import store from './store';
 import { Provider } from 'react-redux';
 import Home from './containers/Home/Home';
+import Flights from './containers/Flights/Flights';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Layout from './hocs/Layout';
 
@@ -12,6 +13,7 @@ const App = () => {
       <Router>
         <Switch>
           <Route exact path='/' component={Home}/>
+          <Route path='/tickets' component={Flights}/>
         </Switch>
       </Router>
     </Provider>

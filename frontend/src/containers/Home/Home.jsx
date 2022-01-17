@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../Home/Home.css';
 import photo1 from '../../photos/bg.jpg';
-import { FromAirport as FromAirport, toAirport as ToAirport, checkIn as CheckIn, checkOut as CheckOut, findBtn as FindBtn, fromLocations as FromLocation, toLocations as ToLocations } from '../../components/Inputs/Inputs';
-import { BrowserRouter as Link } from "react-router-dom";
+import { FromAirport, ToAirport, CheckIn, CheckOut, FindBtn, FromLocations, ToLocations } from '../../components/Inputs/Inputs';
+import { Link, Redirect } from "react-router-dom";
 
 const Home = () => {
 
@@ -13,7 +13,8 @@ const Home = () => {
         departure: '',
         return: ''
     });
-
+    const [departDate, setDepartDate] = useState('');
+    const [returnDate, setReturnDate] = useState('');
     const [fromLocation, setFromLocations] = useState([]);
     const [toLocation, setToLocations] = useState([]);
     const [eventValue, setEventValue] = useState('');
@@ -67,15 +68,15 @@ const Home = () => {
         setEventValue(prev => prev = event.target.value);
     };
 
-    const populateText = (event, country, airportId) => {
+    const populateText = (country, airportId) => {
         fromInput.current.value = `${airportId} - ${country} `;
-        setParamData({ ...paramData, from_airport: airportId });
+        setParamData((prevState) => { return { ...prevState, from_airport: airportId } });
         setFromLocations([]);
     };
 
-    const populateToInput = (e, country, airportId) => {
+    const populateToInput = (country, airportId) => {
         toInput.current.value = `${airportId} - ${country} `;
-        setParamData({ ...paramData, to_airport: airportId });
+        setParamData((prevState) => { return { ...prevState, to_airport: airportId } });
         setToLocations([]);
     };
 
@@ -86,7 +87,7 @@ const Home = () => {
                     {fromLocation.map((itm, idx) => {
                         return (
                             <>
-                                <FromLocation name={itm.name} id={itm.id} onClick={(e) => populateText(e, itm.city.country.name, itm.id)} />
+                                <FromLocations name={itm.name} id={itm.id} onClick={(e) => populateText(itm.city.country.name, itm.id)} />
                             </>
                         )
                     })}
@@ -102,7 +103,11 @@ const Home = () => {
                     {toLocation.map((itm, idx) => {
                         return (
                             <>
-                                <ToLocations name={itm.name} id={itm.id} onClick={(e) => populateToInput(e, itm.city.country.name, itm.id)} />
+                                <ToLocations
+                                    name={itm.name}
+                                    id={itm.id}
+                                    onClick={(e) => populateToInput(itm.city.country.name, itm.id)}
+                                />
                             </>
                         )
                     })}
@@ -113,6 +118,8 @@ const Home = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
+        return < Redirect to='/tickets' />
+        //handle errors if no data
 
     };
 
@@ -127,6 +134,10 @@ const Home = () => {
         };
     }, [eventValue]);
 
+    useEffect(() => {
+        setParamData({ ...paramData, departure: departDate, return: returnDate });
+    }, [departDate, returnDate])
+
     return (
         <>
             <div className='banner'>
@@ -134,7 +145,7 @@ const Home = () => {
                     <img src={photo1} className='cover' alt='cover' />
                     <div className='content'>
                         <h2>Explore the World</h2>
-                        <span className='btn'><Link to='/'>Book Now</Link></span>
+                        <span className='btn'><Link to='/tickets'>Book Now</Link></span>
                     </div>
                     <div className='searchBox'>
                         <div>
@@ -145,9 +156,12 @@ const Home = () => {
                             {toLocation.length > 1 ? showToLocations() : null}
                             <ToAirport onChange={(e) => changeHandler(e)} ref={toInput} />
                         </div>
-
-                        <CheckIn onChange={changeHandler} />
-                        <CheckOut onChange={changeHandler} />
+                        <div>
+                            <CheckIn selected={departDate} onChange={date => setDepartDate(date)} />
+                        </div>
+                        <div>
+                            <CheckOut selected={returnDate} onChange={date => setReturnDate(date)} />
+                        </div>
                         <FindBtn onClick={submitHandler} />
                     </div>
                 </div>
