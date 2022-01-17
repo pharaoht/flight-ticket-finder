@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Main from '../../components/Main/Main'
 import SearchAdvance from '../../components/SearchAdvance/SearchAdvance'
 import SideBar from '../../components/SideBar/SideBar'
 import './Flights.css'
 
 export default function Flights(props) {
+    console.log(props)
+    useEffect(() => {
+
+    }, []);
 
     return (
         <div className='parent-ticket-container' style={{ outline: '1px solid black' }}>
@@ -16,7 +20,7 @@ export default function Flights(props) {
                     <SideBar />
                 </div>
                 <div className='ticket-area'>
-                    <Main />
+                    <Main flightData={props} />
                 </div>
             </div>
         </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Link } from "react-router-dom";
 import '../Navbar/Navbar.css'
 
-const Navbar = () => {
+export default function Navbar() {
     return (
         <>
             <header>
@@ -23,5 +23,3 @@ const Navbar = () => {
         </>
     )
 }
-
-export default Navbar;

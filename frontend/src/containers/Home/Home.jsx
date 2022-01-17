@@ -3,9 +3,9 @@ import axios from 'axios';
 import '../Home/Home.css';
 import photo1 from '../../photos/bg.jpg';
 import { FromAirport, ToAirport, CheckIn, CheckOut, FindBtn, FromLocations, ToLocations } from '../../components/Inputs/Inputs';
-import { Link, Redirect } from "react-router-dom";
+import BrowserRouter, { Link, Redirect } from "react-router-dom";
 
-const Home = () => {
+export default function Home(props) {
 
     const [paramData, setParamData] = useState({
         from_airport: '',
@@ -118,9 +118,9 @@ const Home = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        return < Redirect to='/tickets' />
-        //handle errors if no data
-
+        props.flightdata(paramData);
+        console.log('submitted');
+        return <Redirect to='/tickets' />
     };
 
     useEffect(() => {
@@ -169,5 +169,3 @@ const Home = () => {
         </>
     );
 };
-
-export default Home;
