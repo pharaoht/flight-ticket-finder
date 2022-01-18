@@ -3,7 +3,7 @@ import axios from 'axios';
 import '../Home/Home.css';
 import photo1 from '../../photos/bg.jpg';
 import { FromAirport, ToAirport, CheckIn, CheckOut, FindBtn, FromLocations, ToLocations } from '../../components/Inputs/Inputs';
-import BrowserRouter, { Link, Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 export default function Home(props) {
 
@@ -118,9 +118,23 @@ export default function Home(props) {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        props.flightdata(paramData);
+        props.flightParams(paramData);
         console.log('submitted');
         return <Redirect to='/tickets' />
+    };
+
+    const dateConversion = (date, isFromInput) => {
+        const month = date.getMonth() + 1;
+        const day = date.toLocaleString('en-US', { day: '2-digit' });
+        const year = date.getFullYear();
+
+        if (isFromInput) {
+            setDepartDate(date);
+            setParamData((prevState) => { return { ...prevState, departure: `${day}/${month}/${year}` } })
+        } else {
+            setReturnDate(date);
+            setParamData((prevState) => { return { ...prevState, return: `${day}/${month}/${year}` } })
+        };
     };
 
     useEffect(() => {
@@ -133,10 +147,6 @@ export default function Home(props) {
             clearTimeout(timer);
         };
     }, [eventValue]);
-
-    useEffect(() => {
-        setParamData((prevState) => { return { ...prevState, departure: departDate, return: returnDate } })
-    }, [departDate, returnDate])
 
     return (
         <>
@@ -157,10 +167,10 @@ export default function Home(props) {
                             <ToAirport onChange={(e) => changeHandler(e)} ref={toInput} />
                         </div>
                         <div>
-                            <CheckIn selected={departDate} onChange={date => setDepartDate(date)} />
+                            <CheckIn selected={departDate} onChange={date => dateConversion(date, true)} />
                         </div>
                         <div>
-                            <CheckOut selected={returnDate} onChange={date => setReturnDate(date)} />
+                            <CheckOut selected={returnDate} onChange={date => dateConversion(date, false)} />
                         </div>
                         <FindBtn onClick={submitHandler} />
                     </div>

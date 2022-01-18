@@ -8,3 +8,8 @@
 .sidebar-component {
   width: 25%;
 }
+
+.ticket-area {
+  width: 100%;
+  display: flex;
+}

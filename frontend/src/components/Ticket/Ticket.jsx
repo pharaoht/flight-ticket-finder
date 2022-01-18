@@ -1,9 +1,14 @@
 import React from 'react'
-
-export default function Ticket() {
+import './Ticket.css';
+export default function Ticket(props) {
     return (
-        <div>
+        <div className='ticket-holder'>
+            <div className='tc-flight-info'>
 
+            </div>
+            <div className='tc-price'>
+
+            </div>
         </div>
     )
 }
