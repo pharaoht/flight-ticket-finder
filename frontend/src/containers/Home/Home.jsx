@@ -3,7 +3,7 @@ import axios from 'axios';
 import '../Home/Home.css';
 import photo1 from '../../photos/bg.jpg';
 import { FromAirport, ToAirport, CheckIn, CheckOut, FindBtn, FromLocations, ToLocations } from '../../components/Inputs/Inputs';
-import { Link, Redirect } from "react-router-dom";
+import BrowserRouter, { Link, } from "react-router-dom";
 
 export default function Home(props) {
 
@@ -21,6 +21,9 @@ export default function Home(props) {
     const [changeValue, setChangeValue] = useState('');
     const fromInput = React.createRef();
     const toInput = React.createRef();
+    const dateInputCN = React.createRef();
+    const dateInputCO = React.createRef();
+
 
     const locationAPIRequest = (location, val) => {
 
@@ -29,6 +32,7 @@ export default function Home(props) {
             setToLocations([]);
             return false;
         };
+
 
         const url_1 = 'https://tequila-api.kiwi.com/locations/query?term=';
         const url_2 = '&locale=en-US&location_types=airport&limit=10&active_only=true';
@@ -53,6 +57,8 @@ export default function Home(props) {
     };
 
     const changeHandler = (event) => {
+
+        formValidator(event, 'change');
 
         if (event.target.value === '') {
 
@@ -116,24 +122,88 @@ export default function Home(props) {
         );
     };
 
-    const submitHandler = (e) => {
-        e.preventDefault();
-        props.flightParams(paramData);
-        console.log('submitted');
-        return <Redirect to='/tickets' />
+    const formValidator = (event, type, bool) => {
+
+        if (type === 'change') {
+
+            if (event.target.name === 'from_airport') {
+                if (fromInput.current.style.border === '1px solid red') {
+                    fromInput.current.style.border = '1px solid black'
+                }
+            }
+
+            if (event.target.name === 'to_airport') {
+                if (toInput.current.style.border === '1px solid red') {
+                    toInput.current.style.border = '1px solid black'
+                }
+            }
+
+            if (bool) {
+                if (dateInputCN.current.input.style.border = '1px solid red') {
+                    dateInputCN.current.input.style.border = '1px solid black'
+                }
+            }
+            else {
+                if (dateInputCO.current.input.style.border = '1px solid red') {
+                    dateInputCO.current.input.style.border = '1px solid black'
+                }
+            }
+        }
+        else {
+            let tracker = 0;
+
+            paramData.from_airport === '' ?
+                fromInput.current.style.border = '1px solid red' :
+                tracker--;
+
+            paramData.to_airport === '' ?
+                toInput.current.style.border = '1px solid red' :
+                tracker--;
+
+            paramData.departure === '' ?
+                dateInputCN.current.input.style.border = '1px solid red' :
+                tracker--;
+
+            paramData.return === '' ?
+                dateInputCO.current.input.style.border = '1px solid red' :
+                tracker--;
+
+            if (tracker === -4) {
+                return true;
+            }
+            else {
+                return false;
+            };
+        }
+
     };
 
-    const dateConversion = (date, isFromInput) => {
+    const submitHandler = (e) => {
+        e.preventDefault();
+        const isFormOK = formValidator('submit');
+
+        if (isFormOK) {
+            return window.location.replace(`/tickets/${paramData.from_airport}/${paramData.to_airport}/${paramData.departure}/${paramData.return}/`)
+        }
+        else {
+            return false;
+        };
+
+    };
+
+
+    const dateConversion = (date, isFromInput, event) => {
         const month = date.getMonth() + 1;
         const day = date.toLocaleString('en-US', { day: '2-digit' });
         const year = date.getFullYear();
+        formValidator(event, 'change', isFromInput);
 
         if (isFromInput) {
             setDepartDate(date);
-            setParamData((prevState) => { return { ...prevState, departure: `${day}/${month}/${year}` } })
+            setParamData((prevState) => { return { ...prevState, departure: `${day}-0${month}-${year}` } })
         } else {
             setReturnDate(date);
-            setParamData((prevState) => { return { ...prevState, return: `${day}/${month}/${year}` } })
+            setParamData((prevState) => { return { ...prevState, return: `${day}-0${month}-${year}` } })
         };
     };
 
@@ -167,10 +237,10 @@ export default function Home(props) {
                             <ToAirport onChange={(e) => changeHandler(e)} ref={toInput} />
                         </div>
                         <div>
-                            <CheckIn selected={departDate} onChange={date => dateConversion(date, true)} />
+                            <CheckIn ref={dateInputCN} selected={departDate} onChange={(date, event) => dateConversion(date, true, event)} />
                         </div>
                         <div>
-                            <CheckOut selected={returnDate} onChange={date => dateConversion(date, false)} />
+                            <CheckOut ref={dateInputCO} selected={returnDate} onChange={(date, event) => dateConversion(date, false, event)} />
                         </div>
                         <FindBtn onClick={submitHandler} />
                     </div>

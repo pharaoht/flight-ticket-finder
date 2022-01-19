@@ -7,19 +7,14 @@ import Layout from './hocs/Layout';
 
 
 const App = () => {
-  let flightParams = [];
-  //get flight data
-  const flightDataProps = (data) => {
-    flightParams = data;
-  };
 
   return (
     <Provider store={store}>
       <Layout/>
       <Router>
         <Switch>
-          <Route exact path='/' component={() => <Home flightParams={flightDataProps}/>}/>
-          <Route path='/tickets' component={() => <Flights flightParams={flightParams}/>}/>
+          <Route exact path='/' component={Home}/>
+          <Route path='/tickets/:from_airport/:to_airport/:depart_date/:return_date/' component={Flights}/>
         </Switch>
       </Router>
     </Provider>

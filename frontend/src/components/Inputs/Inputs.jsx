@@ -24,23 +24,23 @@ export const ToAirport = React.forwardRef((props, ref) => (
     </>
 ));
 
-export const CheckIn = ({ onChange, selected }) => {
-    return (
-        <div className='inputBx'>
-            <p>Departure</p>
-            <DatePicker name='departure' selected={selected} onChange={onChange} minDate={new Date()} placeholderText='mm/dd/yyyy' />
-        </div>
-    );
-};
+export const CheckIn = React.forwardRef((props, ref) => (
 
-export const CheckOut = ({ onChange, selected }) => {
-    return (
-        <div className='inputBx'>
-            <p>Return</p>
-            <DatePicker name='departure' selected={selected} onChange={onChange} minDate={new Date()} placeholderText='mm/dd/yyyy' />
-        </div>
-    );
-};
+    <div className='inputBx'>
+        <p>Departure</p>
+        <DatePicker name='departure' selected={props['selected']} onChange={props['onChange']} minDate={new Date()} placeholderText='mm/dd/yyyy' ref={ref} />
+    </div>
+
+));
+
+export const CheckOut = React.forwardRef((props, ref) => (
+
+    <div className='inputBx'>
+        <p>Return</p>
+        <DatePicker name='return' ref={ref} selected={props['selected']} onChange={props['onChange']} minDate={new Date()} placeholderText='mm/dd/yyyy' />
+    </div>
+
+));
 
 export const FindBtn = ({ onClick }) => {
     return (
@@ -52,7 +52,7 @@ export const FindBtn = ({ onClick }) => {
 };
 
 //pass props
-export const FromLocations = ({ name, id, onClick, key }) => {
+export const FromLocations = ({ name, onClick, key }) => {
     return (
         <>
             <li className="airports" key={key} onClick={onClick}> {name} </li>

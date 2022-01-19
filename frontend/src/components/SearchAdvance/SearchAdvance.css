@@ -1,12 +1,51 @@
 .sd-main-search-container {
-  display: flex;
   padding: 20px;
+  background-color: #042759;
 }
-
+.sd-seprator {
+  display: flex;
+  margin-bottom: 10px;
+}
 .sd-holder {
   width: 50%;
   display: flex;
 }
 
-.sd-holder .sd-srch-holder {
+.sd-airport-holder {
+  display: flex;
+  width: 20%;
+  justify-content: space-evenly;
+  padding: 10px 0px;
+}
+
+.sd-h2 {
+  color: #fff;
+}
+.sd-srch-holder {
+  width: 15%;
+}
+
+#sd-icon {
+  font-size: x-large;
+  color: #fff;
+}
+.sd-dates {
+  justify-content: end;
+  padding: 10px 0px;
+  color: #fff;
+}
+
+.sd-date {
+  display: flex;
+  justify-content: space-between;
+  width: 20%;
+  margin-left: 10px;
+}
+
+.sd-button {
+  background-color: #00a698;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
 }
