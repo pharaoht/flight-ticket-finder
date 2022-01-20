@@ -14,7 +14,7 @@ export default function Flights() {
     const [isLoading, setIsLoading] = useState(false);
     const [flights, setFlights] = useState([]);
 
-    const getFlights = () => {
+    const getFlights = useCallback(() => {
 
         const from = params.from_airport;
         const destination = params.to_airport;
@@ -24,7 +24,7 @@ export default function Flights() {
         departure_date = departure_date.replace('-', '/')
         return_date = return_date.replace('-', '/')
 
-        const URL = `https://tequila-api.kiwi.com/v2/search?fly_from=${from}&fly_to=${destination}&dateFrom=${departure_date}&dateTo=${return_date}&curr=USD&locale=en`;
+        const URL = `https://tequila-api.kiwi.com/v2/search?fly_from=${from}&fly_to=${destination}&dateFrom=${departure_date}&dateTo=${departure_date}&return_to=${return_date}&return_from=${return_date}&vehicle_type=aircraft&dtime_from=0:00&dtime_to=24:00&atime_from=0:00&atime_to=24:00&ret_dtime_from=0:00&ret_dtime_to=24:00&ret_atime_from=0:00&ret_atime_to=24:00&curr=USD&locale=en`;
 
         const config = {
             headers: {
@@ -43,7 +43,7 @@ export default function Flights() {
                 console.log(err);
                 return setIsLoading(false);
             });
-    };
+    }, []);
 
     function loader() {
         return (
@@ -54,6 +54,24 @@ export default function Flights() {
             </>
         )
     };
+
+    function page() {
+        return (
+            <div className='parent-ticket-container'>
+                <div className='fligh-edit-component'>
+                    <SearchAdvance flightInfo={params} />
+                </div>
+                <div className='main-flight-info'>
+                    <div className='sidebar-component'>
+                        <SideBar />
+                    </div>
+                    <div className='ticket-area'>
+                        <Main flights={flights} />
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
 
     useEffect(() => {
@@ -66,21 +84,7 @@ export default function Flights() {
 
     return (
         <>
-            {isLoading ? loader() :
-                <div className='parent-ticket-container' style={{ outline: '1px solid black' }}>
-                    <div className='fligh-edit-component' style={{ outline: '1px solid blue' }}>
-                        <SearchAdvance flightInfo={params} />
-                    </div>
-                    <div className='main-flight-info' style={{ outline: '1px solid red' }}>
-                        <div className='sidebar-component'>
-                            <SideBar />
-                        </div>
-                        <div className='ticket-area'>
-                            <Main flights={flights} />
-                        </div>
-                    </div>
-                </div>
-            }
+            {isLoading ? loader() : page()}
         </>
     )
 }

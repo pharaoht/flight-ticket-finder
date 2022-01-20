@@ -1,7 +1,17 @@
 .sd-main-search-container {
   padding: 20px;
   background-color: #042759;
+  border-radius: 0px 0px 10px 10px;
 }
+
+.is-sticky {
+  position: fixed;
+  width: 87%;
+  left: 10;
+  z-index: 999;
+  top: 0;
+}
+
 .sd-seprator {
   display: flex;
   margin-bottom: 10px;

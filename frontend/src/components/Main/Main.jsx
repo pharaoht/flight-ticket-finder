@@ -4,7 +4,12 @@ import Ticket from '../Ticket/Ticket';
 import './Main.css';
 
 export default function Main(props) {
-    let flights = []
+
+    const [flights, setFlights] = useState([]);
+
+    useEffect(() => {
+        setFlights(props.flights.data)
+    }, [])
 
     const showFlights = () => {
         return (
@@ -13,15 +18,18 @@ export default function Main(props) {
                     return null;
                 }
                 return (
-                    <Ticket cityfrom={item.cityCodeFrom}
+                    <Ticket cityFrom={item.cityCodeFrom}
                         cityTo={item.cityCodeTo}
                         depart={item.local_departure}
                         arrive={item.local_arrival}
                         price={item.price}
                         link={item.deep_link}
                         stops={item.route}
-                        key={`${idx}1`}
+                        type={item.id}
                         airlines={item.airlines}
+                        countryFrom={item.countryFrom.name}
+                        countryTo={item.countryTo.name}
+                        duration={item.duration.return}
                     />
                 )
             })
@@ -37,7 +45,7 @@ export default function Main(props) {
     }
 
     return (
-        <div className='main-holder' style={{ outline: '2px solid purple' }}>
+        <div className='main-holder'>
             {flights.length > 1 ? showFlights() : noFlights()}
         </div>
     )

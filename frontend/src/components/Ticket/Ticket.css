@@ -1,6 +1,126 @@
 .ticket-holder {
   width: 100%;
-  background-color: blanchedalmond;
-  padding: 5px;
-  margin: 10px 0px;
+  background-image: linear-gradient(312deg, #ffffff 68%, #d7e1ec 9%);
+  margin: 20px 0px;
+  display: flex;
+  border: 1px solid lightslategray;
+  border-radius: 5px;
+  box-shadow: 1px 5px 5px lightgrey;
+}
+
+.tc-flight-info {
+  padding: 50px;
+  width: 75%;
+}
+
+.tc-ticket-info {
+  display: flex;
+}
+
+.tc-img {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.tc-h4 {
+  text-align: center;
+}
+
+.tc-detail-sec {
+  text-align: center;
+}
+
+.tc-details {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.tc-utl {
+  width: 50%;
+}
+.tc-line {
+  position: relative;
+}
+.inline-block {
+  display: inline-block;
+  padding: 5px 10px;
+  position: relative;
+  z-index: 2;
+  background-color: #fff;
+  left: 80%;
+}
+
+.inline-block2 {
+  display: inline-block;
+  padding: 5px 10px;
+  position: relative;
+  z-index: 2;
+  background-color: #fff;
+  left: 45%;
+}
+.tc-hr-1 {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  margin: 0;
+  z-index: 1;
+}
+
+.tc-stops {
+  text-align: center;
+  cursor: pointer;
+}
+
+.tc-duration {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tc-price {
+  display: flex;
+  width: 25%;
+  justify-content: center;
+  align-items: center;
+  border-left: 4px dotted lightgrey;
+}
+
+.tc-deals {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.tc-button {
+  background-color: #00a698;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: large;
+  color: #fff;
+  border-radius: 5%;
+}
+
+.tc-tr-price {
+  margin-bottom: 5px;
+  font-size: larger;
+}
+
+.tc-country {
+  font-size: small;
+}
+
+span {
+  margin-bottom: 2px;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
 }

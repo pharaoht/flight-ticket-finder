@@ -1,12 +1,13 @@
 .parent-ticket-container {
   padding: 0 100px;
+  background-color: #f1f2f8;
 }
 .main-flight-info {
   display: flex;
 }
 
 .sidebar-component {
-  width: 25%;
+  width: 30%;
 }
 
 .ticket-area {
