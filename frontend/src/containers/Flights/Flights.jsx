@@ -70,7 +70,7 @@ export default function Flights() {
                 </div>
             </div>
         )
-    }
+    };
 
 
     useEffect(() => {

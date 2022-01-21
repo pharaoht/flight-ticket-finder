@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import '../Navbar/Navbar.css'
 
 export default function Navbar() {
@@ -9,14 +9,14 @@ export default function Navbar() {
                 <Link to='/' className='logo'>Travel</Link>
                 <div className='group'>
                     <ul className='navigation'>
-                        <li><Link to='/'>Home</Link></li>
-                        <li><Link to='/'>Destinations</Link></li>
-                        <li><Link to='/'>Tips</Link></li>
-                        <li><Link to='/'>NewsLetter</Link></li>
+                        <Link to='/'><li>Home</li></Link>
+                        <Link to='/'><li>Destinations</li></Link>
+                        <Link to='/'><li>Tips</li></Link>
+                        <Link to='/'><li>NewsLetter</li></Link>
                     </ul>
                     <ul className='action'>
-                        <li><Link to='/' ><ion-icon name='search-outline'></ion-icon></Link></li>
-                        <li><Link to='/' ><ion-icon name='person-outline'></ion-icon></Link></li>
+                        <Link to='/' ><li><ion-icon name='search-outline'></ion-icon></li></Link>
+                        <Link to='/' ><li><ion-icon name='person-outline'></ion-icon></li></Link>
                     </ul>
                 </div>
             </header>

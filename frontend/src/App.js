@@ -10,8 +10,8 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <Layout/>
       <Router>
+      <Layout/>
         <Switch>
           <Route exact path='/' component={Home}/>
           <Route path='/tickets/:from_airport/:to_airport/:depart_date/:return_date/' component={Flights}/>
