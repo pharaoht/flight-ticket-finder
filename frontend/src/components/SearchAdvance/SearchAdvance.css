@@ -6,8 +6,8 @@
 
 .is-sticky {
   position: fixed;
-  width: 87%;
-  left: 10;
+  width: 90%;
+  left: 5;
   z-index: 999;
   top: 0;
 }

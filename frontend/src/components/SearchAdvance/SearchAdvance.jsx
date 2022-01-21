@@ -42,7 +42,7 @@ export default function SearchAdvance(props) {
         return () => {
             window.removeEventListener('scroll', isSticky);
         };
-    });
+    }, []);
 
     const isSticky = (e) => {
         const scrollTop = window.scrollY;
@@ -52,8 +52,8 @@ export default function SearchAdvance(props) {
 
 
     return (
-        <div className='header-section' ref={header}>
-            <div className='sd-main-search-container'>
+        <div className='header-section' >
+            <div className='sd-main-search-container' ref={header}>
                 <div className='sd-seprator'>
                     <div className='sd-holder'>
                         <div className='sd-srch-holder'>

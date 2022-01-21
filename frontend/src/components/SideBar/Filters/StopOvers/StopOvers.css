@@ -1,0 +1,19 @@
+.so-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid grey;
+}
+
+.so-icon {
+  cursor: pointer;
+  font-size: x-large;
+}
+
+.so-stops {
+  border-bottom: 1px solid grey;
+  border-left: 1px solid grey;
+  border-right: 1px solid grey;
+}
+
+.cbox {
+}

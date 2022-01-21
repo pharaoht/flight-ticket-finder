@@ -29,12 +29,17 @@ export default function Main(props) {
                         airlines={item.airlines}
                         countryFrom={item.countryFrom.name}
                         countryTo={item.countryTo.name}
-                        duration={item.duration.return}
+                        durationDepart={item.duration.departure}
+                        durationReturn={item.duration.return}
                     />
                 )
             })
         )
     }
+
+    const observer = new IntersectionObserver(entries => {
+        console.log(entries);
+    })
 
     const noFlights = () => {
         return (
