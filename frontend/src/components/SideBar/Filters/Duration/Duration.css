@@ -1,0 +1,14 @@
+.dr-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid grey;
+}
+
+.dr-icon {
+  cursor: pointer;
+  font-size: x-large;
+}
+
+.dr-parent {
+  margin-top: 10px;
+}

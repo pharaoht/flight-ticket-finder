@@ -72,7 +72,6 @@ export default function Flights() {
         )
     };
 
-
     useEffect(() => {
         setIsLoading(true);
         getFlights();

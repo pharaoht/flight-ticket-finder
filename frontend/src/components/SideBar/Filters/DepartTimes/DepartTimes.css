@@ -1,14 +1,18 @@
-.so-header {
+.dt-header {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid grey;
 }
 
-.so-icon {
+.dt-icon {
   cursor: pointer;
   font-size: x-large;
 }
 
-.so-stops {
+.dt-stops {
   padding: 10px;
+}
+
+.dt-parent {
+  margin-top: 10px;
 }

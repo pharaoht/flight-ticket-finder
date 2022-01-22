@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './StopOvers.css';
 
 export default function StopOvers() {
+
     const [isHidden, setIsHidden] = useState(false);
 
     const toggleHandler = () => {
@@ -27,9 +28,9 @@ export default function StopOvers() {
             <>
                 <div className='so-stops'>
                     <ul>
-                        <li><input type='checkbox' name='non-stop' className='cbox' /> <span>Non-Stop</span></li>
-                        <li>1 Stop<input type='checkbox' name='one-stop' /></li>
-                        <li>2 Stops<input type='checkbox' name='two-stops' /></li>
+                        <li><input type='checkbox' name='non-stop' /> <span>Non-Stop</span></li>
+                        <li><input type='checkbox' name='one-stop' /> <span>1 Stop</span></li>
+                        <li><input type='checkbox' name='two-stops' /> <span>2 Stops</span></li>
                     </ul>
                 </div>
             </>

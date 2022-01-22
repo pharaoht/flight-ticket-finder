@@ -159,8 +159,8 @@ export default function Ticket(props) {
                                 </div>
                             </div>
                             <div className='tc-stops' >{fromFlights == undefined ? null : stopCheck(fromFlights.length)}</div>
-                        </div>
 
+                        </div>
                         <div className='tc-detail-sec'>
                             <div className='tc-date'>{convertDate(props.arrive)}</div>
                             <div className='tc-time'>{convertTime(props.arrive)}</div>
