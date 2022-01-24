@@ -120,7 +120,6 @@ export default function Ticket(props) {
 
     const stopCheck = (num) => {
         return (
-
             num === 1 ? <><span style={{ color: 'green' }}>Non-Stop</span></> : <div onClick={show} style={{ color: 'red' }}>{num} stops</div>
         )
     }
