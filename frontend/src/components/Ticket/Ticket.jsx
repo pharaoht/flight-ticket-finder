@@ -5,7 +5,6 @@ import airlines from 'airline-codes'
 import { useEffect } from 'react';
 
 export default function Ticket(props) {
-    console.log(props)
 
     const [isHidden, setIsHidden] = useState(true);
     const [returnFlights, setReturnFlights] = useState()
@@ -33,10 +32,10 @@ export default function Ticket(props) {
     const toFlight = () => {
         props.stops.map((item) => {
             if (item.return === 0) {
-                Fflights.push(item)
+                return Fflights.push(item);
             }
             else {
-                Rflights.push(item)
+                return Rflights.push(item);
             }
         })
         setFromFlights(Fflights);
@@ -71,7 +70,7 @@ export default function Ticket(props) {
                                 <ion-icon name="airplane-outline"></ion-icon>
                             </div>
                         </div>
-                        <div className='tc-stops'>{returnFlights == undefined ? null : stopCheck(returnFlights.length)}</div>
+                        <div className='tc-stops'>{returnFlights === undefined ? null : stopCheck(returnFlights.length)}</div>
                     </div>
 
                     <div className='tc-detail-sec'>
@@ -157,7 +156,7 @@ export default function Ticket(props) {
                                     <ion-icon name="airplane-outline"></ion-icon>
                                 </div>
                             </div>
-                            <div className='tc-stops' >{fromFlights == undefined ? null : stopCheck(fromFlights.length)}</div>
+                            <div className='tc-stops' >{fromFlights === undefined ? null : stopCheck(fromFlights.length)}</div>
 
                         </div>
                         <div className='tc-detail-sec'>
@@ -179,7 +178,7 @@ export default function Ticket(props) {
                     <div>
                         <button className='tc-button'>
                             <span>
-                                <a target='_blank' href={props.link}>Book</a>
+                                <a target='_blank' rel="noreferrer" href={props.link}>Book</a>
                             </span>
                             <ion-icon name="arrow-forward-outline"></ion-icon>
                         </button>

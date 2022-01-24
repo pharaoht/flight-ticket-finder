@@ -68,3 +68,13 @@ export const ToLocations = ({ name, id, onClick, }) => {
     );
 };
 
+export const Cabin = () => {
+    return (
+        <>
+            <div className='inputBx'>
+                <p>Cabin, Class, & Travelers</p>
+                <input type='text' />
+            </div>
+        </>
+    )
+}

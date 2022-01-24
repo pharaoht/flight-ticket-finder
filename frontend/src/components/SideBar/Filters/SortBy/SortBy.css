@@ -1,0 +1,14 @@
+.sort-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid grey;
+}
+
+.sort-icon {
+  cursor: pointer;
+  font-size: x-large;
+}
+
+.sort-parent {
+  margin-top: 10px;
+}

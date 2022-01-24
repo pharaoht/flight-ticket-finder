@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useRef } from 'react';
 import { Link } from "react-router-dom";
+import { FromAirport, ToAirport, CheckIn, CheckOut, Cabin } from '../Inputs/Inputs';
 import './SearchAdvance.css'
 
 export default function SearchAdvance(props) {
-    const lt = '<';
-    const gt = '>';
+
     const [isShowing, setIsShowing] = useState(false);
     const [startDate, setStartDate] = useState(props.flightInfo.depart_date);
     const [returnDate, setReturnDate] = useState(props.flightInfo.return_date);
@@ -31,7 +31,39 @@ export default function SearchAdvance(props) {
         return (
             <>
                 <div className='search-form'>
-                    hib
+                    <div className='sd-search-return-type sd-spacing'>
+                        <div>
+                            <input id='sd-return-btn' type='radio' name='return' value='return' />
+                            <label for='sd-return-btn'>Return</label>
+                        </div>
+                        <div>
+                            <input id='sd-oneway-btn' type='radio' name='return' value='oneway' />
+                            <label for='sd-oneway-btn'>One-way</label>
+                        </div>
+                    </div>
+                    <div className='sd-from-to-airport sd-spacing'>
+                        <div className='sd-airport'>
+                            <FromAirport />
+                        </div>
+                        <div className='sd-airport'>
+                            <ToAirport />
+                        </div>
+                    </div>
+                    <div className='sd-dates-travel sd-spacing'>
+                        <div className='sd-checks'>
+                            <CheckIn />
+                        </div>
+                        <div className='sd-checks'>
+                            <CheckOut />
+                        </div>
+                        <div className='sd-cabin'>
+                            <div>
+                                <Cabin />
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
             </>
         )
