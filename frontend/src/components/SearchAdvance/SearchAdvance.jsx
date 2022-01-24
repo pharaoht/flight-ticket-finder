@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useRef } from 'react';
-import BrowserRouter, { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import './SearchAdvance.css'
 
 export default function SearchAdvance(props) {
@@ -15,7 +15,7 @@ export default function SearchAdvance(props) {
         //if date is change have to lift state up to flight compo
     };
 
-    const decrementDAte = () => {
+    const decrementDate = () => {
         //if date is change have to lift state up to flight compo
     };
 
@@ -49,7 +49,9 @@ export default function SearchAdvance(props) {
         scrollTop >= 100 ? header.current.classList.add('is-sticky') : header.current.classList.remove('is-sticky');
     };
 
+    const liftDateHandler = () => {
 
+    }
 
     return (
         <div className='header-section' >
@@ -71,14 +73,14 @@ export default function SearchAdvance(props) {
                     </div>
                     <div className='sd-holder sd-dates'>
                         <div className='sd-date'>
-                            <div>{lt}</div>
+                            <div className='sd-chev' onClick={decrementDate}><ion-icon name="chevron-back-outline"></ion-icon></div>
                             <div>{startDate}</div>
-                            <div>{gt}</div>
+                            <div className='sd-chev' onClick={incrementDate}><ion-icon name="chevron-forward-outline"></ion-icon></div>
                         </div>
                         <div className='sd-date'>
-                            <div>{lt}</div>
+                            <div className='sd-chev' onClick={decrementDate}><ion-icon name="chevron-back-outline"></ion-icon></div>
                             <div>{returnDate}</div>
-                            <div>{gt}</div>
+                            <div className='sd-chev' onClick={incrementDate}><ion-icon name="chevron-forward-outline"></ion-icon></div>
                         </div>
                     </div>
                 </div>

@@ -19,7 +19,7 @@ export default function Ticket(props) {
             <div style={{ display: 'flex', justifyContent: 'space-evenly', paddingTop: '10px' }}>
                 {fromFlights.map(item => {
                     return (
-                        <div key={item.id}>{item.flyFrom} <ion-icon name="airplane-outline"></ion-icon> {item.flyTo} </div>
+                        <div key={item.id} className='tc-stop-icon'>{item.flyFrom} <ion-icon name="airplane-outline"></ion-icon> {item.flyTo} </div>
                     )
                 })}
             </div>
