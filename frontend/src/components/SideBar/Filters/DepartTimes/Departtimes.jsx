@@ -14,12 +14,12 @@ export default function Departtimes() {
 
     const showDownArrow = () => {
         return (
-            <span className="so-icon"> <ion-icon name="chevron-down-outline" onClick={toggleHandler}></ion-icon></span>
+            <span className="so-icon so-hover"> <ion-icon name="chevron-down-outline" onClick={toggleHandler}></ion-icon></span>
         )
     }
     const showUpArrow = () => {
         return (
-            <span className="so-icon"> <ion-icon name="chevron-up-outline" onClick={toggleHandler}></ion-icon></span>
+            <span className="so-icon so-hover"> <ion-icon name="chevron-up-outline" onClick={toggleHandler}></ion-icon></span>
         )
     }
 

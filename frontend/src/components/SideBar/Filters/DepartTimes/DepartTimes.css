@@ -16,3 +16,7 @@
 .dt-parent {
   margin-top: 10px;
 }
+
+.so-hover:hover {
+  color: #00a698;
+}

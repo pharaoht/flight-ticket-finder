@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useRef } from 'react';
 import { Link } from "react-router-dom";
-import { FromAirport, ToAirport, CheckIn, CheckOut, Cabin } from '../Inputs/Inputs';
+import { FromAirport, ToAirport, CheckIn, CheckOut, Cabin, FindBtn, FromLocations, CabinDropDown } from '../Inputs/Inputs';
+import { locationAPIRequest } from '../../Util/UtilMethods';
 import './SearchAdvance.css'
 
 export default function SearchAdvance(props) {
@@ -9,10 +10,19 @@ export default function SearchAdvance(props) {
     const [isShowing, setIsShowing] = useState(false);
     const [startDate, setStartDate] = useState(props.flightInfo.depart_date);
     const [returnDate, setReturnDate] = useState(props.flightInfo.return_date);
+    const [fromLocation, setFromLocation] = useState([]);
+    const [toLocation, setToLocation] = useState([]);
+    const [eventValue, setEventValue] = useState('');
+    const [changeValue, setChangeValue] = useState('');
     const header = useRef();
 
     const incrementDate = () => {
-        //if date is change have to lift state up to flight compo
+        let dayArr = startDate.split('-');
+        let day = Number(dayArr[0]) + 1
+        let month = Number(dayArr[1])
+        let year = Number(dayArr[2])
+
+
     };
 
     const decrementDate = () => {
@@ -27,6 +37,22 @@ export default function SearchAdvance(props) {
         }
     };
 
+    const showLocations = () => {
+        return (
+            <div className='airport_holder'>
+                <ul>
+                    {fromLocation.map((itm, idx) => {
+                        return (
+                            <>
+                                <FromLocations name={itm.name} id={itm.id} />
+                            </>
+                        )
+                    })}
+                </ul>
+            </div>
+        );
+    }
+
     const searchSection = () => {
         return (
             <>
@@ -34,16 +60,17 @@ export default function SearchAdvance(props) {
                     <div className='sd-search-return-type sd-spacing'>
                         <div>
                             <input id='sd-return-btn' type='radio' name='return' value='return' />
-                            <label for='sd-return-btn'>Return</label>
+                            <label className='sd-hover'>Return</label>
                         </div>
                         <div>
                             <input id='sd-oneway-btn' type='radio' name='return' value='oneway' />
-                            <label for='sd-oneway-btn'>One-way</label>
+                            <label className='sd-hover'>One-way</label>
                         </div>
                     </div>
                     <div className='sd-from-to-airport sd-spacing'>
                         <div className='sd-airport'>
                             <FromAirport />
+                            {fromLocation.length > 1 ? null : showLocations()}
                         </div>
                         <div className='sd-airport'>
                             <ToAirport />
@@ -60,6 +87,9 @@ export default function SearchAdvance(props) {
                             <div>
                                 <Cabin />
                             </div>
+                            <div className='sd-find-btn'>
+                                <FindBtn />
+                            </div>
                         </div>
 
                     </div>
@@ -69,12 +99,6 @@ export default function SearchAdvance(props) {
         )
     };
 
-    useEffect(() => {
-        window.addEventListener('scroll', isSticky);
-        return () => {
-            window.removeEventListener('scroll', isSticky);
-        };
-    }, []);
 
     const isSticky = (e) => {
         const scrollTop = window.scrollY;
@@ -82,8 +106,26 @@ export default function SearchAdvance(props) {
     };
 
     const liftDateHandler = () => {
-
+        //each time there is a change in filter, 
+        //this method will be called to lift the state to parent flight component
     }
+
+    useEffect(() => {
+        window.addEventListener('scroll', isSticky);
+        return () => {
+            window.removeEventListener('scroll', isSticky);
+        };
+    }, []);
+
+    useEffect(() => {
+
+        const timer = setTimeout(() => {
+            locationAPIRequest(eventValue, changeValue, setFromLocation, setToLocation);
+        }, 500)
+        return () => {
+            clearTimeout(timer)
+        }
+    }, [])
 
     return (
         <div className='header-section' >
@@ -105,14 +147,14 @@ export default function SearchAdvance(props) {
                     </div>
                     <div className='sd-holder sd-dates'>
                         <div className='sd-date'>
-                            <div className='sd-chev' onClick={decrementDate}><ion-icon name="chevron-back-outline"></ion-icon></div>
+                            <div className='sd-chev sd-hover' onClick={decrementDate}><ion-icon name="chevron-back-outline"></ion-icon></div>
                             <div>{startDate}</div>
-                            <div className='sd-chev' onClick={incrementDate}><ion-icon name="chevron-forward-outline"></ion-icon></div>
+                            <div className='sd-chev sd-hover' onClick={incrementDate}><ion-icon name="chevron-forward-outline"></ion-icon></div>
                         </div>
                         <div className='sd-date'>
-                            <div className='sd-chev' onClick={decrementDate}><ion-icon name="chevron-back-outline"></ion-icon></div>
+                            <div className='sd-chev sd-hover' onClick={decrementDate}><ion-icon name="chevron-back-outline"></ion-icon></div>
                             <div>{returnDate}</div>
-                            <div className='sd-chev' onClick={incrementDate}><ion-icon name="chevron-forward-outline"></ion-icon></div>
+                            <div className='sd-chev sd-hover' onClick={incrementDate}><ion-icon name="chevron-forward-outline"></ion-icon></div>
                         </div>
                     </div>
                 </div>

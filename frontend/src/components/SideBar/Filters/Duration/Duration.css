@@ -12,3 +12,7 @@
 .dr-parent {
   margin-top: 10px;
 }
+
+.dr-icon:hover {
+  color: #00a698;
+}

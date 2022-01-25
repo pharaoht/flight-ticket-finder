@@ -107,3 +107,22 @@ label {
   border-radius: 5px;
   height: 50px;
 }
+
+.sd-cabin {
+  display: flex;
+}
+
+.sd-cabin div input[type="submit"] {
+  width: 100%;
+  height: 50px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.sd-cabin .sd-find-btn div p {
+  color: #042759;
+}
+
+.sd-hover:hover {
+  color: #00a698;
+}

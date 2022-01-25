@@ -78,3 +78,17 @@ export const Cabin = () => {
         </>
     )
 }
+
+export const CabinDropDown = () => {
+    return (
+        <>
+            <select>
+                <option value=''>Any</option>
+                <option value='M'>Economy</option>
+                <option value='W'>Premium Economy</option>
+                <option value='C'>Business Class</option>
+                <option value='F'>First Calss</option>
+            </select>
+        </>
+    )
+}
