@@ -1,11 +1,9 @@
 import axios from 'axios';
 
 //Will go and refact once project is completed, any methods used more than once will go in here 
-export const locationAPIRequest = (location, val, setFromLocation, setToLocation) => {
+export const locationAPIRequest = async (location, val) => {
 
     if (location === '') {
-        setFromLocation([]);
-        setToLocation([]);
         return false;
     };
 
@@ -20,14 +18,15 @@ export const locationAPIRequest = (location, val, setFromLocation, setToLocation
         }
     };
 
-    axios.get(`${url_1}${location}${url_2}`, config)
-        .then(res => {
-            console.log(res)
-            val === 1 ?
-                setFromLocation(res.data.locations) :
-                setToLocation(res.data.locations);
-        })
-        .catch(err => {
-            console.log(err)
-        });
+    let loco = await axios.get(`${url_1}${location}${url_2}`, config);
+    try {
+
+        return loco.data.locations
+
+    }
+    catch (err) {
+        console.log(err)
+        throw new Error(err)
+    }
+
 };

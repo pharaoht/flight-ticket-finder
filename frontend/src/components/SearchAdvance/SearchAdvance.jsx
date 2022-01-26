@@ -10,10 +10,8 @@ export default function SearchAdvance(props) {
     const [isShowing, setIsShowing] = useState(false);
     const [startDate, setStartDate] = useState(props.flightInfo.depart_date);
     const [returnDate, setReturnDate] = useState(props.flightInfo.return_date);
-    const [fromLocation, setFromLocation] = useState([]);
-    const [toLocation, setToLocation] = useState([]);
-    const [eventValue, setEventValue] = useState('');
-    const [changeValue, setChangeValue] = useState('');
+    const [fromLoco, setFromLoco] = useState();
+    const [to, setTo] = useState();
     const header = useRef();
 
     const incrementDate = () => {
@@ -37,21 +35,10 @@ export default function SearchAdvance(props) {
         }
     };
 
-    const showLocations = () => {
-        return (
-            <div className='airport_holder'>
-                <ul>
-                    {fromLocation.map((itm, idx) => {
-                        return (
-                            <>
-                                <FromLocations name={itm.name} id={itm.id} />
-                            </>
-                        )
-                    })}
-                </ul>
-            </div>
-        );
-    }
+    const isSticky = (e) => {
+        const scrollTop = window.scrollY;
+        scrollTop >= 100 ? header.current.classList.add('is-sticky') : header.current.classList.remove('is-sticky');
+    };
 
     const searchSection = () => {
         return (
@@ -70,7 +57,7 @@ export default function SearchAdvance(props) {
                     <div className='sd-from-to-airport sd-spacing'>
                         <div className='sd-airport'>
                             <FromAirport />
-                            {fromLocation.length > 1 ? null : showLocations()}
+
                         </div>
                         <div className='sd-airport'>
                             <ToAirport />
@@ -99,32 +86,21 @@ export default function SearchAdvance(props) {
         )
     };
 
-
-    const isSticky = (e) => {
-        const scrollTop = window.scrollY;
-        scrollTop >= 100 ? header.current.classList.add('is-sticky') : header.current.classList.remove('is-sticky');
-    };
-
-    const liftDateHandler = () => {
-        //each time there is a change in filter, 
-        //this method will be called to lift the state to parent flight component
-    }
-
     useEffect(() => {
         window.addEventListener('scroll', isSticky);
         return () => {
             window.removeEventListener('scroll', isSticky);
         };
-    }, []);
+    }, [])
 
     useEffect(() => {
-
-        const timer = setTimeout(() => {
-            locationAPIRequest(eventValue, changeValue, setFromLocation, setToLocation);
-        }, 500)
-        return () => {
-            clearTimeout(timer)
+        async function fetechData() {
+            let places;
+            places = await locationAPIRequest();
+            setFromLoco(places);
         }
+
+        fetechData();
     }, [])
 
     return (
