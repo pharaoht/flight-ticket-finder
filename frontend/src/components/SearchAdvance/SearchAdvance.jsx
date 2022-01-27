@@ -5,7 +5,17 @@ import { locationAPIRequest } from '../../Util/UtilMethods';
 import './SearchAdvance.css'
 
 export default function SearchAdvance(props) {
-
+    const [paramBuilder, SetParamBuilder] = useState({
+        from_airport: '',
+        to_airport: '',
+        return: true,
+        date_from: '',
+        date_to: '',
+        cabin: '',
+        adults: 1,
+        children: '',
+        infants: ''
+    });
     const [isShowing, setIsShowing] = useState(false);
     const [startDate, setStartDate] = useState(props.flightInfo.depart_date);
     const [returnDate, setReturnDate] = useState(props.flightInfo.return_date);
@@ -51,13 +61,18 @@ export default function SearchAdvance(props) {
 
     const showFrom = () => {
 
+        const populateFromInput = (country, airportId) => {
+            fromInput.current.value = `${airportId} - ${country}`;
+            setFromLocation([]);
+        };
+
         return (
             <div className='sd-location-holder'>
                 <ul>
                     {fromLocation.map((itm, idx) => {
                         return (
                             <>
-                                <FromLocations name={itm.name} id={itm.id} />
+                                <FromLocations name={itm.name} id={itm.id} onClick={(e) => populateFromInput(itm.city.country.name, itm.id)} />
                             </>
                         )
                     })}
@@ -68,13 +83,19 @@ export default function SearchAdvance(props) {
 
     const showTo = () => {
 
+        const populateToInput = (country, airportId) => {
+            toInput.current.value = `${airportId} - ${country}`;
+            setToLocation([]);
+        };
+
         return (
             <div className='sd-location-holder'>
                 <ul>
                     {toLocation.map((itm, idx) => {
                         return (
                             <>
-                                <ToLocations name={itm.name} id={itm.id} />
+                                <ToLocations name={itm.name} id={itm.id} onClick={(e) => populateToInput(itm.city.country.name, itm.id)}
+                                />
                             </>
                         )
                     })}
@@ -90,6 +111,19 @@ export default function SearchAdvance(props) {
     };
 
     const travelers = () => {
+        return (
+            <div>
+                <div className='sd-adults'>
+                    adults
+                </div>
+                <div className='sd-children'>
+                    children
+                </div>
+                <div className='sd-infants'>
+                    infants
+                </div>
+            </div>
+        )
 
     }
 
@@ -109,14 +143,14 @@ export default function SearchAdvance(props) {
                     </div>
                     <div className='sd-from-to-airport sd-spacing'>
                         <div className='sd-airport'>
-                            <FromAirport onChange={(e) => changeHandler(e)} />
+                            <FromAirport onChange={(e) => changeHandler(e)} ref={fromInput} />
                             <div className='sd-li-pad'>
                                 {fromLocation.length < 1 ? null : triangle()}
                                 {fromLocation.length < 1 ? null : showFrom()}
                             </div>
                         </div>
                         <div className='sd-airport'>
-                            <ToAirport onChange={(e) => changeHandler(e)} />
+                            <ToAirport onChange={(e) => changeHandler(e)} ref={toInput} />
                             <div className='sd-li-pad'>
                                 {toLocation.length < 1 ? null : triangle()}
                                 {toLocation.length < 1 ? null : showTo()}
@@ -138,6 +172,7 @@ export default function SearchAdvance(props) {
                                     <div className='sd-dropdown-holder'>
                                         <p className='sd-cab-title'>Cabin Class</p>
                                         <CabinDropDown />
+                                        {travelers()}
                                     </div>
                                 </div>
                             </div>
@@ -150,6 +185,14 @@ export default function SearchAdvance(props) {
             </>
         )
     };
+
+    const formValidation = () => {
+
+    }
+
+    const submitHandler = () => {
+        alert('hi')
+    }
 
     useEffect(() => {
         window.addEventListener('scroll', isSticky);

@@ -46,6 +46,12 @@
   color: grey;
 }
 
+.airports:hover {
+  color: black;
+  background-color: #f1f2f8;
+  border-radius: 5px;
+}
+
 .cab-dd {
   width: 100%;
 }
