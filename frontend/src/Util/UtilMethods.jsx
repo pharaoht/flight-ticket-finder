@@ -4,9 +4,8 @@ import axios from 'axios';
 export const locationAPIRequest = async (location, val) => {
 
     if (location === '') {
-        return false;
+        return [];
     };
-
 
     const url_1 = 'https://tequila-api.kiwi.com/locations/query?term=';
     const url_2 = '&locale=en-US&location_types=airport&limit=10&active_only=true';
@@ -19,6 +18,7 @@ export const locationAPIRequest = async (location, val) => {
     };
 
     let loco = await axios.get(`${url_1}${location}${url_2}`, config);
+
     try {
 
         return loco.data.locations

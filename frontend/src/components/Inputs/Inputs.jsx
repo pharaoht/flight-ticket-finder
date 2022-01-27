@@ -52,10 +52,10 @@ export const FindBtn = ({ onClick }) => {
 };
 
 //pass props
-export const FromLocations = ({ name, onClick, key }) => {
+export const FromLocations = ({ name, onClick, id }) => {
     return (
         <>
-            <li className="airports" key={key} onClick={onClick}> {name} </li>
+            <li className="airports" key={id} onClick={onClick}> {name} </li>
         </>
     )
 };
@@ -68,7 +68,7 @@ export const ToLocations = ({ name, id, onClick, }) => {
     );
 };
 
-export const Cabin = () => {
+export const Cabin = (props) => {
     return (
         <>
             <div className='inputBx'>
@@ -79,10 +79,10 @@ export const Cabin = () => {
     )
 }
 
-export const CabinDropDown = () => {
+export const CabinDropDown = (props) => {
     return (
         <>
-            <select>
+            <select className='cab-dd'>
                 <option value=''>Any</option>
                 <option value='M'>Economy</option>
                 <option value='W'>Premium Economy</option>

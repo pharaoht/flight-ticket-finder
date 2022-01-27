@@ -41,6 +41,11 @@
 
 .airports {
   cursor: pointer;
-  margin: 5px;
+  padding: 5px 10px;
   border-bottom: 1px solid grey;
+  color: grey;
+}
+
+.cab-dd {
+  width: 100%;
 }

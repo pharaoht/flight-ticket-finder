@@ -77,8 +77,8 @@ ul {
 
 .airport_holder {
   width: 15%;
-  padding: 5px;
   position: absolute;
+  padding: 5px;
   display: block;
   bottom: 100%;
   /* pointer-events: none; */

@@ -82,6 +82,7 @@ export default function Flights() {
 
     return (
         <>
+            {isLoading === undefined && null}
             {isLoading ? loader() : page()}
         </>
     )

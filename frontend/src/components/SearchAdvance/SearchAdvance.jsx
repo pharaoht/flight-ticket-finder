@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useRef } from 'react';
-import { Link } from "react-router-dom";
-import { FromAirport, ToAirport, CheckIn, CheckOut, Cabin, FindBtn, FromLocations, CabinDropDown } from '../Inputs/Inputs';
+import { FromAirport, ToAirport, CheckIn, CheckOut, Cabin, FindBtn, FromLocations, CabinDropDown, ToLocations } from '../Inputs/Inputs';
 import { locationAPIRequest } from '../../Util/UtilMethods';
 import './SearchAdvance.css'
 
@@ -10,15 +9,15 @@ export default function SearchAdvance(props) {
     const [isShowing, setIsShowing] = useState(false);
     const [startDate, setStartDate] = useState(props.flightInfo.depart_date);
     const [returnDate, setReturnDate] = useState(props.flightInfo.return_date);
-    const [fromLoco, setFromLoco] = useState();
-    const [to, setTo] = useState();
+    const [fromLocation, setFromLocation] = useState([]);
+    const [toLocation, setToLocation] = useState([]);
+    const [eventValue, setEventValue] = useState();
+    const [changeValue, setChangeValue] = useState();
+    const fromInput = React.createRef();
+    const toInput = React.createRef();
     const header = useRef();
 
     const incrementDate = () => {
-        let dayArr = startDate.split('-');
-        let day = Number(dayArr[0]) + 1
-        let month = Number(dayArr[1])
-        let year = Number(dayArr[2])
 
 
     };
@@ -30,6 +29,7 @@ export default function SearchAdvance(props) {
     const showSearch = () => {
         if (isShowing) {
             setIsShowing(false)
+            setFromLocation([])
         } else {
             setIsShowing(true)
         }
@@ -39,6 +39,59 @@ export default function SearchAdvance(props) {
         const scrollTop = window.scrollY;
         scrollTop >= 100 ? header.current.classList.add('is-sticky') : header.current.classList.remove('is-sticky');
     };
+
+    const changeHandler = (event) => {
+
+        event.target.name === 'from_airport' ?
+            setChangeValue(1) :
+            setChangeValue(2);
+
+        setEventValue(prev => prev = event.target.value);
+    };
+
+    const showFrom = () => {
+
+        return (
+            <div className='sd-location-holder'>
+                <ul>
+                    {fromLocation.map((itm, idx) => {
+                        return (
+                            <>
+                                <FromLocations name={itm.name} id={itm.id} />
+                            </>
+                        )
+                    })}
+                </ul>
+            </div>
+        );
+    }
+
+    const showTo = () => {
+
+        return (
+            <div className='sd-location-holder'>
+                <ul>
+                    {toLocation.map((itm, idx) => {
+                        return (
+                            <>
+                                <ToLocations name={itm.name} id={itm.id} />
+                            </>
+                        )
+                    })}
+                </ul>
+            </div>
+        );
+    }
+
+    const triangle = () => {
+        return (
+            <div className="arrow-up"></div>
+        )
+    };
+
+    const travelers = () => {
+
+    }
 
     const searchSection = () => {
         return (
@@ -56,11 +109,18 @@ export default function SearchAdvance(props) {
                     </div>
                     <div className='sd-from-to-airport sd-spacing'>
                         <div className='sd-airport'>
-                            <FromAirport />
-
+                            <FromAirport onChange={(e) => changeHandler(e)} />
+                            <div className='sd-li-pad'>
+                                {fromLocation.length < 1 ? null : triangle()}
+                                {fromLocation.length < 1 ? null : showFrom()}
+                            </div>
                         </div>
                         <div className='sd-airport'>
-                            <ToAirport />
+                            <ToAirport onChange={(e) => changeHandler(e)} />
+                            <div className='sd-li-pad'>
+                                {toLocation.length < 1 ? null : triangle()}
+                                {toLocation.length < 1 ? null : showTo()}
+                            </div>
                         </div>
                     </div>
                     <div className='sd-dates-travel sd-spacing'>
@@ -73,14 +133,19 @@ export default function SearchAdvance(props) {
                         <div className='sd-cabin'>
                             <div>
                                 <Cabin />
+                                <div className='sd-ca-cl-tr'>
+                                    {triangle()}
+                                    <div className='sd-dropdown-holder'>
+                                        <p className='sd-cab-title'>Cabin Class</p>
+                                        <CabinDropDown />
+                                    </div>
+                                </div>
                             </div>
                             <div className='sd-find-btn'>
                                 <FindBtn />
                             </div>
                         </div>
-
                     </div>
-
                 </div>
             </>
         )
@@ -94,14 +159,20 @@ export default function SearchAdvance(props) {
     }, [])
 
     useEffect(() => {
-        async function fetechData() {
-            let places;
-            places = await locationAPIRequest();
-            setFromLoco(places);
-        }
 
-        fetechData();
-    }, [])
+        const timer = setTimeout(async () => {
+            let data = await locationAPIRequest(eventValue, changeValue);
+
+            changeValue === 1 ?
+                setFromLocation(data) :
+                setToLocation(data);
+
+        }, 500);
+
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [eventValue])
 
     return (
         <div className='header-section' >

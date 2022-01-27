@@ -63,6 +63,7 @@
 
 .sd-chev {
   cursor: pointer;
+  padding: 0px 10px;
 }
 
 .sd-search-return-type {
@@ -125,4 +126,45 @@ label {
 
 .sd-hover:hover {
   color: #00a698;
+}
+
+.sd-location-holder {
+  width: 25%;
+  position: absolute;
+  background: #fff;
+  border-radius: 5px;
+  z-index: 10;
+  padding-bottom: 25px;
+  box-shadow: 0px 5px 5px darkgrey;
+}
+
+.sd-li-pad {
+  padding-left: 25px;
+}
+
+.arrow-up {
+  margin-left: 25%;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #fff;
+}
+
+.sd-ca-cl-tr {
+  margin: 0px 20px;
+}
+
+.sd-dropdown-holder {
+  width: 10%;
+  background: #fff;
+  padding: 10px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  position: absolute;
+}
+
+.sd-dropdown-holder .sd-cab-title {
+  font-size: small;
+  color: black;
 }
