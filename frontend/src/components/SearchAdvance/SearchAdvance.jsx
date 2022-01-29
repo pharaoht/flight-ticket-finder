@@ -17,6 +17,7 @@ export default function SearchAdvance(props) {
         infants: ''
     });
     const [isShowing, setIsShowing] = useState(false);
+    const [isCabin, setIsCabin] = useState(false);
     const [startDate, setStartDate] = useState(props.flightInfo.depart_date);
     const [returnDate, setReturnDate] = useState(props.flightInfo.return_date);
     const [fromLocation, setFromLocation] = useState([]);
@@ -25,6 +26,7 @@ export default function SearchAdvance(props) {
     const [changeValue, setChangeValue] = useState();
     const fromInput = React.createRef();
     const toInput = React.createRef();
+    const cabinInput = React.createRef();
     const header = useRef();
 
     const incrementDate = () => {
@@ -44,6 +46,15 @@ export default function SearchAdvance(props) {
             setIsShowing(true)
         }
     };
+
+    const showCabin = (e) => {
+        if (e._reactName === 'onMouseEnter') {
+            !isCabin && setIsCabin(true);
+        }
+        else if (e._reactName === 'onMouseLeave') {
+            isCabin && setIsCabin(false);
+        }
+    }
 
     const isSticky = (e) => {
         const scrollTop = window.scrollY;
@@ -113,18 +124,75 @@ export default function SearchAdvance(props) {
     const travelers = () => {
         return (
             <div>
-                <div className='sd-adults'>
-                    adults
+                <div className='sd-travelers'>
+                    <div className='sd-travel-type'>
+                        <h4>Adults</h4>
+                        <h6>Over 11</h6>
+                    </div>
+                    <div className='sd-number-of-travelers'>
+                        <div>
+                            <ion-icon id="sd-icon-minus-ad" name="remove-circle-outline"></ion-icon>
+                        </div>
+                        <div>
+                            1
+                        </div>
+                        <div>
+                            <ion-icon id='sd-icon-plus-ad' name="add-circle-outline"></ion-icon>
+                        </div>
+                    </div>
                 </div>
-                <div className='sd-children'>
-                    children
+                <div className='sd-travelers'>
+                    <div className='sd-travel-type'>
+                        <h4>Children</h4>
+                        <h6>2 - 11</h6>
+                    </div>
+                    <div className='sd-number-of-travelers'>
+                        <div>
+                            <ion-icon id="sd-icon-minus-ad" name="remove-circle-outline"></ion-icon>
+                        </div>
+                        <div>
+                            0
+                        </div>
+                        <div>
+                            <ion-icon id='sd-icon-plus-ad' name="add-circle-outline"></ion-icon>
+                        </div>
+                    </div>
                 </div>
-                <div className='sd-infants'>
-                    infants
+                <div className='sd-travelers'>
+                    <div className='sd-travel-type'>
+                        <h4>Infants</h4>
+                        <h6>Under 2</h6>
+                    </div>
+                    <div className='sd-number-of-travelers'>
+                        <div>
+                            <ion-icon id="sd-icon-minus-ad" name="remove-circle-outline"></ion-icon>
+                        </div>
+                        <div>
+                            0
+                        </div>
+                        <div>
+                            <ion-icon id='sd-icon-plus-ad' name="add-circle-outline"></ion-icon>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
 
+    }
+
+    const cabinModule = () => {
+        return (
+            <>
+                <div className='sd-ca-cl-tr' onMouseLeave={showCabin} >
+                    {triangle()}
+                    <div className='sd-dropdown-holder'>
+                        <h5 className='sd-cab-title'>Cabin Class</h5>
+                        <CabinDropDown />
+                        {travelers()}
+                    </div>
+                </div>
+            </>
+        )
     }
 
     const searchSection = () => {
@@ -165,16 +233,9 @@ export default function SearchAdvance(props) {
                             <CheckOut />
                         </div>
                         <div className='sd-cabin'>
-                            <div>
-                                <Cabin />
-                                <div className='sd-ca-cl-tr'>
-                                    {triangle()}
-                                    <div className='sd-dropdown-holder'>
-                                        <p className='sd-cab-title'>Cabin Class</p>
-                                        <CabinDropDown />
-                                        {travelers()}
-                                    </div>
-                                </div>
+                            <div className='sd-cabin-holder'>
+                                <Cabin onMouseEnter={(e) => showCabin(e)} />
+                                {!isCabin ? null : cabinModule()}
                             </div>
                             <div className='sd-find-btn'>
                                 <FindBtn />

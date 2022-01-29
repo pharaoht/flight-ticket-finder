@@ -54,4 +54,7 @@
 
 .cab-dd {
   width: 100%;
+  text-align: center;
+  height: 30px;
+  border-radius: 5px;
 }

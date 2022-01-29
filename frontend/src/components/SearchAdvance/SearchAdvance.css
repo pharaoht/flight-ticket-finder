@@ -111,6 +111,7 @@ label {
 
 .sd-cabin {
   display: flex;
+  width: 50%;
 }
 
 .sd-cabin div input[type="submit"] {
@@ -156,15 +157,55 @@ label {
 }
 
 .sd-dropdown-holder {
-  width: 10%;
+  z-index: 14;
+  width: 30%;
   background: #fff;
   padding: 10px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
   position: absolute;
+  box-shadow: 0px 5px 5px darkgrey;
+  border-radius: 5px;
 }
 
 .sd-dropdown-holder .sd-cab-title {
-  font-size: small;
+  text-align: center;
+  font-size: larger;
   color: black;
+}
+
+.sd-travelers {
+  display: flex;
+  margin: 15px 0px;
+}
+
+.sd-cabin-holder {
+  width: 80%;
+}
+
+.sd-number-of-travelers {
+  display: flex;
+}
+.sd-number-of-travelers {
+  display: flex;
+  width: 75%;
+  justify-content: space-around;
+  align-items: center;
+}
+.sd-travel-type {
+  width: 25%;
+  text-align: center;
+}
+
+#sd-icon-minus-ad {
+  font-size: x-large;
+  color: red;
+}
+
+#sd-icon-plus-ad {
+  font-size: x-large;
+  color: #00a698;
+}
+
+#sd-icon-minus-disabled {
+  color: gray;
+  cursor: not-allowed;
 }

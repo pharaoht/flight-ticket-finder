@@ -68,16 +68,15 @@ export const ToLocations = ({ name, id, onClick, }) => {
     );
 };
 
-export const Cabin = (props) => {
-    return (
-        <>
-            <div className='inputBx'>
-                <p>Cabin, Class, & Travelers</p>
-                <input type='text' />
-            </div>
-        </>
-    )
-}
+export const Cabin = React.forwardRef((props, ref) => (
+    <>
+        <div className='inputBx'>
+            <p>Cabin, Class, & Travelers</p>
+            <input type='text' onMouseEnter={props['onMouseEnter']} ref={ref} />
+        </div>
+    </>
+
+))
 
 export const CabinDropDown = (props) => {
     return (

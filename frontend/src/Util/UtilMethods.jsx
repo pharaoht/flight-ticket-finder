@@ -30,3 +30,11 @@ export const locationAPIRequest = async (location, val) => {
     }
 
 };
+
+export const showFromLocations = () => {
+
+}
+
+export const showToLocations = () => {
+
+}
