@@ -21,6 +21,8 @@ export default function SearchAdvance(props) {
     const [isCabin, setIsCabin] = useState(false);
     const [startDate, setStartDate] = useState(props.flightInfo.depart_date);
     const [returnDate, setReturnDate] = useState(props.flightInfo.return_date);
+    const [fromDateInput, setFromDateInput] = useState();
+    const [toDateInput, setToDateInput] = useState();
     const [fromLocation, setFromLocation] = useState([]);
     const [toLocation, setToLocation] = useState([]);
     const [eventValue, setEventValue] = useState();
@@ -66,6 +68,13 @@ export default function SearchAdvance(props) {
 
     const changeHandler = (event) => {
 
+        if (event.target.name === 'from_airport') {
+            event.target.value === '' && SetParamBuilder((prevState) => { return { ...prevState, from_airport: '' } });
+        }
+        else {
+            event.target.value === '' && SetParamBuilder((prevState) => { return { ...prevState, to_airport: '' } });
+        }
+
         event.target.name === 'from_airport' ?
             setChangeValue(1) :
             setChangeValue(2);
@@ -78,6 +87,7 @@ export default function SearchAdvance(props) {
         const populateFromInput = (country, airportId) => {
             fromInput.current.value = `${airportId} - ${country}`;
             setFromLocation([]);
+            SetParamBuilder((prevState) => { return { ...prevState, from_airport: airportId } });
         };
 
         return (
@@ -100,6 +110,7 @@ export default function SearchAdvance(props) {
         const populateToInput = (country, airportId) => {
             toInput.current.value = `${airportId} - ${country}`;
             setToLocation([]);
+            SetParamBuilder((prevState) => { return { ...prevState, to_airport: airportId } });
         };
 
         return (
@@ -263,6 +274,24 @@ export default function SearchAdvance(props) {
     }
 
     const searchSection = () => {
+        const dateConversion = (date, isFormInput, event) => {
+            let month = date.getMonth() + 1;
+            const day = date.toLocaleString('en-US', { day: '2-digit' });
+            const year = date.getFullYear();
+
+            if (month < 10) {
+                month = `0${month}`
+            };
+
+            if (isFormInput) {
+                setFromDateInput(prevState => { return date })
+                SetParamBuilder(prevState => { return { ...prevState, date_from: `${day}-${month}-${year}` } })
+            }
+            else {
+                setToDateInput(prevState => { return date })
+                SetParamBuilder(prevState => { return { ...prevState, date_to: `${day}-${month}-${year}` } })
+            }
+        }
         return (
             <>
                 <div className='search-form'>
@@ -294,10 +323,10 @@ export default function SearchAdvance(props) {
                     </div>
                     <div className='sd-dates-travel sd-spacing'>
                         <div className='sd-checks'>
-                            <CheckIn />
+                            <CheckIn selected={fromDateInput} onChange={(date, event) => dateConversion(date, true, event)} />
                         </div>
                         <div className='sd-checks'>
-                            <CheckOut />
+                            <CheckOut selected={toDateInput} onChange={(date, event) => dateConversion(date, false, event)} />
                         </div>
                         <div className='sd-cabin'>
                             <div className='sd-cabin-holder'>

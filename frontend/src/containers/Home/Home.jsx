@@ -193,17 +193,21 @@ export default function Home(props) {
 
 
     const dateConversion = (date, isFromInput, event) => {
-        const month = date.getMonth() + 1;
+        let month = date.getMonth() + 1;
         const day = date.toLocaleString('en-US', { day: '2-digit' });
         const year = date.getFullYear();
         formValidator(event, 'change', isFromInput);
 
+        if (month < 10) {
+            month = `0${month}`
+        };
+
         if (isFromInput) {
             setDepartDate(date);
-            setParamData((prevState) => { return { ...prevState, departure: `${day}-0${month}-${year}` } })
+            setParamData((prevState) => { return { ...prevState, departure: `${day}-${month}-${year}` } })
         } else {
             setReturnDate(date);
-            setParamData((prevState) => { return { ...prevState, return: `${day}-0${month}-${year}` } })
+            setParamData((prevState) => { return { ...prevState, return: `${day}-${month}-${year}` } })
         };
     };
 
