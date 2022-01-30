@@ -1,10 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
 import RangeSlider from '../../../Slider/Slider';
-import moment from 'moment'
 import './Duration.css';
 
 export default function Duration(props) {
+
     const [isHidden, setIsHidden] = useState(false);
     const [maxDuration, setMaxduration] = useState()
 
@@ -30,8 +30,8 @@ export default function Duration(props) {
 
     function convertSec(sec) {
         var convert = function (x) { return (x < 10) ? "0" + x : x; }
-        const hours = convert(parseInt(sec / (60 * 60)))
-
+        let hours = convert(parseInt(sec / (60 * 60)));
+        hours = Number(hours)
         return hours;
     }
 

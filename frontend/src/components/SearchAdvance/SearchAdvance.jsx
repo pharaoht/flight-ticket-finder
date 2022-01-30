@@ -3,9 +3,9 @@ import { useRef } from 'react';
 import { FromAirport, ToAirport, CheckIn, CheckOut, Cabin, FindBtn, FromLocations, CabinDropDown, ToLocations } from '../Inputs/Inputs';
 import { locationAPIRequest } from '../../Util/UtilMethods';
 import './SearchAdvance.css'
-import { set } from 'airline-codes';
 
 export default function SearchAdvance(props) {
+
     const [paramBuilder, SetParamBuilder] = useState({
         from_airport: '',
         to_airport: '',
@@ -19,8 +19,8 @@ export default function SearchAdvance(props) {
     });
     const [isShowing, setIsShowing] = useState(false);
     const [isCabin, setIsCabin] = useState(false);
-    const [startDate, setStartDate] = useState(props.flightInfo.depart_date);
-    const [returnDate, setReturnDate] = useState(props.flightInfo.return_date);
+    const [startDate, setStartDate] = useState();
+    const [returnDate, setReturnDate] = useState(new Date(props.flightInfo.return_date));
     const [fromDateInput, setFromDateInput] = useState();
     const [toDateInput, setToDateInput] = useState();
     const [fromLocation, setFromLocation] = useState([]);
@@ -30,18 +30,25 @@ export default function SearchAdvance(props) {
     const [adults, setAdults] = useState(1);
     const [children, setChildren] = useState(0);
     const [infants, setInfants] = useState(0);
+    const [days, setDays] = useState(0);
+    const [cabinValue, setCabinValue] = useState(`${adults} Adult, ${children} Children, ${infants} Infants`);
     const fromInput = React.createRef();
     const toInput = React.createRef();
     const header = useRef();
 
     const incrementDate = () => {
 
+        setDays(prevState => prevState + 1);
 
     };
 
     const decrementDate = () => {
-        //if date is change have to lift state up to flight compo
+        setDays(prevState => prevState - 1);
     };
+
+    const updateDate = () => {
+
+    }
 
     const showSearch = () => {
         if (isShowing) {
@@ -330,7 +337,7 @@ export default function SearchAdvance(props) {
                         </div>
                         <div className='sd-cabin'>
                             <div className='sd-cabin-holder'>
-                                <Cabin onClick={(e) => showCabin(e)} value={''} />
+                                <Cabin onClick={(e) => showCabin(e)} value={cabinValue} />
                                 {!isCabin ? null : cabinModule()}
                             </div>
                             <div className='sd-find-btn'>
@@ -359,8 +366,19 @@ export default function SearchAdvance(props) {
     }, [])
 
     useEffect(() => {
+        let numOfAdults, numOfChild, numOfInfan
+
+        adults === 1 ? numOfAdults = 'Adult' : numOfAdults = 'Adults';
+        children === 1 ? numOfChild = 'Child' : numOfChild = 'Children';
+        infants === 1 ? numOfInfan = 'Infant' : numOfInfan = 'Infants';
+
+        setCabinValue(prevState => { return `${adults} ${numOfAdults}, ${children} ${numOfChild}, ${infants} ${numOfInfan}` })
+    }, [adults, children, infants]);
+
+    useEffect(() => {
 
         const timer = setTimeout(async () => {
+
             let data = await locationAPIRequest(eventValue, changeValue);
 
             changeValue === 1 ?
@@ -373,6 +391,10 @@ export default function SearchAdvance(props) {
             clearTimeout(timer);
         };
     }, [eventValue])
+
+    useEffect(() => {
+        updateDate()
+    }, [days])
 
     return (
         <div className='header-section' >
@@ -395,12 +417,12 @@ export default function SearchAdvance(props) {
                     <div className='sd-holder sd-dates'>
                         <div className='sd-date'>
                             <div className='sd-chev sd-hover' onClick={decrementDate}><ion-icon name="chevron-back-outline"></ion-icon></div>
-                            <div>{startDate}</div>
+                            <div>12/12/2022</div>
                             <div className='sd-chev sd-hover' onClick={incrementDate}><ion-icon name="chevron-forward-outline"></ion-icon></div>
                         </div>
                         <div className='sd-date'>
                             <div className='sd-chev sd-hover' onClick={decrementDate}><ion-icon name="chevron-back-outline"></ion-icon></div>
-                            <div>{returnDate}</div>
+                            <div>12/12/2022</div>
                             <div className='sd-chev sd-hover' onClick={incrementDate}><ion-icon name="chevron-forward-outline"></ion-icon></div>
                         </div>
                     </div>
