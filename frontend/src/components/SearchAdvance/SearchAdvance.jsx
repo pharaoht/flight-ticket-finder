@@ -153,7 +153,9 @@ export default function SearchAdvance(props) {
                 //add css disabled class
                 return false
             }
+            let count = children + 1
             setChildren(prevState => { return prevState + 1 })
+            SetParamBuilder(prevState => { return { ...prevState, children: count } });
         };
 
         const decrementChild = () => {
@@ -162,8 +164,9 @@ export default function SearchAdvance(props) {
                 //add css disable to mius btn
                 return false
             };
-
+            let count = children - 1
             setChildren(prevState => { return prevState - 1 })
+            SetParamBuilder(prevState => { return { ...prevState, children: count } });
         };
 
         const incrementInfant = () => {
@@ -171,16 +174,18 @@ export default function SearchAdvance(props) {
                 //add css disabled class
                 return false
             }
-
+            let count = infants + 1
             setInfants(prevState => { return prevState + 1 })
+            SetParamBuilder(prevState => { return { ...prevState, infants: count } });
         }
 
         const decrementInfant = () => {
             if (infants === 0) {
                 return false
             }
-
+            let count = infants - 1
             setInfants(prevState => { return prevState - 1 })
+            SetParamBuilder(prevState => { return { ...prevState, infants: count } });
         }
 
         return (

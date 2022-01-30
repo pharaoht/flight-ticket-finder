@@ -30,7 +30,7 @@ export default function StopOvers() {
                     <ul>
                         <li><input type='checkbox' name='non-stop' /> <span>Non-Stop</span></li>
                         <li><input type='checkbox' name='one-stop' /> <span>1 Stop</span></li>
-                        <li><input type='checkbox' name='two-stops' /> <span>2 Stops</span></li>
+                        <li><input type='checkbox' name='two-stops' /> <span>+2 Stops</span></li>
                     </ul>
                 </div>
             </>
