@@ -1,10 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
+import RangeSlider from '../../../Slider/Slider';
+import moment from 'moment'
 import './Duration.css';
 
-export default function Duration() {
-
+export default function Duration(props) {
     const [isHidden, setIsHidden] = useState(false);
+    const [maxDuration, setMaxduration] = useState()
 
     const toggleHandler = () => {
         if (isHidden) {
@@ -26,6 +28,38 @@ export default function Duration() {
         )
     };
 
+    function convertSec(sec) {
+        var convert = function (x) { return (x < 10) ? "0" + x : x; }
+        const hours = convert(parseInt(sec / (60 * 60)))
+
+        return hours;
+    }
+
+    const showSlider = () => {
+        return (
+            <>
+                <div className='dr-time-head'>
+                    <h4>{convertSec(props.durationAvg[0])} hours</h4>
+                    <div className='dr-light'>to</div>
+                    <h4>{maxDuration === undefined ? convertSec(props.durationAvg[1]) : maxDuration} hours</h4>
+                </div>
+                <div>
+                    <RangeSlider
+                        start={convertSec(props.durationAvg[0])}
+                        end={convertSec(props.durationAvg[1])}
+                        updateDuration={updateMaxDuration}
+                        savedMax={maxDuration}
+                        single={true}
+                    />
+                </div>
+            </>
+        )
+    }
+
+    const updateMaxDuration = (limit) => {
+        setMaxduration(limit);
+    }
+
     return (
         <div className='dr-parent'>
             <div className='dr-header'>
@@ -35,6 +69,9 @@ export default function Duration() {
                 <div className='dr-collaspe'>
                     {isHidden ? showDownArrow() : showUpArrow()}
                 </div>
+            </div>
+            <div className='dr-slider-holder'>
+                {isHidden ? showSlider() : null}
             </div>
         </div>
     )

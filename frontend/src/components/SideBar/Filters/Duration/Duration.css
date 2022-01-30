@@ -16,3 +16,18 @@
 .dr-icon:hover {
   color: #00a698;
 }
+
+.dr-time-head {
+  padding: 10px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.dr-slider-holder {
+  padding: 0px 25px;
+}
+
+.dr-light {
+  font-weight: 600;
+  cursor: default;
+}

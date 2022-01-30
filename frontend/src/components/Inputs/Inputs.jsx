@@ -72,7 +72,7 @@ export const Cabin = React.forwardRef((props, ref) => (
     <>
         <div className='inputBx'>
             <p>Cabin, Class, & Travelers</p>
-            <input type='text' onMouseEnter={props['onMouseEnter']} ref={ref} />
+            <input type='text' onClick={props['onClick']} ref={ref} value={props['value']} readOnly={true} placeholder='click me' />
         </div>
     </>
 

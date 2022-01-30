@@ -12,6 +12,7 @@ export default function Flights() {
     const params = useParams();
     const [isLoading, setIsLoading] = useState(false);
     const [flights, setFlights] = useState([]);
+    const [duration, setDuration] = useState([])
 
     const getFlights = useCallback(() => {
 
@@ -36,6 +37,7 @@ export default function Flights() {
             .then((res) => {
                 console.log(res)
                 setFlights(res.data);
+                getDurationsAvg(res.data.data);
                 return setIsLoading(false);
             })
             .catch((err) => {
@@ -43,6 +45,27 @@ export default function Flights() {
                 return setIsLoading(false);
             });
     }, []);
+
+    function getDurationsAvg(arr) {
+        let minimum;
+        let maximum;
+        arr.map((item, idx) => {
+            if (idx === 0) {
+                minimum = item.duration.total;
+                maximum = item.duration.total;
+            }
+            else {
+                if (item.duration.total < minimum) {
+                    minimum = item.duration.total;
+                }
+                if (item.duration.total > maximum) {
+                    maximum = item.duration.total
+                }
+            }
+        })
+        setDuration(prevState => { return [minimum, maximum] })
+        return true;
+    }
 
     function loader() {
         return (
@@ -62,7 +85,7 @@ export default function Flights() {
                 </div>
                 <div className='main-flight-info'>
                     <div className='sidebar-component'>
-                        <SideBar />
+                        <SideBar durationAvg={duration} />
                     </div>
                     <div className='ticket-area'>
                         <Main flights={flights} />

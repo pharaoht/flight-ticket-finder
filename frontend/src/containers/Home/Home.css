@@ -81,7 +81,6 @@ ul {
   padding: 5px;
   display: block;
   bottom: 100%;
-  /* pointer-events: none; */
   background: #fff;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;

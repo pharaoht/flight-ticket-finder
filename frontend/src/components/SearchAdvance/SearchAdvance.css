@@ -154,6 +154,7 @@ label {
 
 .sd-ca-cl-tr {
   margin: 0px 20px;
+  animation: fade-in 0.1s;
 }
 
 .sd-dropdown-holder {
@@ -198,14 +199,36 @@ label {
 #sd-icon-minus-ad {
   font-size: x-large;
   color: red;
+  cursor: pointer;
 }
 
+#sd-icon-minus-ad:hover {
+  transform: scale(1.1);
+  transition: all 0.3s;
+}
 #sd-icon-plus-ad {
   font-size: x-large;
   color: #00a698;
+  cursor: pointer;
+}
+
+#sd-icon-plus-ad:hover {
+  transform: scale(1.1);
+  transition: all 0.3s;
 }
 
 #sd-icon-minus-disabled {
   color: gray;
   cursor: not-allowed;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    height: 0;
+  }
+  100% {
+    opacity: 1;
+    height: 21px;
+  }
 }

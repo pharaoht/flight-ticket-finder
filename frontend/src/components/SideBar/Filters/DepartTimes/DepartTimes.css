@@ -20,3 +20,13 @@
 .so-hover:hover {
   color: #00a698;
 }
+
+.dt-slider-holder {
+  padding: 0px 25px;
+}
+
+.dt-outbound {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}

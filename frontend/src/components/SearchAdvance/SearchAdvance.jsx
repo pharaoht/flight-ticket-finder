@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { FromAirport, ToAirport, CheckIn, CheckOut, Cabin, FindBtn, FromLocations, CabinDropDown, ToLocations } from '../Inputs/Inputs';
 import { locationAPIRequest } from '../../Util/UtilMethods';
 import './SearchAdvance.css'
+import { set } from 'airline-codes';
 
 export default function SearchAdvance(props) {
     const [paramBuilder, SetParamBuilder] = useState({
@@ -12,7 +13,7 @@ export default function SearchAdvance(props) {
         date_from: '',
         date_to: '',
         cabin: '',
-        adults: 1,
+        adults: '',
         children: '',
         infants: ''
     });
@@ -24,9 +25,11 @@ export default function SearchAdvance(props) {
     const [toLocation, setToLocation] = useState([]);
     const [eventValue, setEventValue] = useState();
     const [changeValue, setChangeValue] = useState();
+    const [adults, setAdults] = useState(1);
+    const [children, setChildren] = useState(0);
+    const [infants, setInfants] = useState(0);
     const fromInput = React.createRef();
     const toInput = React.createRef();
-    const cabinInput = React.createRef();
     const header = useRef();
 
     const incrementDate = () => {
@@ -48,7 +51,7 @@ export default function SearchAdvance(props) {
     };
 
     const showCabin = (e) => {
-        if (e._reactName === 'onMouseEnter') {
+        if (e._reactName === 'onClick') {
             !isCabin && setIsCabin(true);
         }
         else if (e._reactName === 'onMouseLeave') {
@@ -122,6 +125,64 @@ export default function SearchAdvance(props) {
     };
 
     const travelers = () => {
+        const total = 10;
+
+        const incrementAdult = () => {
+
+            if (adults + children + infants === total) {
+                //add css disabled class
+                return false
+            }
+            let count = adults + 1
+            setAdults(prevState => { return prevState + 1 })
+            SetParamBuilder(prevState => { return { ...prevState, adults: count } })
+        };
+
+        const decrementAdult = () => {
+            if (adults === 1) {
+                //add css disable to mius btn
+                return false;
+            }
+            let count = adults - 1
+            setAdults(prevState => { return prevState - 1 });
+            SetParamBuilder(prevState => { return { ...prevState, adults: count } });
+        };
+
+        const incrementChild = () => {
+            if (adults + children + infants === total) {
+                //add css disabled class
+                return false
+            }
+            setChildren(prevState => { return prevState + 1 })
+        };
+
+        const decrementChild = () => {
+            if (children === 0) {
+
+                //add css disable to mius btn
+                return false
+            };
+
+            setChildren(prevState => { return prevState - 1 })
+        };
+
+        const incrementInfant = () => {
+            if (adults + children + infants === total) {
+                //add css disabled class
+                return false
+            }
+
+            setInfants(prevState => { return prevState + 1 })
+        }
+
+        const decrementInfant = () => {
+            if (infants === 0) {
+                return false
+            }
+
+            setInfants(prevState => { return prevState - 1 })
+        }
+
         return (
             <div>
                 <div className='sd-travelers'>
@@ -130,13 +191,13 @@ export default function SearchAdvance(props) {
                         <h6>Over 11</h6>
                     </div>
                     <div className='sd-number-of-travelers'>
-                        <div>
+                        <div onClick={decrementAdult}>
                             <ion-icon id="sd-icon-minus-ad" name="remove-circle-outline"></ion-icon>
                         </div>
                         <div>
-                            1
+                            {adults}
                         </div>
-                        <div>
+                        <div onClick={incrementAdult}>
                             <ion-icon id='sd-icon-plus-ad' name="add-circle-outline"></ion-icon>
                         </div>
                     </div>
@@ -147,13 +208,13 @@ export default function SearchAdvance(props) {
                         <h6>2 - 11</h6>
                     </div>
                     <div className='sd-number-of-travelers'>
-                        <div>
+                        <div onClick={decrementChild}>
                             <ion-icon id="sd-icon-minus-ad" name="remove-circle-outline"></ion-icon>
                         </div>
                         <div>
-                            0
+                            {children}
                         </div>
-                        <div>
+                        <div onClick={incrementChild}>
                             <ion-icon id='sd-icon-plus-ad' name="add-circle-outline"></ion-icon>
                         </div>
                     </div>
@@ -164,13 +225,13 @@ export default function SearchAdvance(props) {
                         <h6>Under 2</h6>
                     </div>
                     <div className='sd-number-of-travelers'>
-                        <div>
+                        <div onClick={decrementInfant}>
                             <ion-icon id="sd-icon-minus-ad" name="remove-circle-outline"></ion-icon>
                         </div>
                         <div>
-                            0
+                            {infants}
                         </div>
-                        <div>
+                        <div onClick={incrementInfant}>
                             <ion-icon id='sd-icon-plus-ad' name="add-circle-outline"></ion-icon>
                         </div>
                     </div>
@@ -189,6 +250,7 @@ export default function SearchAdvance(props) {
                         <h5 className='sd-cab-title'>Cabin Class</h5>
                         <CabinDropDown />
                         {travelers()}
+                        <h6>Max 10 passengers</h6>
                     </div>
                 </div>
             </>
@@ -234,7 +296,7 @@ export default function SearchAdvance(props) {
                         </div>
                         <div className='sd-cabin'>
                             <div className='sd-cabin-holder'>
-                                <Cabin onMouseEnter={(e) => showCabin(e)} />
+                                <Cabin onClick={(e) => showCabin(e)} value={''} />
                                 {!isCabin ? null : cabinModule()}
                             </div>
                             <div className='sd-find-btn'>

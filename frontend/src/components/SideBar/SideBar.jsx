@@ -5,7 +5,7 @@ import SortBy from './Filters/SortBy/SortBy';
 import StopOvers from './Filters/StopOvers/StopOvers';
 import './SideBar.css';
 
-export default function SideBar() {
+export default function SideBar(props) {
 
     const sidebar = useRef()
 
@@ -24,7 +24,7 @@ export default function SideBar() {
     return (
         <div className='side-bar' ref={sidebar}>
             <StopOvers />
-            <Duration />
+            <Duration durationAvg={props.durationAvg} />
             <Departtimes />
             <SortBy />
         </div>
