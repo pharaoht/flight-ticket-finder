@@ -14,9 +14,6 @@ export default function Main(props) {
     const showFlights = () => {
         return (
             flights.map((item, idx) => {
-                if (idx > 11) {
-                    return null;
-                }
                 return (
                     <Ticket cityFrom={item.cityCodeFrom}
                         cityTo={item.cityCodeTo}

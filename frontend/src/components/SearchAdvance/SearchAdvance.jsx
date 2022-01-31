@@ -6,6 +6,8 @@ import './SearchAdvance.css'
 
 export default function SearchAdvance(props) {
 
+    const str = props.flightInfo.depart_date.split('-');
+    const str2 = props.flightInfo.return_date.split('-');
     const [paramBuilder, SetParamBuilder] = useState({
         from_airport: '',
         to_airport: '',
@@ -19,8 +21,8 @@ export default function SearchAdvance(props) {
     });
     const [isShowing, setIsShowing] = useState(false);
     const [isCabin, setIsCabin] = useState(false);
-    const [startDate, setStartDate] = useState();
-    const [returnDate, setReturnDate] = useState(new Date(props.flightInfo.return_date));
+    const [startDate, setStartDate] = useState(new Date(`${str[1]}-${str[0]}-${str[2]}`));
+    const [returnDate, setReturnDate] = useState(new Date(`${str2[1]}-${str2[0]}-${str2[2]}`));
     const [fromDateInput, setFromDateInput] = useState();
     const [toDateInput, setToDateInput] = useState();
     const [fromLocation, setFromLocation] = useState([]);
@@ -30,25 +32,42 @@ export default function SearchAdvance(props) {
     const [adults, setAdults] = useState(1);
     const [children, setChildren] = useState(0);
     const [infants, setInfants] = useState(0);
-    const [days, setDays] = useState(0);
     const [cabinValue, setCabinValue] = useState(`${adults} Adult, ${children} Children, ${infants} Infants`);
     const fromInput = React.createRef();
     const toInput = React.createRef();
     const header = useRef();
 
-    const incrementDate = () => {
-
-        setDays(prevState => prevState + 1);
-
+    const incrementDate = (isPast) => {
+        if (isPast) {
+            if (startDate.getTime() >= returnDate.getTime()) {
+                return false;
+            }
+        }
+        isPast ?
+            setStartDate(prevState => new Date(prevState.getTime() + 1 * 24 * 60 * 60 * 1000)) :
+            setReturnDate(prevState => new Date(prevState.getTime() + 1 * 24 * 60 * 60 * 1000));
     };
 
-    const decrementDate = () => {
-        setDays(prevState => prevState - 1);
+    const decrementDate = (isPast) => {
+        const now = new Date(Date.now());
+
+        //check if date is in past
+        if (isPast) {
+            const dateInput = startDate.getTime();
+            if (dateInput <= now) {
+                return false;
+            }
+        }
+        else {
+            if (returnDate.getTime() <= startDate.getTime()) {
+                return false;
+            }
+        }
+
+        isPast ?
+            setStartDate(prevState => new Date(prevState.getTime() - 1 * 24 * 60 * 60 * 1000)) :
+            setReturnDate(prevState => new Date(prevState.getTime() - 1 * 24 * 60 * 60 * 1000));
     };
-
-    const updateDate = () => {
-
-    }
 
     const showSearch = () => {
         if (isShowing) {
@@ -393,8 +412,8 @@ export default function SearchAdvance(props) {
     }, [eventValue])
 
     useEffect(() => {
-        updateDate()
-    }, [days])
+        props.refresh(startDate, returnDate);
+    }, [startDate, returnDate])
 
     return (
         <div className='header-section' >
@@ -416,14 +435,14 @@ export default function SearchAdvance(props) {
                     </div>
                     <div className='sd-holder sd-dates'>
                         <div className='sd-date'>
-                            <div className='sd-chev sd-hover' onClick={decrementDate}><ion-icon name="chevron-back-outline"></ion-icon></div>
-                            <div>12/12/2022</div>
-                            <div className='sd-chev sd-hover' onClick={incrementDate}><ion-icon name="chevron-forward-outline"></ion-icon></div>
+                            <div className='sd-chev sd-hover' onClick={(e) => decrementDate(true)}><ion-icon name="chevron-back-outline"></ion-icon></div>
+                            <div>{startDate.toDateString()}</div>
+                            <div className='sd-chev sd-hover' onClick={(e) => incrementDate(true)}><ion-icon name="chevron-forward-outline"></ion-icon></div>
                         </div>
                         <div className='sd-date'>
-                            <div className='sd-chev sd-hover' onClick={decrementDate}><ion-icon name="chevron-back-outline"></ion-icon></div>
-                            <div>12/12/2022</div>
-                            <div className='sd-chev sd-hover' onClick={incrementDate}><ion-icon name="chevron-forward-outline"></ion-icon></div>
+                            <div className='sd-chev sd-hover' onClick={(e) => decrementDate(false)}><ion-icon name="chevron-back-outline"></ion-icon></div>
+                            <div>{returnDate.toDateString()}</div>
+                            <div className='sd-chev sd-hover' onClick={(e) => incrementDate(false)}><ion-icon name="chevron-forward-outline"></ion-icon></div>
                         </div>
                     </div>
                 </div>
