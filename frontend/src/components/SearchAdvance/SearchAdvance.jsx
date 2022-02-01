@@ -50,7 +50,7 @@ export default function SearchAdvance(props) {
     };
 
     function convertDay(date) {
-        const str = date
+        const str = date.split('-')
         return `${str[1]}-${str[0]}-${str[2]}`
     }
 
