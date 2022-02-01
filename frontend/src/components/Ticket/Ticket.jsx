@@ -70,7 +70,7 @@ export default function Ticket(props) {
                                 <ion-icon name="airplane-outline"></ion-icon>
                             </div>
                         </div>
-                        <div className='tc-stops'>{returnFlights === undefined ? null : stopCheck(returnFlights.length)}</div>
+                        <div className='tc-stops'>{returnFlights === undefined ? null : null}</div>
                     </div>
 
                     <div className='tc-detail-sec'>
@@ -126,7 +126,7 @@ export default function Ticket(props) {
 
     useEffect(() => {
         toFlight();
-    }, [])
+    }, [props.stops])
 
     return (
         <div className='ticket-holder' key={props.type}>

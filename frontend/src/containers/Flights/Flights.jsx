@@ -5,6 +5,7 @@ import SearchAdvance from '../../components/SearchAdvance/SearchAdvance'
 import ClipLoader from "react-spinners/ClipLoader";
 import SideBar from '../../components/SideBar/SideBar'
 import axios from 'axios'
+import moment from 'moment';
 import './Flights.css'
 
 export default function Flights() {
@@ -12,17 +13,20 @@ export default function Flights() {
     const params = useParams();
     const [isLoading, setIsLoading] = useState(false);
     const [flights, setFlights] = useState([]);
-    const [duration, setDuration] = useState([])
+    const [duration, setDuration] = useState([]);
+    const [test, setTest] = useState(false);
 
-    const getFlights = useCallback(() => {
+    const getFlights = useCallback((sdate, edate) => {
+        let departure_date, return_date;
+        const from = params.from_airport, destination = params.to_airport;
 
-        const from = params.from_airport;
-        const destination = params.to_airport;
-        //refactor later
-        let departure_date = params.depart_date.replace('-', '/')
-        let return_date = params.return_date.replace('-', '/')
-        departure_date = departure_date.replace('-', '/')
-        return_date = return_date.replace('-', '/')
+        if (sdate) {
+            departure_date = convertDay(sdate);
+            return_date = convertDay(edate);
+        } else {
+            departure_date = convertDay(params.depart_date);
+            return_date = convertDay(params.return_date)
+        }
 
         const URL = `https://tequila-api.kiwi.com/v2/search?fly_from=${from}&fly_to=${destination}&dateFrom=${departure_date}&dateTo=${departure_date}&return_to=${return_date}&return_from=${return_date}&vehicle_type=aircraft&dtime_from=0:00&dtime_to=24:00&atime_from=0:00&atime_to=24:00&ret_dtime_from=0:00&ret_dtime_to=24:00&ret_atime_from=0:00&ret_atime_to=24:00&curr=USD&locale=en&limit=50`;
 
@@ -38,13 +42,26 @@ export default function Flights() {
                 console.log(res)
                 setFlights(res.data);
                 getDurationsAvg(res.data.data);
+                setTest(false)
                 return setIsLoading(false);
             })
             .catch((err) => {
                 console.log(err);
+                setTest(false)
                 return setIsLoading(false);
             });
     }, []);
+
+    function convertDay(date) {
+        if (typeof date === 'object') {
+            let newDate = moment(date).format('L').split('/');
+            return `${newDate[1]}/${newDate[0]}/${newDate[2]}`
+        }
+        else if (typeof date === 'string') {
+            let newDate = date.split('-');
+            return `${newDate[0]}/${newDate[1]}/${newDate[2]}`
+        }
+    }
 
     function getDurationsAvg(arr) {
         let minimum;
@@ -78,7 +95,8 @@ export default function Flights() {
     };
 
     function getNewFlights(startDate, returnDate) {
-        console.log(startDate, returnDate)
+        setTest(true)
+        getFlights(startDate, returnDate);
     };
 
     function page() {
@@ -92,7 +110,7 @@ export default function Flights() {
                         <SideBar durationAvg={duration} />
                     </div>
                     <div className='ticket-area'>
-                        <Main flights={flights} />
+                        <Main flights={flights} test={test} />
                     </div>
                 </div>
             </div>
@@ -102,10 +120,10 @@ export default function Flights() {
     useEffect(() => {
         setIsLoading(true);
         getFlights();
-        return () => {
 
-        };
     }, [getFlights]);
+
+
 
     return (
         <>

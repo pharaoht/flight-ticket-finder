@@ -5,9 +5,8 @@ import { locationAPIRequest } from '../../Util/UtilMethods';
 import './SearchAdvance.css'
 
 export default function SearchAdvance(props) {
-
-    const str = props.flightInfo.depart_date.split('-');
-    const str2 = props.flightInfo.return_date.split('-');
+    const newStartDay = convertDay(props.flightInfo.depart_date)
+    const newEndDay = convertDay(props.flightInfo.return_date)
     const [paramBuilder, SetParamBuilder] = useState({
         from_airport: '',
         to_airport: '',
@@ -21,8 +20,8 @@ export default function SearchAdvance(props) {
     });
     const [isShowing, setIsShowing] = useState(false);
     const [isCabin, setIsCabin] = useState(false);
-    const [startDate, setStartDate] = useState(new Date(`${str[1]}-${str[0]}-${str[2]}`));
-    const [returnDate, setReturnDate] = useState(new Date(`${str2[1]}-${str2[0]}-${str2[2]}`));
+    const [startDate, setStartDate] = useState(new Date(newStartDay));
+    const [returnDate, setReturnDate] = useState(new Date(newEndDay));
     const [fromDateInput, setFromDateInput] = useState();
     const [toDateInput, setToDateInput] = useState();
     const [fromLocation, setFromLocation] = useState([]);
@@ -36,6 +35,7 @@ export default function SearchAdvance(props) {
     const fromInput = React.createRef();
     const toInput = React.createRef();
     const header = useRef();
+    const [liftState, setLiftState] = useState(false)
 
     const incrementDate = (isPast) => {
         if (isPast) {
@@ -46,7 +46,13 @@ export default function SearchAdvance(props) {
         isPast ?
             setStartDate(prevState => new Date(prevState.getTime() + 1 * 24 * 60 * 60 * 1000)) :
             setReturnDate(prevState => new Date(prevState.getTime() + 1 * 24 * 60 * 60 * 1000));
+        setLiftState(prev => { return true })
     };
+
+    function convertDay(date) {
+        const str = date
+        return `${str[1]}-${str[0]}-${str[2]}`
+    }
 
     const decrementDate = (isPast) => {
         const now = new Date(Date.now());
@@ -67,6 +73,8 @@ export default function SearchAdvance(props) {
         isPast ?
             setStartDate(prevState => new Date(prevState.getTime() - 1 * 24 * 60 * 60 * 1000)) :
             setReturnDate(prevState => new Date(prevState.getTime() - 1 * 24 * 60 * 60 * 1000));
+
+        setLiftState(prev => { return true })
     };
 
     const showSearch = () => {
@@ -412,7 +420,18 @@ export default function SearchAdvance(props) {
     }, [eventValue])
 
     useEffect(() => {
-        props.refresh(startDate, returnDate);
+
+        if (liftState) {
+            const time = setTimeout(() => {
+                props.refresh(startDate, returnDate);
+                setLiftState(false)
+
+            }, 500)
+            return () => {
+                clearTimeout(time)
+            }
+        };
+
     }, [startDate, returnDate])
 
     return (
