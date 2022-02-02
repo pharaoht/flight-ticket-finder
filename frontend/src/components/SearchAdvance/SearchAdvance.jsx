@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { FromAirport, ToAirport, CheckIn, CheckOut, Cabin, FindBtn, FromLocations, CabinDropDown, ToLocations } from '../Inputs/Inputs';
 import { locationAPIRequest } from '../../Util/UtilMethods';
 import './SearchAdvance.css'
+import { Redirect } from 'react-router-dom';
 
 export default function SearchAdvance(props) {
     const newStartDay = convertDay(props.flightInfo.depart_date)
@@ -29,13 +30,15 @@ export default function SearchAdvance(props) {
     const [eventValue, setEventValue] = useState();
     const [changeValue, setChangeValue] = useState();
     const [adults, setAdults] = useState(1);
-    const [children, setChildren] = useState(0);
     const [infants, setInfants] = useState(0);
+    const [children, setChildren] = useState(0);
+    const [liftState, setLiftState] = useState(false)
     const [cabinValue, setCabinValue] = useState(`${adults} Adult, ${children} Children, ${infants} Infants`);
     const fromInput = React.createRef();
     const toInput = React.createRef();
+    const fromDateRef = React.createRef();
+    const toDateRef = React.createRef();
     const header = useRef();
-    const [liftState, setLiftState] = useState(false)
 
     const incrementDate = (isPast) => {
         if (isPast) {
@@ -101,6 +104,10 @@ export default function SearchAdvance(props) {
     };
 
     const changeHandler = (event) => {
+
+        if (event.target.name === 'return') {
+            return SetParamBuilder(prevState => { return { ...prevState, return: event.target.value } })
+        }
 
         if (event.target.name === 'from_airport') {
             event.target.value === '' && SetParamBuilder((prevState) => { return { ...prevState, from_airport: '' } });
@@ -307,6 +314,26 @@ export default function SearchAdvance(props) {
         )
     }
 
+    const submitHandler = (e) => {
+        e.preventDefault();
+        return window.location.replace(`/tickets/${paramBuilder.from_airport}/${paramBuilder.to_airport}/${paramBuilder.date_from}/${paramBuilder.date_to}/`)
+    }
+
+    const formValidation = (e) => {
+        let counter = 0
+        paramBuilder.from_airport === '' ? fromInput.current.style.border = '1px solid red' : counter--
+        paramBuilder.to_airport === '' ? toInput.current.style.border = '1px solid red' : counter--
+        paramBuilder.date_from === '' ? fromDateRef.current.style.border = '1px solid red' : counter--
+        paramBuilder.date_to === '' ? toDateRef.current.style.border = '1px solid red' : counter--
+
+        if (counter !== -4) {
+            return false
+        }
+        else {
+            submitHandler(e);
+        }
+    }
+
     const searchSection = () => {
         const dateConversion = (date, isFormInput, event) => {
             let month = date.getMonth() + 1;
@@ -331,11 +358,11 @@ export default function SearchAdvance(props) {
                 <div className='search-form'>
                     <div className='sd-search-return-type sd-spacing'>
                         <div>
-                            <input id='sd-return-btn' type='radio' name='return' value='return' />
+                            <input id='sd-return-btn' type='radio' name='return' value='true' onClick={(e) => changeHandler(e)} />
                             <label className='sd-hover'>Return</label>
                         </div>
                         <div>
-                            <input id='sd-oneway-btn' type='radio' name='return' value='oneway' />
+                            <input id='sd-oneway-btn' type='radio' name='return' value='false' onClick={(e) => changeHandler(e)} />
                             <label className='sd-hover'>One-way</label>
                         </div>
                     </div>
@@ -357,10 +384,10 @@ export default function SearchAdvance(props) {
                     </div>
                     <div className='sd-dates-travel sd-spacing'>
                         <div className='sd-checks'>
-                            <CheckIn selected={fromDateInput} onChange={(date, event) => dateConversion(date, true, event)} />
+                            <CheckIn ref={fromDateRef} selected={fromDateInput} onChange={(date, event) => dateConversion(date, true, event)} />
                         </div>
                         <div className='sd-checks'>
-                            <CheckOut selected={toDateInput} onChange={(date, event) => dateConversion(date, false, event)} />
+                            <CheckOut ref={toDateRef} selected={toDateInput} onChange={(date, event) => dateConversion(date, false, event)} />
                         </div>
                         <div className='sd-cabin'>
                             <div className='sd-cabin-holder'>
@@ -368,7 +395,7 @@ export default function SearchAdvance(props) {
                                 {!isCabin ? null : cabinModule()}
                             </div>
                             <div className='sd-find-btn'>
-                                <FindBtn />
+                                <FindBtn onClick={(e) => formValidation(e)} />
                             </div>
                         </div>
                     </div>
@@ -376,14 +403,6 @@ export default function SearchAdvance(props) {
             </>
         )
     };
-
-    const formValidation = () => {
-
-    }
-
-    const submitHandler = () => {
-        alert('hi')
-    }
 
     useEffect(() => {
         window.addEventListener('scroll', isSticky);

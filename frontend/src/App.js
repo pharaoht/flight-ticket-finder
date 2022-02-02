@@ -16,7 +16,7 @@ const App = () => {
         <Switch>
           <Route exact path='/' component={Home}/>
           <Route path='/destinations/' component={Destinations} />
-          <Route path='/tickets/:from_airport/:to_airport/:depart_date/:return_date/:type?/:adult?/:children?/:infants?/' component={Flights}/>
+          <Route path='/tickets/:from_airport/:to_airport/:depart_date/:return_date?' component={Flights}/>
         </Switch>
       </Router>
     </Provider>

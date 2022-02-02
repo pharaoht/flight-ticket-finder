@@ -25,10 +25,6 @@ export default function Ticket(props) {
         )
     };
 
-    const timeDifference = () => {
-        //to handle layovers
-    }
-
     const toFlight = () => {
         props.stops.map((item) => {
             if (item.return === 0) {
@@ -122,7 +118,6 @@ export default function Ticket(props) {
             num === 1 ? <><span style={{ color: 'green' }}>Non-Stop</span></> : <div onClick={show} style={{ color: 'red' }}>{num} stops</div>
         )
     }
-
 
     useEffect(() => {
         toFlight();

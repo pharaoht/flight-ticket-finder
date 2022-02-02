@@ -8,7 +8,9 @@ export default function Main(props) {
     const [flights, setFlights] = useState([]);
 
     useEffect(() => {
-        setFlights(props.flights.data)
+        if (props.flights.data !== undefined) {
+            setFlights(props.flights.data)
+        }
     }, [props])
 
     const showFlights = () => {
@@ -36,8 +38,8 @@ export default function Main(props) {
 
     const noFlights = () => {
         return (
-            <div>
-                <h3>No Flights available</h3>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                <h3>No Flights Available</h3>
             </div>
         )
     };
@@ -45,7 +47,7 @@ export default function Main(props) {
     function loader() {
         return (
             <>
-                <div style={{ width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <div style={{ width: '100%', height: '80vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <div><ClipLoader color={'#4EF3D2'} loading={props.test} size={150} /></div>
                 </div>
             </>

@@ -29,6 +29,9 @@ export default function Duration(props) {
     };
 
     function convertSec(sec) {
+        if (sec === undefined) {
+            return 0;
+        }
         var convert = function (x) { return (x < 10) ? "0" + x : x; }
         let hours = convert(parseInt(sec / (60 * 60)));
         hours = Number(hours)
