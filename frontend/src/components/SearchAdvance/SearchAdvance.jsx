@@ -37,7 +37,7 @@ export default function SearchAdvance(props) {
     const fromInput = React.createRef();
     const toInput = React.createRef();
     const fromDateRef = React.createRef();
-    const toDateRef = React.createRef()
+    const toDateRef = React.createRef();
     const header = useRef();
 
     const incrementDate = (isPast) => {

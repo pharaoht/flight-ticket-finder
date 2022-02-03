@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import Compare from './Filters/Compare/Compare';
 import Departtimes from './Filters/DepartTimes/Departtimes';
 import Duration from './Filters/Duration/Duration';
 import SortBy from './Filters/SortBy/SortBy';
@@ -27,6 +28,7 @@ export default function SideBar(props) {
             <Duration durationAvg={props.durationAvg} />
             <Departtimes />
             <SortBy />
+            <Compare />
         </div>
     )
 };
