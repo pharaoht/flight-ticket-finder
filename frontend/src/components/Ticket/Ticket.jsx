@@ -121,28 +121,36 @@ export default function Ticket(props) {
         )
     }
 
-    const changeSelected = () => {
-
-        const flightDataObj = {
-            id: '',
-            airportCodeFrom: props.cityFrom,
-            airportCodeTo: props.cityTo,
-            price: props.price,
-            totalDuration: Number(props.durationDepart + props.durationReturn),
-            totalStops: Number(props.stops.length),
-            bookingLink: props.link,
-            countryFrom: props.countryFrom,
-            countryTo: props.countryTo,
-            departDate: convertDate(props.depart),
-            departTime: convertTime(props.depart),
-            arriveDate: convertDate(props.arrive),
-            arriveTime: convertTime(props.arrive)
-        }
+    const changeSelected = (e) => {
 
         if (!isSelected) {
+
+            if (context.selectedFlights.length === 3) {
+                return false;
+            }
+
+            const flightDataObj = {
+                id: props.type,
+                airportCodeFrom: props.cityFrom,
+                airportCodeTo: props.cityTo,
+                price: props.price,
+                totalDuration: Number(props.durationDepart + props.durationReturn),
+                totalStops: Number(props.stops.length),
+                bookingLink: props.link,
+                countryFrom: props.countryFrom,
+                countryTo: props.countryTo,
+                departDate: convertDate(props.depart),
+                departTime: convertTime(props.depart),
+                arriveDate: convertDate(props.arrive),
+                arriveTime: convertTime(props.arrive)
+            }
+
             context.setData(flightDataObj)
             setIsSelected(prev => { return true })
+
         } else {
+            const flightDataObj = { id: props.type };
+            context.removeItem(flightDataObj);
             setIsSelected(prev => { return false })
         }
     };

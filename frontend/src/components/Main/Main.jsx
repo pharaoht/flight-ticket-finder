@@ -24,7 +24,7 @@ export default function Main(props) {
                         price={item.price}
                         link={item.deep_link}
                         stops={item.route}
-                        type={item.id}
+                        type={item.booking_token}
                         airlines={item.airlines}
                         countryFrom={item.countryFrom.name}
                         countryTo={item.countryTo.name}

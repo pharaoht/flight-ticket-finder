@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import FlightContext from '../../../../Context/flight-context';
 import './Compare.css';
 
 export default function Compare() {
 
-    const [comparedFlights, setComparedFlights] = useState([]);
-    const [count, setCount] = useState(0);
+    const context = useContext(FlightContext);
 
     return (
         <div className='cp-parent'>
@@ -18,7 +18,7 @@ export default function Compare() {
                     <button>Compare</button>
                 </div>
                 <div>
-                    0/3 Flights
+                    <p>{context.selectedFlights.length} / 3 flights selected</p>
                 </div>
             </div>
         </div >
