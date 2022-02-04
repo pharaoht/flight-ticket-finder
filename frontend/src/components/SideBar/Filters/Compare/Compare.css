@@ -1,0 +1,17 @@
+.cp-holder {
+  display: flex;
+}
+
+.cp-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid grey;
+}
+
+.cp-header div {
+  padding-bottom: 5px;
+}
+
+.cp-parent {
+  margin-top: 10px;
+}

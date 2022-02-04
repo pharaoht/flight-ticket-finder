@@ -5,6 +5,7 @@ import Destinations from './containers/Destinations/Destinations.jsx';
 import Flights from './containers/Flights/Flights';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Layout from './hocs/Layout';
+import {FlightContextProvider} from './Context/flight-context';
 
 
 const App = () => {
@@ -16,7 +17,9 @@ const App = () => {
         <Switch>
           <Route exact path='/' component={Home}/>
           <Route path='/destinations/' component={Destinations} />
-          <Route path='/tickets/:from_airport/:to_airport/:depart_date/:return_date?' component={Flights}/>
+          <FlightContextProvider>
+            <Route path='/tickets/:from_airport/:to_airport/:depart_date/:return_date?' component={Flights}/>
+          </FlightContextProvider>
         </Switch>
       </Router>
     </Provider>

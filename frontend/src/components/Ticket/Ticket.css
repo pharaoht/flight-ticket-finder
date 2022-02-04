@@ -83,18 +83,23 @@
 }
 
 .tc-price {
-  display: flex;
   width: 25%;
-  justify-content: center;
-  align-items: center;
   border-left: 4px dotted lightgrey;
 }
 
 .tc-deals {
   display: flex;
+  height: 50%;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+.tc-compare {
+  padding-top: 10%;
+  padding-right: 10%;
+  display: flex;
+  justify-content: end;
 }
 
 .tc-button {
@@ -132,4 +137,13 @@ hr {
 
 .tc-stop-icon {
   font-size: 12px;
+}
+
+.tc-add-btn {
+  cursor: pointer;
+  font-size: 25px;
+  color: black;
+}
+.tc-add-btn:hover {
+  color: #00a698;
 }

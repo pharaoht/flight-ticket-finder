@@ -1,17 +1,19 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import './Ticket.css';
 import moment from 'moment'
 import airlines from 'airline-codes'
 import { useEffect } from 'react';
+import FlightContext from '../../Context/flight-context';
 
 export default function Ticket(props) {
 
+    const context = useContext(FlightContext);
     const [isHidden, setIsHidden] = useState(true);
-    const [returnFlights, setReturnFlights] = useState()
-    const [fromFlights, setFromFlights] = useState()
+    const [returnFlights, setReturnFlights] = useState();
+    const [fromFlights, setFromFlights] = useState();
+    const [isSelected, setIsSelected] = useState(false);
     let Fflights = []
     let Rflights = []
-
 
     const stopComponent = () => {
         return (
@@ -119,6 +121,32 @@ export default function Ticket(props) {
         )
     }
 
+    const changeSelected = () => {
+
+        const flightDataObj = {
+            id: '',
+            airportCodeFrom: props.cityFrom,
+            airportCodeTo: props.cityTo,
+            price: props.price,
+            totalDuration: Number(props.durationDepart + props.durationReturn),
+            totalStops: Number(props.stops.length),
+            bookingLink: props.link,
+            countryFrom: props.countryFrom,
+            countryTo: props.countryTo,
+            departDate: convertDate(props.depart),
+            departTime: convertTime(props.depart),
+            arriveDate: convertDate(props.arrive),
+            arriveTime: convertTime(props.arrive)
+        }
+
+        if (!isSelected) {
+            context.setData(flightDataObj)
+            setIsSelected(prev => { return true })
+        } else {
+            setIsSelected(prev => { return false })
+        }
+    };
+
     useEffect(() => {
         toFlight();
     }, [props.stops])
@@ -168,7 +196,12 @@ export default function Ticket(props) {
 
             </div>
             <div className='tc-price'>
-                <div className='tc-deals'>
+                <div className='tc-compare'>
+                    <div onClick={changeSelected} className='tc-add-btn'>
+                        {!isSelected ? <ion-icon name="add-outline"></ion-icon> : <ion-icon name="checkmark-outline"></ion-icon>}
+                    </div>
+                </div>
+                <div className='tc-deals '>
                     <div className='tc-tr-price'>${props.price}</div>
                     <div>
                         <button className='tc-button'>
