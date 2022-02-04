@@ -148,7 +148,8 @@ export default function Ticket(props) {
             context.setData(flightDataObj)
             setIsSelected(prev => { return true })
 
-        } else {
+        }
+        else {
             const flightDataObj = { id: props.type };
             context.removeItem(flightDataObj);
             setIsSelected(prev => { return false })
@@ -158,6 +159,22 @@ export default function Ticket(props) {
     useEffect(() => {
         toFlight();
     }, [props.stops])
+
+    useEffect(() => {
+
+        const checkID = obj => obj.id === props.type;
+        const isInside = context.selectedFlights.some(checkID);
+
+        if (isInside && !isSelected) {
+            setIsSelected(true)
+        }
+        else if (!isInside && isSelected) {
+            setIsSelected(false)
+        }
+        else {
+            return null
+        }
+    }, [context.selectedFlights.length])
 
     return (
         <div className='ticket-holder' key={props.type}>

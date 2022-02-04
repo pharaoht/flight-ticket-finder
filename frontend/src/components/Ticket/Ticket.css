@@ -99,7 +99,7 @@
   padding-top: 10%;
   padding-right: 10%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .tc-button {

@@ -1,5 +1,6 @@
 .cp-holder {
   display: flex;
+  flex-direction: column;
 }
 
 .cp-header {
@@ -14,4 +15,9 @@
 
 .cp-parent {
   margin-top: 10px;
+}
+.cp-select-holder {
+  outline: 1px solid black;
+  display: flex;
+  width: 100%;
 }

@@ -37,7 +37,6 @@ export const FlightContextProvider = (props) => {
     };
 
     const removeItem = (data) => {
-
         if (selectedFlights.length === 0) {
             return false
         }
