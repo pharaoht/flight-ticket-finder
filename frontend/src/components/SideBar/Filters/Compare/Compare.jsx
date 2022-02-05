@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import FlightContext from '../../../../Context/flight-context';
 import './Compare.css';
 import Modals from '../../../Modal/Modals';
@@ -10,13 +10,14 @@ export default function Compare() {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => {
+
         if (!isModalOpen) {
             setIsModalOpen(true)
         }
         else {
             setIsModalOpen(false)
         }
-        <Modals isOpen={isModalOpen}></Modals>
+
     }
 
     const renderSelectedFlights = () => {
@@ -30,7 +31,9 @@ export default function Compare() {
                                 <ion-icon name="close-outline"></ion-icon>
                             </div>
                             <div className='cp-brief-info'>
-
+                                <div className='cp-info-flight'>{item.airportCodeFrom} to {item.airportCodeTo}</div>
+                                <div className='cp-info-flight'> ${item.price}</div>
+                                <div className='cp-info-flight'>{item.departDate}</div>
                             </div>
                         </div>
                     </>
@@ -42,14 +45,17 @@ export default function Compare() {
 
     return (
         <div className='cp-parent'>
+            <Modals isOpen={isModalOpen} onRequest={setIsModalOpen}></Modals>
             <div className='cp-header'>
                 <div>
                     <h3>Compare Flights</h3>
                 </div>
             </div>
             <div className='cp-holder'>
-                <div>
-                    <button onClick={openModal}>Compare</button>
+                <div className='cp-btn-holder'>
+                    {context.selectedFlights.length < 3 ?
+                        <button className='cp-compare-btn-disabled' disabled={true}>Compare</button> :
+                        <button className='cp-compare-btn' onClick={openModal}>Compare</button>}
                 </div>
                 <div>
                     <p>{context.selectedFlights.length} / 3 flights selected</p>

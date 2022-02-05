@@ -6,8 +6,9 @@ import Flights from './containers/Flights/Flights';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Layout from './hocs/Layout';
 import {FlightContextProvider} from './Context/flight-context';
+import Modal from 'react-modal';
 
-
+Modal.setAppElement('#root')
 const App = () => {
 
   return (

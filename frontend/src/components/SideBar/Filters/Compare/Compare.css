@@ -3,12 +3,38 @@
   flex-direction: column;
 }
 
+.cp-btn-holder {
+  margin-bottom: 10px;
+}
 .cp-header {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid grey;
+  margin-bottom: 10px;
+}
+.cp-compare-btn {
+  background-color: #00a698;
+  color: #fff;
+  border: 0px;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: 1px 5px 5px lightgrey;
+  cursor: pointer;
+}
+.cp-compare-btn-disabled {
+  border: 0px;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: 1px 5px 5px lightgrey;
+  cursor: not-allowed;
 }
 
+.cp-compare-btn:hover {
+  transform: scale(1.03);
+  transition: 100ms;
+}
 .cp-header div {
   padding-bottom: 5px;
 }
@@ -17,7 +43,32 @@
   margin-top: 10px;
 }
 .cp-select-holder {
-  outline: 1px solid black;
   display: flex;
   width: 100%;
+
+  background-image: linear-gradient(312deg, #ffffff 68%, #d7e1ec 9%);
+  margin: 5px 0px;
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 1px 5px 5px lightgrey;
+  cursor: default;
+}
+.cp-icon {
+  width: 10%;
+  color: red;
+  cursor: pointer;
+}
+
+.cp-icon:hover {
+  color: darkred;
+  transform: scale(1.1);
+  transition: 100ms;
+}
+.cp-brief-info {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+.cp-info-flight {
+  margin-right: 5px;
 }
