@@ -31,7 +31,7 @@ export default function RangeSlider(props) {
     const handleChange = (event, newValue) => {
         if (props.single === true) {
             setValue(newValue);
-            props.updateDuration(newValue)
+            props.updateDuration(newValue, start)
         }
         else {
             if (props.return === false) {

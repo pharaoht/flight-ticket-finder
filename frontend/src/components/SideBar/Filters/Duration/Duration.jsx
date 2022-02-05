@@ -59,7 +59,8 @@ export default function Duration(props) {
         )
     }
 
-    const updateMaxDuration = (limit) => {
+    const updateMaxDuration = (limit, start) => {
+        console.log(limit)
         setMaxduration(limit);
     }
 

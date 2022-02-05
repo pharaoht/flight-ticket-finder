@@ -22,6 +22,10 @@ export default function SideBar(props) {
         scrollTop >= 100 ? sidebar.current.classList.add('is-stick') : sidebar.current.classList.remove('is-stick');
     };
 
+    const liftStateDurationHandler = () => {
+
+    }
+
     return (
         <div className='side-bar' ref={sidebar}>
             <StopOvers />

@@ -100,6 +100,13 @@ export default function Flights() {
         getFlights(startDate, returnDate);
     };
 
+    const durationFilter = () => {
+        let duration = 1000;
+        const arr = flights.map((item) => {
+
+        });
+    }
+
     function page() {
         return (
             <div className='parent-ticket-container'>

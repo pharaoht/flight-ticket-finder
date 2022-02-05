@@ -9,23 +9,12 @@ export default function Ticket(props) {
 
     const context = useContext(FlightContext);
     const [isHidden, setIsHidden] = useState(true);
+    const [isHiddenReturn, setIsHiddenReturn] = useState(true);
     const [returnFlights, setReturnFlights] = useState();
     const [fromFlights, setFromFlights] = useState();
     const [isSelected, setIsSelected] = useState(false);
     let Fflights = []
     let Rflights = []
-
-    const stopComponent = () => {
-        return (
-            <div style={{ display: 'flex', justifyContent: 'space-evenly', paddingTop: '10px' }}>
-                {fromFlights.map(item => {
-                    return (
-                        <div key={item.id} className='tc-stop-icon'>{item.flyFrom} <ion-icon name="airplane-outline"></ion-icon> {item.flyTo} </div>
-                    )
-                })}
-            </div>
-        )
-    };
 
     const toFlight = () => {
         props.stops.map((item) => {
@@ -41,53 +30,156 @@ export default function Ticket(props) {
     }
 
     const returnFlight = () => {
-        const end = returnFlights.length - 1
-        return (
-            <div className='tc-ticket-info'>
-                <div className='tc-img'>
-                    <h4 className='tc-h4'>{getAirLineName(returnFlights[0].airline)}</h4>
-                </div>
-                <div className='tc-details'>
-                    <div className='tc-detail-sec'>
-                        <div className='tc-date'>{convertDate(returnFlights[0].local_departure)}</div>
-                        <div className='tc-time'>{convertTime(returnFlights[0].local_departure)}</div>
-                        <div className='tc-location'>{props.cityTo}</div>
-                        <div className='tc-country'>{props.countryTo}</div>
-                    </div>
-                    <div className='tc-utl'>
-                        <div className='tc-duration'>
-                            <div>Duration</div>
-                            <div>{convertSeconds(props.durationReturn)}</div>
-                        </div>
-                        <div className='tc-line'>
-                            <hr className='tc-hr-1'></hr>
-                            <div className='inline-block2'>
-                                <ion-icon name="stop-circle-outline"></ion-icon>
-                            </div>
-                            <div className='inline-block'>
-                                <ion-icon name="airplane-outline"></ion-icon>
-                            </div>
-                        </div>
-                        <div className='tc-stops'>{returnFlights === undefined ? null : null}</div>
-                    </div>
 
-                    <div className='tc-detail-sec'>
-                        <div className='tc-date'>{convertDate(returnFlights[end].local_arrival)}</div>
-                        <div className='tc-time'>{convertTime(returnFlights[end].local_arrival)}</div>
-                        <div className='tc-location'>{props.cityFrom}</div>
-                        <div className='tc-country'>{props.countryFrom}</div>
+        const stopComponentReturn = () => {
+            return (
+                <div style={{ display: 'flex', justifyContent: 'space-evenly', paddingTop: '10px' }}>
+                    {returnFlights.map(item => {
+                        return (
+                            <div key={item.id} className='tc-stop-icon'>{item.flyFrom} <ion-icon name="airplane-outline"></ion-icon> {item.flyTo} </div>
+                        )
+                    })}
+                </div>
+            )
+        };
+
+        const stopCheckReturn = (num) => {
+            let stops;
+            let number = num - 1
+            num === 2 ? stops = 'Stop' : stops = 'Stops';
+
+            return (
+                num === 1 ? <><span style={{ color: 'green' }}>Non-Stop</span></> : <div onClick={() => show(1)} style={{ color: 'red' }}>{number} {stops}</div>
+            )
+        }
+
+        const end = returnFlights.length - 1;
+
+        return (
+            <>
+                <div className='tc-ticket-info'>
+                    <div className='tc-img'>
+                        <h4 className='tc-h4'>{getAirLineName(returnFlights[0].airline)}</h4>
+                    </div>
+                    <div className='tc-details'>
+                        <div className='tc-detail-sec'>
+                            <div className='tc-date'>{convertDate(returnFlights[0].local_departure)}</div>
+                            <div className='tc-time'>{convertTime(returnFlights[0].local_departure)}</div>
+                            <div className='tc-location'>{props.cityTo}</div>
+                            <div className='tc-country'>{props.countryTo}</div>
+                        </div>
+                        <div className='tc-utl'>
+                            <div className='tc-duration'>
+                                <div>Duration</div>
+                                <div>{convertSeconds(props.durationReturn)}</div>
+                            </div>
+                            <div className='tc-line'>
+                                <hr className='tc-hr-1'></hr>
+                                <div className='inline-block2'>
+                                    <ion-icon name="stop-circle-outline"></ion-icon>
+                                </div>
+                                <div className='inline-block'>
+                                    <ion-icon name="airplane-outline"></ion-icon>
+                                </div>
+                            </div>
+                            <div className='tc-stops'>{returnFlights === undefined ? null : stopCheckReturn(returnFlights.length)}</div>
+                        </div>
+
+                        <div className='tc-detail-sec'>
+                            <div className='tc-date'>{convertDate(returnFlights[end].local_arrival)}</div>
+                            <div className='tc-time'>{convertTime(returnFlights[end].local_arrival)}</div>
+                            <div className='tc-location'>{props.cityFrom}</div>
+                            <div className='tc-country'>{props.countryFrom}</div>
+                        </div>
                     </div>
                 </div>
-            </div>
+                {isHiddenReturn ? null : stopComponentReturn()}
+            </>
         )
     }
 
-    const show = () => {
-        if (isHidden) {
-            setIsHidden(false)
-        } else {
-            setIsHidden(true)
+    const fromFlight = () => {
+
+        const stopCheck = (num) => {
+            let stops;
+            let number = num - 1
+            num === 2 ? stops = 'Stop' : stops = 'Stops';
+
+            return (
+                num === 1 ? <><span style={{ color: 'green' }}>Non-Stop</span></> : <div onClick={show} style={{ color: 'red' }}>{number} {stops}</div>
+            )
         }
+
+        const stopComponent = () => {
+            return (
+                <div style={{ display: 'flex', justifyContent: 'space-evenly', paddingTop: '10px' }}>
+                    {fromFlights.map(item => {
+                        return (
+                            <div key={item.id} className='tc-stop-icon'>{item.flyFrom} <ion-icon name="airplane-outline"></ion-icon> {item.flyTo} </div>
+                        )
+                    })}
+                </div>
+            )
+        };
+
+        return (
+            <>
+                <div className='tc-ticket-info'>
+                    <div className='tc-img'>
+                        <h4 className='tc-h4'>{getAirLineName(props.airlines[0])}</h4>
+                    </div>
+                    <div className='tc-details'>
+                        <div className='tc-detail-sec'>
+                            <div className='tc-date'>{convertDate(props.depart)}</div>
+                            <div className='tc-time'>{convertTime(props.depart)}</div>
+                            <div className='tc-location'>{props.cityFrom}</div>
+                            <div className='tc-country'>{props.countryFrom}</div>
+                        </div>
+                        <div className='tc-utl'>
+                            <div className='tc-duration'>
+                                <div>Duration</div>
+                                <div>{convertSeconds(props.durationDepart)}</div>
+                            </div>
+                            <div className='tc-line'>
+                                <hr className='tc-hr-1'></hr>
+                                <div className='inline-block2'>
+                                    <ion-icon name="stop-circle-outline"></ion-icon>
+                                </div>
+                                <div className='inline-block'>
+                                    <ion-icon name="airplane-outline"></ion-icon>
+                                </div>
+                            </div>
+                            <div className='tc-stops' >{fromFlights === undefined ? null : stopCheck(fromFlights.length)}</div>
+
+                        </div>
+                        <div className='tc-detail-sec'>
+                            <div className='tc-date'>{convertDate(props.arrive)}</div>
+                            <div className='tc-time'>{convertTime(props.arrive)}</div>
+                            <div className='tc-location'>{props.cityTo}</div>
+                            <div className='tc-country'>{props.countryTo}</div>
+                        </div>
+                    </div>
+                </div>
+                {isHidden ? null : stopComponent()}
+            </>
+        )
+    }
+
+    const show = (id) => {
+        if (id === 1) {
+            if (isHiddenReturn) {
+                return setIsHiddenReturn(false)
+            } else {
+                return setIsHiddenReturn(true)
+            }
+        }
+
+        if (isHidden) {
+            return setIsHidden(false)
+        } else {
+            return setIsHidden(true)
+        }
+
     };
 
     const getAirLineName = (iata) => {
@@ -112,12 +204,6 @@ export default function Ticket(props) {
             <>
                 <div>{hours} h {minutes} m</div>
             </>
-        )
-    }
-
-    const stopCheck = (num) => {
-        return (
-            num === 1 ? <><span style={{ color: 'green' }}>Non-Stop</span></> : <div onClick={show} style={{ color: 'red' }}>{num} stops</div>
         )
     }
 
@@ -179,46 +265,9 @@ export default function Ticket(props) {
     return (
         <div className='ticket-holder' key={props.type}>
             <div className='tc-flight-info'>
-                <div className='tc-ticket-info'>
-                    <div className='tc-img'>
-                        <h4 className='tc-h4'>{getAirLineName(props.airlines[0])}</h4>
-                    </div>
-                    <div className='tc-details'>
-                        <div className='tc-detail-sec'>
-                            <div className='tc-date'>{convertDate(props.depart)}</div>
-                            <div className='tc-time'>{convertTime(props.depart)}</div>
-                            <div className='tc-location'>{props.cityFrom}</div>
-                            <div className='tc-country'>{props.countryFrom}</div>
-                        </div>
-                        <div className='tc-utl'>
-                            <div className='tc-duration'>
-                                <div>Duration</div>
-                                <div>{convertSeconds(props.durationDepart)}</div>
-                            </div>
-                            <div className='tc-line'>
-                                <hr className='tc-hr-1'></hr>
-                                <div className='inline-block2'>
-                                    <ion-icon name="stop-circle-outline"></ion-icon>
-                                </div>
-                                <div className='inline-block'>
-                                    <ion-icon name="airplane-outline"></ion-icon>
-                                </div>
-                            </div>
-                            <div className='tc-stops' >{fromFlights === undefined ? null : stopCheck(fromFlights.length)}</div>
-
-                        </div>
-                        <div className='tc-detail-sec'>
-                            <div className='tc-date'>{convertDate(props.arrive)}</div>
-                            <div className='tc-time'>{convertTime(props.arrive)}</div>
-                            <div className='tc-location'>{props.cityTo}</div>
-                            <div className='tc-country'>{props.countryTo}</div>
-                        </div>
-                    </div>
-                </div>
-                {isHidden ? null : stopComponent()}
+                {fromFlight()}
                 <hr></hr>
                 {returnFlights ? returnFlight() : null}
-
             </div>
             <div className='tc-price'>
                 <div className='tc-compare'>
