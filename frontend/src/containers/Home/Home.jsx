@@ -33,7 +33,6 @@ export default function Home(props) {
             return false;
         };
 
-
         const url_1 = 'https://tequila-api.kiwi.com/locations/query?term=';
         const url_2 = '&locale=en-US&location_types=airport&limit=10&active_only=true';
 
@@ -58,7 +57,7 @@ export default function Home(props) {
 
     const changeHandler = (event) => {
 
-        formValidator(event, 'change');
+        // formValidator(event, 'change');
 
         if (event.target.value === '') {
 

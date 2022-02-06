@@ -3,7 +3,7 @@ import './DepartTimes.css'
 import RangeSlider from '../../../Slider/Slider';
 
 
-export default function Departtimes() {
+export default function Departtimes(props) {
     const [isHidden, setIsHidden] = useState(true);
     const [obStart, setObStart] = useState('12:00 AM');
     const [ObEnd, setObEnd] = useState('11:00 PM');
@@ -54,6 +54,7 @@ export default function Departtimes() {
     const updateOb = (num) => {
         const updateStartTime = convertTime(num[0]);
         const updateEndTime = convertTime(num[1]);
+        props.liftState(num)
         setObStart(prevState => { return updateStartTime });
         setObEnd(prevState => { return updateEndTime });
     }

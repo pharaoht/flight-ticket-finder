@@ -1,6 +1,17 @@
 import React from 'react';
-import Bar from 'react-chartjs-2';
+import { CategoryScale } from 'chart.js';
+import { Bar, Chart } from 'react-chartjs-2';
+import '../BarChart/barchart.css'
 
 export default function BarChart() {
-    return <div></div>;
+
+    const data = {
+        labels: ['Mon', 'Tue', 'Wed'],
+        datasets: [{
+            label: 'Weekly Sales',
+            data: [18, 12, 6],
+        }]
+    };
+
+    return <Bar data={data} />;
 }

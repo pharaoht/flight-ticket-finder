@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Ticket from '../Ticket/Ticket';
 import ClipLoader from "react-spinners/ClipLoader";
+import BarChart from '../BarChart/BarChart';
 import './Main.css';
 
 export default function Main(props) {
@@ -8,10 +9,10 @@ export default function Main(props) {
     const [flights, setFlights] = useState([]);
 
     useEffect(() => {
-        if (props.flights.data !== undefined) {
-            setFlights(props.flights.data)
+        if (props.flights !== undefined) {
+            setFlights(props.flights)
         }
-    }, [props])
+    }, [props.flights])
 
     const showFlights = () => {
         return (
@@ -58,7 +59,7 @@ export default function Main(props) {
     return (
         <div className='main-holder'>
             {props.test ? loader() :
-                flights.length > 1 ? showFlights() : noFlights()}
+                flights.length >= 1 ? showFlights() : noFlights()}
         </div>
     )
 };

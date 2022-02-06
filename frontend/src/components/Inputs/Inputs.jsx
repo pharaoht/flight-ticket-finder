@@ -3,6 +3,7 @@ import '../Inputs/Inputs.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
+//React factor? forward refs isnt the best practice?
 
 export const FromAirport = React.forwardRef((props, ref) => (
     <>

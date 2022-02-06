@@ -21,7 +21,6 @@ export default function Compare() {
     }
 
     const renderSelectedFlights = () => {
-
         return (
             context.selectedFlights.map((item) => {
                 return (
@@ -58,7 +57,7 @@ export default function Compare() {
                         <button className='cp-compare-btn' onClick={openModal}>Compare</button>}
                 </div>
                 <div>
-                    <p>{context.selectedFlights.length} / 3 flights selected</p>
+                    <p><b>{context.selectedFlights.length}</b> / 3 flights selected</p>
                 </div>
                 <div>
                     {context.selectedFlights.length >= 1 ? renderSelectedFlights() : null}

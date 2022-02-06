@@ -7,10 +7,15 @@
 }
 
 .sidebar-component {
+  margin-top: 10px;
   width: 30%;
 }
 
 .ticket-area {
   width: 100%;
   display: flex;
+}
+
+.sidebar-total {
+  text-align: center;
 }
