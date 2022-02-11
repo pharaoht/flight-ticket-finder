@@ -19,8 +19,10 @@ export default function Flights() {
     const [flights2, setFlights2] = useState([]);
     const [duration, setDuration] = useState([]);
     const [test, setTest] = useState(false);
+    // const [nonStopFlights, setNonStopFlights] = useState(false);
 
     const getFlights = useCallback((sdate, edate) => {
+        const queryString = window.location;
         let departure_date, return_date;
         const from = params.from_airport, destination = params.to_airport;
 
@@ -45,8 +47,9 @@ export default function Flights() {
             .then((res) => {
                 console.log(res)
                 setFlights(res.data.data);
-                setFlights2(res.data.data)
+                setFlights2(res.data.data);
                 getDurationsAvg(res.data.data);
+                // findNonStopFlights(res.data.data);
                 setTest(false)
                 return setIsLoading(false);
             })
@@ -55,7 +58,7 @@ export default function Flights() {
                 setTest(false)
                 return setIsLoading(false);
             });
-    }, []);
+    }, [params.depart_date, params.from_airport, params.to_airport, params.return_date]);
 
     function convertDay(date) {
         if (typeof date === 'object') {
@@ -75,6 +78,7 @@ export default function Flights() {
             if (idx === 0) {
                 minimum = item.duration.total;
                 maximum = item.duration.total;
+                return item;
             }
             else {
                 if (item.duration.total < minimum) {
@@ -83,6 +87,7 @@ export default function Flights() {
                 if (item.duration.total > maximum) {
                     maximum = item.duration.total
                 }
+                return item;
             }
         })
         setDuration(prevState => { return [minimum, maximum] })
@@ -101,6 +106,7 @@ export default function Flights() {
 
     function getNewFlights(startDate, returnDate) {
         setTest(true)
+        // setNonStopFlights(prev => false);
         getFlights(startDate, returnDate);
     };
 
@@ -113,21 +119,40 @@ export default function Flights() {
 
         filtFlights = flights2.filter(item => {
             if (seconds === 0) {
-                return item
-            } else {
-                return item.duration.total <= seconds
+                return item;
             }
+            else {
+                return item.duration.total <= seconds;
+            }
+
         }).filter(item => {
             if (obj.outBound === null) {
-                return item
+                return item;
             } else {
                 const start = obj.outBound[0];
                 const end = obj.outBound[1];
                 const departure = Number(moment(item.local_departure).utc().format('HH'));
 
                 if (departure >= start && departure <= end) {
-                    return item
+                    return item;
                 }
+                return false;
+            }
+        }).filter(item => {
+            if (obj.returnTime === null) {
+                return item;
+            }
+            else {
+                const lastRoute = item.route.length - 1;
+                const time = item.route[lastRoute].local_arrival;
+                const returnTime = Number(moment(time).utc().format('HH'));
+                const start = obj.returnTime[0];
+                const end = obj.returnTime[1];
+
+                if (returnTime >= start && returnTime <= end) {
+                    return item;
+                }
+                return false;
             }
         });
 
@@ -158,6 +183,17 @@ export default function Flights() {
             </div>
         )
     };
+
+    // function findNonStopFlights(flights) {
+    //     flights.map(item => {
+    //         if (nonStopFlights) {
+    //             return null;
+    //         }
+    //         else if (item.route <= 2) {
+    //             return setNonStopFlights(prev => true)
+    //         }
+    //     });
+    // };
 
     useEffect(() => {
         setIsLoading(true);

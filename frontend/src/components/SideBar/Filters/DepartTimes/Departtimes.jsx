@@ -42,7 +42,7 @@ export default function Departtimes(props) {
         if (time_part_array[0] > 12) {
             time_part_array[0] = time_part_array[0] - 12;
         }
-        if (time_part_array[0] == '0') {
+        if (time_part_array[0] === '0') {
             time_part_array[0] = '12'
         }
 
@@ -62,6 +62,7 @@ export default function Departtimes(props) {
     const updateReturn = (num) => {
         const updateStartTime = convertTime(num[0]);
         const updateEndTime = convertTime(num[1]);
+        props.returnSetter(num);
         setReturnStart(prevState => { return updateStartTime });
         setReturnEnd(prevState => { return updateEndTime });
     }

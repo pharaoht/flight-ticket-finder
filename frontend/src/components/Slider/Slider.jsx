@@ -7,9 +7,7 @@ function valuetext(value) {
 }
 
 export default function RangeSlider(props) {
-    let endMax;
-    let start;
-    let end;
+    let endMax, start, end;
 
     if (props.single === true) {
         start = props.start

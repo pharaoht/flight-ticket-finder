@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 //Will go and refact once project is completed, any methods used more than once will go in here 
-export const locationAPIRequest = async (location, val) => {
+export const locationAPIRequest = async (location) => {
 
-    if (location === '') {
+    if (location[0] === undefined) {
         return [];
     };
 
@@ -17,11 +17,11 @@ export const locationAPIRequest = async (location, val) => {
         }
     };
 
-    let loco = await axios.get(`${url_1}${location}${url_2}`, config);
+    let loco = await axios.get(`${url_1}${location[0]}${url_2}`, config);
 
     try {
 
-        return loco.data.locations
+        return [loco.data.locations, location[1]]
 
     }
     catch (err) {
@@ -31,10 +31,6 @@ export const locationAPIRequest = async (location, val) => {
 
 };
 
-export const showFromLocations = () => {
+export const convertDateObjToTime = (dateObj) => {
 
-}
-
-export const showToLocations = () => {
-
-}
+};

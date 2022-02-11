@@ -10,8 +10,7 @@ export default function SideBar(props) {
     const [duration, setDuration] = useState(null);
     const [outBound, setOutBound] = useState(null);
     const [returnTime, setReturnTime] = useState(null);
-
-    const sidebar = useRef()
+    const sidebar = useRef();
 
     useEffect(() => {
         window.addEventListener('scroll', isSticky);
@@ -20,15 +19,22 @@ export default function SideBar(props) {
         };
     }, []);
 
+    //when dependent state changes, pass props to parent
     useEffect(() => {
-        liftStateDurationHandler();
+        const timer = setTimeout(() => {
+            liftStateDurationHandler();
+        }, 500)
+        return () => {
+            clearTimeout(timer);
+        };
     }, [duration, outBound, returnTime])
 
+    //scoll class adder
     const isSticky = (e) => {
         const scrollTop = window.scrollY;
         scrollTop >= 100 ? sidebar.current.classList.add('is-stick') : sidebar.current.classList.remove('is-stick');
     };
-
+    //lift state handler to parent
     const liftStateDurationHandler = () => {
         const filterObj = {
             duration: duration,
@@ -37,24 +43,24 @@ export default function SideBar(props) {
         }
         props.liftState(filterObj)
     };
-
+    //lift state handler to child
     const durationSetter = (num) => {
         setDuration(prev => num)
     };
-
+    //lift state handler to child
     const outBoundSetter = (time) => {
         setOutBound(prev => time);
     };
-
-    const returnSetter = () => {
-        setReturnTime
-    }
+    //lift state handler to child
+    const returnSetter = (time) => {
+        setReturnTime(prev => time)
+    };
 
     return (
         <div className='side-bar' ref={sidebar}>
             <StopOvers />
             <Duration durationAvg={props.durationAvg} liftState={durationSetter} />
-            <Departtimes liftState={outBoundSetter} />
+            <Departtimes liftState={outBoundSetter} returnSetter={returnSetter} />
             <SortBy />
             <Compare />
         </div>

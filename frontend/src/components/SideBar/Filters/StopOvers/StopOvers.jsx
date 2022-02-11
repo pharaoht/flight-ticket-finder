@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import './StopOvers.css';
 
-export default function StopOvers() {
+export default function StopOvers(props) {
 
     const [isHidden, setIsHidden] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(null)
 
     const toggleHandler = () => {
         if (isHidden) {
@@ -28,7 +29,7 @@ export default function StopOvers() {
             <>
                 <div className='so-stops'>
                     <ul>
-                        <li><input type='checkbox' name='non-stop' /> <span>Non-Stop</span></li>
+                        <li><input type='checkbox' name='non-stop' disabled={props.nonStop} /> <span>Non-Stop</span></li>
                         <li><input type='checkbox' name='one-stop' /> <span>1 Stop</span></li>
                         <li><input type='checkbox' name='two-stops' /> <span>+2 Stops</span></li>
                     </ul>
