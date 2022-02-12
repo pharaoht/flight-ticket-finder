@@ -3,7 +3,6 @@ import { useRef } from 'react';
 import { FromAirport, ToAirport, CheckIn, CheckOut, Cabin, FindBtn, FromLocations, CabinDropDown, ToLocations } from '../Inputs/Inputs';
 import { locationAPIRequest } from '../../Util/UtilMethods';
 import './SearchAdvance.css'
-import { Redirect } from 'react-router-dom';
 
 export default function SearchAdvance(props) {
     const newStartDay = convertDay(props.flightInfo.depart_date)

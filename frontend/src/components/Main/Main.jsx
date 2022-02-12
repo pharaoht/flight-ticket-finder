@@ -5,7 +5,6 @@ import BarChart from '../BarChart/BarChart';
 import './Main.css';
 
 export default function Main(props) {
-
     const [flights, setFlights] = useState([]);
 
     useEffect(() => {

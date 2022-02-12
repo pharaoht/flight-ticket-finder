@@ -110,7 +110,19 @@ export default function Flights() {
         getFlights(startDate, returnDate);
     };
 
+    const checkNonStop = (flight) => {
+        if (flight.route.length <= 2) {
+            return true
+        }
+        return false;
+    };
+
     const filterSetter = (obj) => {
+
+        if (obj.duration === null && obj.outBound === null && obj.returnTime === null) {
+            return false
+        }
+        let isNonStop = false;
         let timer;
         let filtFlights;
         clearTimeout(timer)
@@ -118,6 +130,7 @@ export default function Flights() {
         let seconds = (obj.duration * 60) * 60;
 
         filtFlights = flights2.filter(item => {
+            checkNonStop(item);
             if (seconds === 0) {
                 return item;
             }

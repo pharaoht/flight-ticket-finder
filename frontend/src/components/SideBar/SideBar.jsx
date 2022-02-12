@@ -58,7 +58,7 @@ export default function SideBar(props) {
 
     return (
         <div className='side-bar' ref={sidebar}>
-            <StopOvers />
+            <StopOvers nonstop={props} />
             <Duration durationAvg={props.durationAvg} liftState={durationSetter} />
             <Departtimes liftState={outBoundSetter} returnSetter={returnSetter} />
             <SortBy />

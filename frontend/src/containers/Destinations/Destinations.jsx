@@ -4,7 +4,6 @@ const Destinations = () => {
     return (
         <div>
             hi
-
         </div>
     )
 }

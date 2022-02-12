@@ -1,5 +1,5 @@
 // import React, { useEffect, useState } from 'react';
-// import { CabinDropDown } from '../../Inputs';
+// import { CabinDropDown } from '../../Inputs/Inputs';
 
 // const CabinModule = () => {
 //     const [adults, setAdults] = useState(1);
@@ -23,7 +23,7 @@
 //         }
 //         let count = adults + 1
 //         setAdults(prevState => { return prevState + 1 })
-//         SetParamBuilder(prevState => { return { ...prevState, adults: count } })
+//         // SetParamBuilder(prevState => { return { ...prevState, adults: count } })
 //     };
 
 //     const decrementAdult = () => {
@@ -33,7 +33,7 @@
 //         }
 //         let count = adults - 1
 //         setAdults(prevState => { return prevState - 1 });
-//         SetParamBuilder(prevState => { return { ...prevState, adults: count } });
+//         // SetParamBuilder(prevState => { return { ...prevState, adults: count } });
 //     };
 
 //     const incrementChild = () => {
@@ -43,7 +43,7 @@
 //         }
 //         let count = children + 1
 //         setChildren(prevState => { return prevState + 1 })
-//         SetParamBuilder(prevState => { return { ...prevState, children: count } });
+//         // SetParamBuilder(prevState => { return { ...prevState, children: count } });
 //     };
 
 //     const decrementChild = () => {
@@ -54,7 +54,7 @@
 //         };
 //         let count = children - 1
 //         setChildren(prevState => { return prevState - 1 })
-//         SetParamBuilder(prevState => { return { ...prevState, children: count } });
+//         // SetParamBuilder(prevState => { return { ...prevState, children: count } });
 //     };
 
 //     const incrementInfant = () => {
@@ -64,7 +64,7 @@
 //         }
 //         let count = infants + 1
 //         setInfants(prevState => { return prevState + 1 })
-//         SetParamBuilder(prevState => { return { ...prevState, infants: count } });
+//         // SetParamBuilder(prevState => { return { ...prevState, infants: count } });
 //     }
 
 //     const decrementInfant = () => {
@@ -73,7 +73,7 @@
 //         }
 //         let count = infants - 1
 //         setInfants(prevState => { return prevState - 1 })
-//         SetParamBuilder(prevState => { return { ...prevState, infants: count } });
+//         // SetParamBuilder(prevState => { return { ...prevState, infants: count } });
 //     }
 
 //     const showCabin = (e) => {

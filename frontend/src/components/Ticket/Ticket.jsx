@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import FlightContext from '../../Context/flight-context';
 
 export default function Ticket(props) {
-
+    console.log(props)
     const context = useContext(FlightContext);
     const [isHidden, setIsHidden] = useState(true);
     const [isHiddenReturn, setIsHiddenReturn] = useState(true);
