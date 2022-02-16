@@ -20,6 +20,7 @@ export default function Flights() {
     const [duration, setDuration] = useState([]);
     const [test, setTest] = useState(false);
     const [nonStopFlights, setNonStopFlights] = useState(true);
+    const [dates, setDates] = useState({});
 
     const getFlights = useCallback((sdate, edate) => {
 
@@ -114,8 +115,8 @@ export default function Flights() {
     };
 
     function getNewFlights(startDate, returnDate) {
-        setTest(true)
-        getFlights(startDate, returnDate);
+
+        setDates(prev => { return { sdate: startDate, edate: returnDate } })
     };
 
     const checkNonStop = (flight) => {
@@ -125,7 +126,7 @@ export default function Flights() {
                 return false;
             }
             if (item.route.length <= 2) {
-                console.log('hi')
+                console.log(item.route.length)
                 setNonStopFlights(false);
                 return isNonStop = true
             };
@@ -230,7 +231,14 @@ export default function Flights() {
     useEffect(() => {
         setIsLoading(true);
         getFlights();
-    }, [getFlights]);
+    }, []);
+
+    useEffect(() => {
+        setTest(true);
+        getFlights(dates.sdate, dates.edate);
+
+    }, [dates])
+
 
     return (
         <>

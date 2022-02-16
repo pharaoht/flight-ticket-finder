@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import './StopOvers.css';
 
 export default function StopOvers(props) {
-
+    console.log(props)
     const [isHidden, setIsHidden] = useState(false);
-    const [isDisabled, setIsDisabled] = useState(props.nonstop)
+    const [isDisabled, setIsDisabled] = useState(props.nonstop);
+    const [checked, setChecked] = useState('checked');
 
     const toggleHandler = () => {
         if (isHidden) {
@@ -27,25 +29,20 @@ export default function StopOvers(props) {
     }
 
     const liftState = (e) => {
-        if (e.target.name === 'non-stop') {
-            if (!e.target.checked) {
-                return false;
-            }
+        if (e.target.id === 'non-stop') {
             props.liftStateStops(2);
         }
-        else if (e.target.name === 'one-stop') {
-            if (e.target.checked === false) {
-                props.liftStateStops(0);
-            } else {
-                props.liftStateStops(4);
-            }
-        } else {
-            if (e.target.checked === false) {
-                props.liftStateStops(0);
-            }
-            else {
-                props.liftStateStops(5);
-            }
+        else if (e.target.id === '1-stop') {
+            props.liftStateStops(4);
+            setChecked(prev => '');
+        }
+        else if (e.target.id === '2-stops') {
+            props.liftStateStops(5);
+            setChecked(prev => '');
+        }
+        else {
+            props.liftStateStops(0);
+            setChecked(prev => 'checked');
         }
     };
 
@@ -53,15 +50,36 @@ export default function StopOvers(props) {
         return (
             <>
                 <div className='so-stops'>
-                    <ul>
-                        <li><input onClick={e => liftState(e)} type='checkbox' name='non-stop' disabled={isDisabled} /> <span>Non-Stop</span></li>
-                        <li><input onClick={e => liftState(e)} type='checkbox' name='one-stop' /> <span>1 Stop</span></li>
-                        <li><input onClick={e => liftState(e)} type='checkbox' name='two-stops' /> <span>+2 Stops</span></li>
+                    <ul className='so-ul-stops'>
+                        <li>
+                            <label className='so-labels'>
+                                <input className='so-input' onChange={e => liftState(e)} type='radio' name='stops' id='non-stop' disabled={isDisabled} />Non-Stop
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input className='so-input' onChange={e => liftState(e)} type='radio' name='stops' id='1-stop' />1 Stop
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input className='so-input' onChange={e => liftState(e)} type='radio' name='stops' id='2-stops' />+2 Stops
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input className='so-input' onChange={e => liftState(e)} type='radio' name='stops' id='all-stops' />All
+                            </label>
+                        </li>
                     </ul>
                 </div>
             </>
         )
     };
+
+    useEffect(() => {
+        setIsDisabled(prev => props.nonstop)
+    }, [props.nonstop]);
 
     return (
         <div className='so-parent'>

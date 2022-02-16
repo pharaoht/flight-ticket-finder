@@ -12,3 +12,11 @@
 .so-stops {
   padding: 10px;
 }
+
+.so-ul-stops li {
+  margin-bottom: 5px;
+}
+
+.so-input {
+  margin-right: 2px;
+}
