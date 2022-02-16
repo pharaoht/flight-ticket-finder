@@ -4,7 +4,7 @@ const FlightContext = React.createContext({
     id: '', airportCodeFrom: '', airportCodeTo: '',
     price: '', totalDuration: '', totalStops: '', bookingLink: '',
     countryFrom: '', countryTo: '', departDate: '',
-    departTime: '', arriveDate: '', arriveTime: ''
+    departTime: '', arriveDate: '', arriveTime: '', link: ''
 });
 
 export const FlightContextProvider = (props) => {
@@ -12,7 +12,7 @@ export const FlightContextProvider = (props) => {
         id: '', airportCodeFrom: '', airportCodeTo: '',
         price: '', totalDuration: '', totalStops: '', bookingLink: '',
         countryFrom: '', countryTo: '', departDate: '',
-        departTime: '', arriveDate: '', arriveTime: ''
+        departTime: '', arriveDate: '', arriveTime: '', link: ''
     });
     const [selectedFlights, setSelectedFlights] = useState([]);
 
@@ -30,7 +30,7 @@ export const FlightContextProvider = (props) => {
                 id: data.id, airportCodeFrom: data.airportCodeFrom, airportCodeTo: data.airportCodeTo,
                 price: data.price, totalDuration: data.totalDuration, totalStops: data.totalStops,
                 bookingLink: data.bookingLink, countryFrom: data.countryFrom,
-                countryTo: data.countryTo, departDate: data.departDate,
+                countryTo: data.countryTo, departDate: data.departDate, link: data.link,
                 departTime: data.departTime, arriveDate: data.arriveDate, arriveTime: data.arriveTime
             }
         })

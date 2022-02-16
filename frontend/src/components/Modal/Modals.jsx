@@ -8,7 +8,8 @@ export default function Modals(props) {
 
     return (
         <Modal isOpen={props.isOpen} style={{ overlay: { zIndex: 999 } }} onRequestClose={() => props.onRequest()} >
-            <h3>Click the legend to adjust scale</h3>
+            <h3>Click the legend to adjust scale.</h3>
+            <h4>Click bars to redirect to booking site.</h4>
             <BarChart />
         </Modal>
     )

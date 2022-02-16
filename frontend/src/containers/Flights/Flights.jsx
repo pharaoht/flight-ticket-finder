@@ -19,12 +19,27 @@ export default function Flights() {
     const [flights2, setFlights2] = useState([]);
     const [duration, setDuration] = useState([]);
     const [test, setTest] = useState(false);
-    // const [nonStopFlights, setNonStopFlights] = useState(false);
+    const [nonStopFlights, setNonStopFlights] = useState(true);
 
     const getFlights = useCallback((sdate, edate) => {
-        const queryString = window.location;
-        let departure_date, return_date;
+
+        const queryString = window.location.search;
         const from = params.from_airport, destination = params.to_airport;
+        let URL = '';
+
+        const config = {
+            headers: {
+                "accept": "application/json",
+                "apikey": "SLxN9_Q0EiAp-Lr7hLb-efLH7T1bIlOd"
+            }
+        };
+
+        if (queryString) {
+            let params = queryString.split('/');
+            console.log(params)
+        }
+        let departure_date, return_date;
+
 
         if (sdate) {
             departure_date = convertDay(sdate);
@@ -34,22 +49,16 @@ export default function Flights() {
             return_date = convertDay(params.return_date)
         }
 
-        const URL = `https://tequila-api.kiwi.com/v2/search?fly_from=${from}&fly_to=${destination}&dateFrom=${departure_date}&dateTo=${departure_date}&return_to=${return_date}&return_from=${return_date}&vehicle_type=aircraft&dtime_from=0:00&dtime_to=24:00&atime_from=0:00&atime_to=24:00&ret_dtime_from=0:00&ret_dtime_to=24:00&ret_atime_from=0:00&ret_atime_to=24:00&curr=USD&locale=en&limit=50`;
-
-        const config = {
-            headers: {
-                "accept": "application/json",
-                "apikey": "SLxN9_Q0EiAp-Lr7hLb-efLH7T1bIlOd"
-            }
-        };
+        URL = `https://tequila-api.kiwi.com/v2/search?fly_from=${from}&fly_to=${destination}&dateFrom=${departure_date}&dateTo=${departure_date}&return_to=${return_date}&return_from=${return_date}&vehicle_type=aircraft&dtime_from=0:00&dtime_to=24:00&atime_from=0:00&atime_to=24:00&ret_dtime_from=0:00&ret_dtime_to=24:00&ret_atime_from=0:00&ret_atime_to=24:00&curr=USD&locale=en&limit=50`;
 
         axios.get(URL, config)
             .then((res) => {
-                console.log(res)
+                console.log(res);
+                setNonStopFlights(true);
                 setFlights(res.data.data);
                 setFlights2(res.data.data);
                 getDurationsAvg(res.data.data);
-                // findNonStopFlights(res.data.data);
+                checkNonStop(res.data.data);
                 setTest(false)
                 return setIsLoading(false);
             })
@@ -97,7 +106,7 @@ export default function Flights() {
     function loader() {
         return (
             <>
-                <div style={{ width: '90vw', height: '90vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <div style={{ width: '90vw', height: '90vh', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 40 }}>
                     <div><ClipLoader color={'#4EF3D2'} loading={isLoading} size={150} /></div>
                 </div>
             </>
@@ -106,23 +115,31 @@ export default function Flights() {
 
     function getNewFlights(startDate, returnDate) {
         setTest(true)
-        // setNonStopFlights(prev => false);
         getFlights(startDate, returnDate);
     };
 
     const checkNonStop = (flight) => {
-        if (flight.route.length <= 2) {
-            return true
-        }
-        return false;
+        let isNonStop = false;
+        flight.map((item) => {
+            if (isNonStop) {
+                return false;
+            }
+            if (item.route.length <= 2) {
+                console.log('hi')
+                setNonStopFlights(false);
+                return isNonStop = true
+            };
+            return false;
+        });
+
     };
 
     const filterSetter = (obj) => {
 
-        if (obj.duration === null && obj.outBound === null && obj.returnTime === null) {
+        if (obj.duration === null && obj.outBound === null && obj.returnTime === null && obj.stopOvers === null) {
             return false
         }
-        let isNonStop = false;
+
         let timer;
         let filtFlights;
         clearTimeout(timer)
@@ -130,7 +147,6 @@ export default function Flights() {
         let seconds = (obj.duration * 60) * 60;
 
         filtFlights = flights2.filter(item => {
-            checkNonStop(item);
             if (seconds === 0) {
                 return item;
             }
@@ -138,6 +154,20 @@ export default function Flights() {
                 return item.duration.total <= seconds;
             }
 
+        }).filter(item => {
+            if (obj.stopOvers === null || obj.stopOvers === 0) {
+                return item
+            } else {
+                if (obj.stopOvers === 5) {
+                    if (item.route.length >= obj.stopOvers) {
+                        return item
+                    }
+                }
+                else if (item.route.length <= obj.stopOvers) {
+                    return item;
+                }
+                return false;
+            }
         }).filter(item => {
             if (obj.outBound === null) {
                 return item;
@@ -187,7 +217,7 @@ export default function Flights() {
                         <div className='sidebar-total'>
                             <span><b>{flights.length}</b> Total flights avaiable</span>
                         </div>
-                        <SideBar durationAvg={duration} liftState={filterSetter} />
+                        <SideBar durationAvg={duration} liftState={filterSetter} nonStop={nonStopFlights} />
                     </div>
                     <div className='ticket-area'>
                         <Main flights={flights} test={test} />
@@ -197,17 +227,6 @@ export default function Flights() {
         )
     };
 
-    // function findNonStopFlights(flights) {
-    //     flights.map(item => {
-    //         if (nonStopFlights) {
-    //             return null;
-    //         }
-    //         else if (item.route <= 2) {
-    //             return setNonStopFlights(prev => true)
-    //         }
-    //     });
-    // };
-
     useEffect(() => {
         setIsLoading(true);
         getFlights();
@@ -215,7 +234,7 @@ export default function Flights() {
 
     return (
         <>
-            {isLoading === undefined && null}
+            {isLoading === undefined && loader()}
             {isLoading ? loader() : page()}
         </>
     )

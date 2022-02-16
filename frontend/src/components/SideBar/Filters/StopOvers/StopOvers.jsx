@@ -4,7 +4,7 @@ import './StopOvers.css';
 export default function StopOvers(props) {
 
     const [isHidden, setIsHidden] = useState(false);
-    const [isDisabled, setIsDisabled] = useState(null)
+    const [isDisabled, setIsDisabled] = useState(props.nonstop)
 
     const toggleHandler = () => {
         if (isHidden) {
@@ -28,19 +28,35 @@ export default function StopOvers(props) {
 
     const liftState = (e) => {
         if (e.target.name === 'non-stop') {
-
+            if (!e.target.checked) {
+                return false;
+            }
+            props.liftStateStops(2);
         }
-        console.log(e)
-    }
+        else if (e.target.name === 'one-stop') {
+            if (e.target.checked === false) {
+                props.liftStateStops(0);
+            } else {
+                props.liftStateStops(4);
+            }
+        } else {
+            if (e.target.checked === false) {
+                props.liftStateStops(0);
+            }
+            else {
+                props.liftStateStops(5);
+            }
+        }
+    };
 
     const showStops = () => {
         return (
             <>
                 <div className='so-stops'>
                     <ul>
-                        <li><input onClick={e => liftState(e)} type='checkbox' name='non-stop' disabled={props.nonStop} /> <span>Non-Stop</span></li>
-                        <li><input type='checkbox' name='one-stop' /> <span>1 Stop</span></li>
-                        <li><input type='checkbox' name='two-stops' /> <span>+2 Stops</span></li>
+                        <li><input onClick={e => liftState(e)} type='checkbox' name='non-stop' disabled={isDisabled} /> <span>Non-Stop</span></li>
+                        <li><input onClick={e => liftState(e)} type='checkbox' name='one-stop' /> <span>1 Stop</span></li>
+                        <li><input onClick={e => liftState(e)} type='checkbox' name='two-stops' /> <span>+2 Stops</span></li>
                     </ul>
                 </div>
             </>

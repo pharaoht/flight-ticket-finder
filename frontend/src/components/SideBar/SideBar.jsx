@@ -10,6 +10,7 @@ export default function SideBar(props) {
     const [duration, setDuration] = useState(null);
     const [outBound, setOutBound] = useState(null);
     const [returnTime, setReturnTime] = useState(null);
+    const [stopOvers, setStopOvers] = useState(null);
     const sidebar = useRef();
 
     useEffect(() => {
@@ -27,7 +28,7 @@ export default function SideBar(props) {
         return () => {
             clearTimeout(timer);
         };
-    }, [duration, outBound, returnTime])
+    }, [duration, outBound, returnTime, stopOvers])
 
     //scoll class adder
     const isSticky = (e) => {
@@ -39,8 +40,10 @@ export default function SideBar(props) {
         const filterObj = {
             duration: duration,
             outBound: outBound,
-            returnTime: returnTime
+            returnTime: returnTime,
+            stopOvers: stopOvers,
         }
+        console.log('sidebar')
         props.liftState(filterObj)
     };
     //lift state handler to child
@@ -56,9 +59,13 @@ export default function SideBar(props) {
         setReturnTime(prev => time)
     };
 
+    const stopOverSetter = (stops) => {
+        setStopOvers(prev => stops);
+    };
+
     return (
         <div className='side-bar' ref={sidebar}>
-            <StopOvers nonstop={props} />
+            <StopOvers nonstop={props.nonStop} liftStateStops={stopOverSetter} />
             <Duration durationAvg={props.durationAvg} liftState={durationSetter} />
             <Departtimes liftState={outBoundSetter} returnSetter={returnSetter} />
             <SortBy />

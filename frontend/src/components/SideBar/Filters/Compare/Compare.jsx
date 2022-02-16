@@ -32,14 +32,13 @@ export default function Compare() {
                             <div className='cp-brief-info'>
                                 <div className='cp-info-flight'>{item.airportCodeFrom} to {item.airportCodeTo}</div>
                                 <div className='cp-info-flight'> ${item.price}</div>
-                                <div className='cp-info-flight'>{item.departDate}</div>
+                                <div className='cp-info-flight'>{item.arriveDate}</div>
                             </div>
                         </div>
                     </>
                 )
             })
         )
-
     }
 
     return (

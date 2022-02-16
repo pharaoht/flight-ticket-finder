@@ -1,42 +1,39 @@
 import React, { useState, useEffect } from 'react'
 import { useRef } from 'react';
 import { FromAirport, ToAirport, CheckIn, CheckOut, Cabin, FindBtn, FromLocations, CabinDropDown, ToLocations } from '../Inputs/Inputs';
+import CabinModule from './Cabin/Cabin';
 import { locationAPIRequest } from '../../Util/UtilMethods';
 import './SearchAdvance.css'
 
 export default function SearchAdvance(props) {
-    const newStartDay = convertDay(props.flightInfo.depart_date)
-    const newEndDay = convertDay(props.flightInfo.return_date)
+
     const [paramBuilder, SetParamBuilder] = useState({
         from_airport: '',
         to_airport: '',
         return: true,
         date_from: '',
         date_to: '',
-        cabin: '',
-        adults: '',
-        children: '',
-        infants: ''
+        cabin: 'M',
+        adults: 1,
+        children: 0,
+        infants: 0
     });
     const [isShowing, setIsShowing] = useState(false);
-    const [isCabin, setIsCabin] = useState(false);
-    const [startDate, setStartDate] = useState(new Date(newStartDay));
-    const [returnDate, setReturnDate] = useState(new Date(newEndDay));
+    const [startDate, setStartDate] = useState(new Date(convertDay(props.flightInfo.depart_date)));
+    const [returnDate, setReturnDate] = useState(new Date(convertDay(props.flightInfo.return_date)));
     const [fromDateInput, setFromDateInput] = useState();
-    const [toDateInput, setToDateInput] = useState();
     const [fromLocation, setFromLocation] = useState([]);
+    const [liftState, setLiftState] = useState(false);
     const [toLocation, setToLocation] = useState([]);
-    const [eventValue, setEventValue] = useState();
     const [changeValue, setChangeValue] = useState();
-    const [adults, setAdults] = useState(1);
-    const [infants, setInfants] = useState(0);
-    const [children, setChildren] = useState(0);
-    const [liftState, setLiftState] = useState(false)
-    const [cabinValue, setCabinValue] = useState(`${adults} Adult, ${children} Children, ${infants} Infants`);
-    const fromInput = React.createRef();
-    const toInput = React.createRef();
+    const [toDateInput, setToDateInput] = useState();
+    const [cabinValue, setCabinValue] = useState();
+    const [eventValue, setEventValue] = useState();
+    const [isCabin, setIsCabin] = useState(false);
     const fromDateRef = React.createRef();
+    const fromInput = React.createRef();
     const toDateRef = React.createRef();
+    const toInput = React.createRef();
     const header = useRef();
 
     const incrementDate = (isPast) => {
@@ -175,147 +172,10 @@ export default function SearchAdvance(props) {
         )
     };
 
-    const travelers = () => {
-        const total = 10;
-
-        const incrementAdult = () => {
-
-            if (adults + children + infants === total) {
-                //add css disabled class
-                return false
-            }
-            let count = adults + 1
-            setAdults(prevState => { return prevState + 1 })
-            SetParamBuilder(prevState => { return { ...prevState, adults: count } })
-        };
-
-        const decrementAdult = () => {
-            if (adults === 1) {
-                //add css disable to mius btn
-                return false;
-            }
-            let count = adults - 1
-            setAdults(prevState => { return prevState - 1 });
-            SetParamBuilder(prevState => { return { ...prevState, adults: count } });
-        };
-
-        const incrementChild = () => {
-            if (adults + children + infants === total) {
-                //add css disabled class
-                return false
-            }
-            let count = children + 1
-            setChildren(prevState => { return prevState + 1 })
-            SetParamBuilder(prevState => { return { ...prevState, children: count } });
-        };
-
-        const decrementChild = () => {
-            if (children === 0) {
-
-                //add css disable to mius btn
-                return false
-            };
-            let count = children - 1
-            setChildren(prevState => { return prevState - 1 })
-            SetParamBuilder(prevState => { return { ...prevState, children: count } });
-        };
-
-        const incrementInfant = () => {
-            if (adults + children + infants === total) {
-                //add css disabled class
-                return false
-            }
-            let count = infants + 1
-            setInfants(prevState => { return prevState + 1 })
-            SetParamBuilder(prevState => { return { ...prevState, infants: count } });
-        }
-
-        const decrementInfant = () => {
-            if (infants === 0) {
-                return false
-            }
-            let count = infants - 1
-            setInfants(prevState => { return prevState - 1 })
-            SetParamBuilder(prevState => { return { ...prevState, infants: count } });
-        }
-
-        return (
-            <div>
-                <div className='sd-travelers'>
-                    <div className='sd-travel-type'>
-                        <h4>Adults</h4>
-                        <h6>Over 11</h6>
-                    </div>
-                    <div className='sd-number-of-travelers'>
-                        <div onClick={decrementAdult}>
-                            <ion-icon id="sd-icon-minus-ad" name="remove-circle-outline"></ion-icon>
-                        </div>
-                        <div>
-                            {adults}
-                        </div>
-                        <div onClick={incrementAdult}>
-                            <ion-icon id='sd-icon-plus-ad' name="add-circle-outline"></ion-icon>
-                        </div>
-                    </div>
-                </div>
-                <div className='sd-travelers'>
-                    <div className='sd-travel-type'>
-                        <h4>Children</h4>
-                        <h6>2 - 11</h6>
-                    </div>
-                    <div className='sd-number-of-travelers'>
-                        <div onClick={decrementChild}>
-                            <ion-icon id="sd-icon-minus-ad" name="remove-circle-outline"></ion-icon>
-                        </div>
-                        <div>
-                            {children}
-                        </div>
-                        <div onClick={incrementChild}>
-                            <ion-icon id='sd-icon-plus-ad' name="add-circle-outline"></ion-icon>
-                        </div>
-                    </div>
-                </div>
-                <div className='sd-travelers'>
-                    <div className='sd-travel-type'>
-                        <h4>Infants</h4>
-                        <h6>Under 2</h6>
-                    </div>
-                    <div className='sd-number-of-travelers'>
-                        <div onClick={decrementInfant}>
-                            <ion-icon id="sd-icon-minus-ad" name="remove-circle-outline"></ion-icon>
-                        </div>
-                        <div>
-                            {infants}
-                        </div>
-                        <div onClick={incrementInfant}>
-                            <ion-icon id='sd-icon-plus-ad' name="add-circle-outline"></ion-icon>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
-
-    }
-
-    const cabinModule = () => {
-        return (
-            <>
-                <div className='sd-ca-cl-tr' onMouseLeave={showCabin} >
-                    {triangle()}
-                    <div className='sd-dropdown-holder'>
-                        <h5 className='sd-cab-title'>Cabin Class</h5>
-                        <CabinDropDown />
-                        {travelers()}
-                        <h6>Max 10 passengers</h6>
-                    </div>
-                </div>
-            </>
-        )
-    }
-
     const submitHandler = (e) => {
+        console.log(paramBuilder)
         e.preventDefault();
-        return window.location.replace(`/tickets/${paramBuilder.from_airport}/${paramBuilder.to_airport}/${paramBuilder.date_from}/${paramBuilder.date_to}/`)
+        return window.location.replace(`/tickets/${paramBuilder.from_airport}/${paramBuilder.to_airport}/${paramBuilder.date_from}/${paramBuilder.date_to}/?/${paramBuilder.return}/${paramBuilder.adults}/${paramBuilder.children}/${paramBuilder.infants}/${paramBuilder.cabin}`)
     }
 
     const formValidation = (e) => {
@@ -357,11 +217,11 @@ export default function SearchAdvance(props) {
                 <div className='search-form'>
                     <div className='sd-search-return-type sd-spacing'>
                         <div>
-                            <input id='sd-return-btn' type='radio' name='return' value='true' onClick={(e) => changeHandler(e)} />
+                            <input id='sd-return-btn' type='radio' name='return' value={true} onClick={(e) => changeHandler(e)} />
                             <label className='sd-hover'>Return</label>
                         </div>
                         <div>
-                            <input id='sd-oneway-btn' type='radio' name='return' value='false' onClick={(e) => changeHandler(e)} />
+                            <input id='sd-oneway-btn' type='radio' name='return' value={false} onClick={(e) => changeHandler(e)} />
                             <label className='sd-hover'>One-way</label>
                         </div>
                     </div>
@@ -391,7 +251,7 @@ export default function SearchAdvance(props) {
                         <div className='sd-cabin'>
                             <div className='sd-cabin-holder'>
                                 <Cabin onClick={(e) => showCabin(e)} value={cabinValue} />
-                                {!isCabin ? null : cabinModule()}
+                                <CabinModule show={isCabin} liftState={showCabin} changeCabin={updateCabinValues} paramSetter={updateParams} />
                             </div>
                             <div className='sd-find-btn'>
                                 <FindBtn onClick={(e) => formValidation(e)} />
@@ -403,14 +263,7 @@ export default function SearchAdvance(props) {
         )
     };
 
-    useEffect(() => {
-        window.addEventListener('scroll', isSticky);
-        return () => {
-            window.removeEventListener('scroll', isSticky);
-        };
-    }, [])
-
-    useEffect(() => {
+    const updateCabinValues = (adults, children, infants) => {
         let numOfAdults, numOfChild, numOfInfan
 
         adults === 1 ? numOfAdults = 'Adult' : numOfAdults = 'Adults';
@@ -418,7 +271,27 @@ export default function SearchAdvance(props) {
         infants === 1 ? numOfInfan = 'Infant' : numOfInfan = 'Infants';
 
         setCabinValue(prevState => { return `${adults} ${numOfAdults}, ${children} ${numOfChild}, ${infants} ${numOfInfan}` })
-    }, [adults, children, infants]);
+    };
+
+    const updateParams = (obj) => {
+        console.log(obj)
+        if (obj.adults) {
+            SetParamBuilder(prevState => { return { ...prevState, adults: obj.adults } })
+        }
+        else if (obj.children === 0 || obj.children) {
+            SetParamBuilder(prevState => { return { ...prevState, children: obj.children } })
+
+        } else if (obj.infants === 0 || obj.infants) {
+            SetParamBuilder(prevState => { return { ...prevState, infants: obj.infants } })
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', isSticky);
+        return () => {
+            window.removeEventListener('scroll', isSticky);
+        };
+    }, [])
 
     useEffect(() => {
 

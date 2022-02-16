@@ -6,7 +6,6 @@ import { useEffect } from 'react';
 import FlightContext from '../../Context/flight-context';
 
 export default function Ticket(props) {
-    console.log(props)
     const context = useContext(FlightContext);
     const [isHidden, setIsHidden] = useState(true);
     const [isHiddenReturn, setIsHiddenReturn] = useState(true);
@@ -215,6 +214,10 @@ export default function Ticket(props) {
                 return false;
             }
 
+            let stops = props.stops.length
+
+            console.log(props)
+
             const flightDataObj = {
                 id: props.type,
                 airportCodeFrom: props.cityFrom,
@@ -225,10 +228,11 @@ export default function Ticket(props) {
                 bookingLink: props.link,
                 countryFrom: props.countryFrom,
                 countryTo: props.countryTo,
-                departDate: convertDate(props.depart),
-                departTime: convertTime(props.depart),
-                arriveDate: convertDate(props.arrive),
-                arriveTime: convertTime(props.arrive)
+                link: props.link,
+                departDate: convertDate(props.stops[stops - 1].local_arrival),
+                departTime: convertTime(props.stops[stops - 1].local_arrival),
+                arriveDate: convertDate(props.depart),
+                arriveTime: convertTime(props.depart)
             }
 
             context.setData(flightDataObj)
