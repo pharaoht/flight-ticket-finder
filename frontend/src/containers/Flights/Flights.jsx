@@ -164,8 +164,15 @@ export default function Flights() {
                         return item
                     }
                 }
-                else if (item.route.length <= obj.stopOvers) {
-                    return item;
+                else if (obj.stopOvers === 4) {
+                    if (item.route.length === 3 || item.route.length === 4) {
+                        return item;
+                    }
+                }
+                else if (obj.stopOvers === 2) {
+                    if (item.route.length <= 2) {
+                        return item;
+                    }
                 }
                 return false;
             }
