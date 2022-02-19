@@ -1,39 +1,32 @@
 import React, {useState, useCallback} from 'react';
 import axios from 'axios';
 
-const useHttp = () => {
+const useHttp = (requestConfig, callback) => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-
-    const sendRequest = useCallback(async (requestConfig, callback) =>{
+    
+    const sendRequest = async () =>{
         setIsLoading(true);
         setError(null);
-
         try {
             const response = await axios.get(
                 requestConfig.url, 
                 {
-                    method: requestConfig.method,
-                    headers: requestConfig.headers,
-                    body: JSON.stringify(requestConfig.body)
+                    method: requestConfig.method ?  requestConfig.method : null ,
+                    headers: requestConfig.headers ? requestConfig.headers : {} ,
+                    body: requestConfig.body ? JSON.stringify(requestConfig.body) : null
                 }
             );
+            
+            if(response.status !== 200){ throw new Error('Request failed') }
 
-            if(!response.ok){
-                throw new Error('Request failed');
-            }
-
-            const data = await response.json();
-
-            callback(data);
+            callback(response.data.locations);
+            setIsLoading(false);
         }
-        catch (error) {
-            setError(err.message || 'Something went wrong');
-        }
+        catch (err) { setError(err.message || 'Something went wrong'); }
+    };
 
-        return {isLoading, error, sendRequest,}
-
-    },[]);
+    return {isLoading, error, sendRequest,}
 };
 
 export default useHttp;

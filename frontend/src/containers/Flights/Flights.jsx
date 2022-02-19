@@ -246,7 +246,6 @@ export default function Flights() {
 
     }, [dates])
 
-
     return (
         <>
             {isLoading === undefined && loader()}
