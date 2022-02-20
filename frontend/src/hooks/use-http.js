@@ -18,6 +18,8 @@ const useHttp = (requestConfig, callback) => {
                 }
             );
             
+            console.log(response.data.locations)
+
             if(response.status !== 200){ throw new Error('Request failed') }
 
             callback(response.data.locations);
