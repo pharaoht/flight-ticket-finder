@@ -1,0 +1,46 @@
+.dest-comp-holder {
+  display: flex;
+  outline: 1px solid black;
+  background-color: #fff;
+  border-radius: 10px;
+  height: 300px;
+}
+
+.dest-comp-photo {
+  width: 25%;
+}
+
+.dest-comp-info {
+  width: 75%;
+  padding: 10px;
+}
+
+.dest-info-header {
+  text-align: center;
+  height: 15%;
+}
+
+.dest-comp-body {
+  outline: 1px solid black;
+  height: 85%;
+}
+
+.img-dest {
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.dest-comp-sub-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.sub-body-container {
+  display: flex;
+  width: 100%;
+  height: 50%;
+}
+.sub-body-item {
+  width: 50%;
+}
