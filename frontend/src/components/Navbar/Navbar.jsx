@@ -1,8 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import '../Navbar/Navbar.css'
 
 export default function Navbar() {
+
+    //getting state from redux store
+    const isAuth = useSelector(state => state.isAuthenticated);
+
     return (
         <>
             <header>
@@ -16,7 +21,8 @@ export default function Navbar() {
                     </ul>
                     <ul className='action'>
                         <Link to='/' ><li><ion-icon name='search-outline'></ion-icon></li></Link>
-                        <Link to='/' ><li><ion-icon name='person-outline'></ion-icon></li></Link>
+                        {!isAuth && <Link to='/' ><li><ion-icon name='person-outline'></ion-icon></li></Link>}
+                        {isAuth && <Link to='/'><li><ion-icon name="log-out-outline"></ion-icon></li></Link>}
                     </ul>
                 </div>
             </header>

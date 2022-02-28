@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { useHistory } from 'react-router-dom';
 import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
@@ -88,6 +88,8 @@ export const load_user = () => async dispatch => {
 
 export const login = (email, password) => async dispatch => {
 
+    const history = useHistory();
+
     const config = {
         headers: {
             'Content-Type': 'application/json'
@@ -107,6 +109,7 @@ export const login = (email, password) => async dispatch => {
 
         dispatch(load_user());
 
+        history.replace('/');
 
     } catch (err) {
 
@@ -176,9 +179,13 @@ export const reset_password_confirm = (userId, token, new_password, re_new_passw
 };
 
 export const logout = () => dispatch => {
+    const history = useHistory();
+
     dispatch({
         type: LOGOUT,
     });
+
+    history.replace('/');
 };
 
 export const signup = (email, first_name, last_name, password, re_password) => async dispatch => {
@@ -231,3 +238,7 @@ export const verify = (userId, token) => async dispatch => {
         })
     };
 };
+
+const autoSignOut = () => {
+
+}
