@@ -1,5 +1,5 @@
 import store from './store';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import Home from './containers/Home/Home';
 import Destinations from './containers/Destinations/Destinations.jsx';
 import Flights from './containers/Flights/Flights';
@@ -12,6 +12,8 @@ import Error from './containers/404/Error';
 
 Modal.setAppElement('#root')
 const App = () => {
+
+
 
   return (
     <Provider store={store}>
