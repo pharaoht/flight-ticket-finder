@@ -1,5 +1,5 @@
 import store from './store';
-import { Provider, useSelector } from 'react-redux';
+import { Provider,} from 'react-redux';
 import Home from './containers/Home/Home';
 import Destinations from './containers/Destinations/Destinations.jsx';
 import Flights from './containers/Flights/Flights';
@@ -26,7 +26,7 @@ const App = () => {
           <FlightContextProvider>
             <Route path='/tickets/:from_airport/:to_airport/:depart_date/:return_date?' component={Flights}/>
           </FlightContextProvider>
-          <Route path='*' component={Error} />
+          <Route component={Error} />
         </Switch>
       </Router>
     </Provider>
