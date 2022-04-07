@@ -243,7 +243,6 @@ export default function Flights() {
     useEffect(() => {
         setTest(true);
         getFlights(dates.sdate, dates.edate);
-
     }, [dates])
 
     return (

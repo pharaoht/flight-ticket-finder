@@ -58,3 +58,19 @@ header .group .action {
 header .group .action li {
   font-size: 1.25em;
 }
+
+
+@media (max-width: 767px) {
+  #navbar{
+    display: none;
+  }
+  header{
+    padding: 30px 0px;
+    justify-content: center;
+  }
+
+  .banner{
+    height: 100vh;
+  }
+
+}

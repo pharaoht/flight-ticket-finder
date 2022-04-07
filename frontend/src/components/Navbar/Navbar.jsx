@@ -12,7 +12,7 @@ export default function Navbar() {
         <>
             <header>
                 <Link to='/' className='logo'>Travel</Link>
-                <div className='group'>
+                <div className='group' id='navbar'>
                     <ul className='navigation'>
                         <Link to='/'><li>Home</li></Link>
                         <Link to='/destinations'><li>Destinations</li></Link>

@@ -228,7 +228,7 @@ export default function Home(props) {
                     <img src={photo1} className='cover' alt='cover' />
                     <div className='content'>
                         <h2>Explore the World</h2>
-                        <span className='btn'><Link to='/tickets'>Book Now</Link></span>
+                        <span className='btn' id='book-btn'><Link to='/tickets'>Book Now</Link></span>
                     </div>
                     <div className='searchBox'>
                         <div>

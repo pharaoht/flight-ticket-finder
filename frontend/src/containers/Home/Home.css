@@ -92,3 +92,31 @@ ul {
     margin: 0;
   }
 }
+
+@media (max-width: 767px) {
+  .banner {
+    padding: 0px;
+  }
+  .searchBox{
+    flex-direction: column;
+    
+  }
+
+  .searchBox div{
+    margin-bottom: 5px;
+  }
+
+  .airport_holder{
+    width: 91%;
+    bottom: 98%;
+    left:5%
+  }
+
+  #book-btn{
+    display: none;
+  }
+
+  .content{
+    padding: 0px 10px;
+  }
+}
