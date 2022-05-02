@@ -39,7 +39,7 @@ export default function Home(props) {
         const config = {
             headers: {
                 "accept": "application/json",
-                "apikey": "SLxN9_Q0EiAp-Lr7hLb-efLH7T1bIlOd"
+                "apikey": `${process.env.REACT_APP_API_KEY}`
             }
         };
 

@@ -15,7 +15,7 @@ export default function Navbar() {
                 <div className='group' id='navbar'>
                     <ul className='navigation'>
                         <Link to='/'><li>Home</li></Link>
-                        <Link to='/destinations'><li>Destinations</li></Link>
+                        <Link to='/'><li>Destinations</li></Link>
                         <Link to='/'><li>Tips</li></Link>
                         <Link to='/'><li>NewsLetter</li></Link>
                     </ul>
