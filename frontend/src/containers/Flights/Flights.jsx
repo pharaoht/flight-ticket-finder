@@ -41,7 +41,6 @@ export default function Flights() {
         }
         let departure_date, return_date;
 
-
         if (sdate) {
             departure_date = convertDay(sdate);
             return_date = convertDay(edate);

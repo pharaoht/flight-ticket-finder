@@ -20,3 +20,10 @@
 .so-input {
   margin-right: 2px;
 }
+
+@media (max-width: 767px) {
+  .so-ul-stops{
+    display: flex;
+    justify-content: space-between;
+  }
+}

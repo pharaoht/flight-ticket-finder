@@ -232,3 +232,56 @@
     height: 21px;
   }
 }
+@media (max-width: 767px) {
+  .is-sticky {
+    position: static;
+    width: 100%;
+    left: 5;
+    z-index: 999;
+    top: 0;
+  }
+
+  .sd-airport-holder {
+    display: flex;
+    width: 100%;
+    padding: 10px 0px;
+  }
+
+  .sd-holder {
+    width: 100%;
+  
+  }
+
+  .sd-seprator {
+    display: contents;
+    margin-bottom: 10px;
+  }
+
+  .sd-from-to-airport {
+    display: block;
+  }
+
+  .sd-airport {
+    width: 100%;
+  }
+
+  .sd-dates-travel {
+    display: block;
+  }
+
+  .sd-checks {
+    width: 100%;
+  }
+  .sd-cabin {
+    display: block;
+    width: 100%;
+  }
+
+  .sd-cabin-holder {
+    width: 100%;
+  }
+
+  .sd-dropdown-holder {
+    width: 80%;
+  }
+}

@@ -19,3 +19,24 @@
 .sidebar-total {
   text-align: center;
 }
+
+@media (max-width: 767px) {
+  .parent-ticket-container{
+    padding: 0 5px;  
+  }
+
+  .main-flight-info {
+    display: block;
+    
+  }
+
+  .sidebar-component {
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  body::-webkit-scrollbar{
+    display: none;
+  }
+  
+}

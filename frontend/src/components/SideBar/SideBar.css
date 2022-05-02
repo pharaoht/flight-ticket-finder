@@ -6,3 +6,11 @@
   position: fixed;
   width: 20%;
 }
+
+
+@media (max-width: 767px) {
+  .is-stick {
+    position: static;
+    width: 100%;
+  }
+}

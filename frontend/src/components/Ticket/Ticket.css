@@ -147,3 +147,54 @@ hr {
 .tc-add-btn:hover {
   color: #00a698;
 }
+
+
+@media (max-width: 767px) {
+  .ticket-holder {
+    width: 100%;
+    display: block;
+  }
+
+  .tc-flight-info {
+    padding: 10px;
+    width: 100%;
+  }
+
+  .tc-price {
+    width: 100%;
+    border-left: 0px dotted lightgrey;
+  }
+
+  .tc-deals {
+    display: flex;
+    height: 100%;
+  }
+
+  .tc-button {
+    padding: 10px 100px;
+    margin-bottom: 10px;
+  }
+
+  .inline-block {
+    display: none;
+  }
+
+  .tc-ticket-info {
+    display: block;
+  }
+  
+  .tc-h4 {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+  
+  .tc-img {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .tc-utl {
+    width: 40%;
+  }
+}
