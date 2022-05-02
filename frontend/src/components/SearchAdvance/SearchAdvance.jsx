@@ -173,7 +173,6 @@ export default function SearchAdvance(props) {
     };
 
     const submitHandler = (e) => {
-        console.log(paramBuilder)
         e.preventDefault();
         return window.location.replace(`/tickets/${paramBuilder.from_airport}/${paramBuilder.to_airport}/${paramBuilder.date_from}/${paramBuilder.date_to}/?/${paramBuilder.return}/${paramBuilder.adults}/${paramBuilder.children}/${paramBuilder.infants}/${paramBuilder.cabin}`)
     }
@@ -221,8 +220,8 @@ export default function SearchAdvance(props) {
                             <label className='sd-hover'>Return</label>
                         </div>
                         <div>
-                            <input id='sd-oneway-btn' type='radio' name='return' value={false} onClick={(e) => changeHandler(e)} />
-                            <label className='sd-hover'>One-way</label>
+                            {/* <input id='sd-oneway-btn' type='radio' name='return' value={false} onClick={(e) => changeHandler(e)} />
+                            <label className='sd-hover'>One-way</label> */}
                         </div>
                     </div>
                     <div className='sd-from-to-airport sd-spacing'>
