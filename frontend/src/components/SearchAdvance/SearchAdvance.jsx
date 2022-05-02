@@ -209,7 +209,7 @@ export default function SearchAdvance(props) {
             else {
                 setToDateInput(prevState => { return date })
                 SetParamBuilder(prevState => { return { ...prevState, date_to: `${day}-${month}-${year}` } })
-            }
+            };
         }
         return (
             <>
